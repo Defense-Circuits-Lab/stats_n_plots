@@ -2,9 +2,26 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"independent_samples": "00_stats.ipynb"}
+index = {"independent_samples": "00_stats.ipynb",
+         "one_sample": "00_stats.ipynb",
+         "mixed_model_ANOVA": "00_stats.ipynb",
+         "STYLE": "03_gui.ipynb",
+         "LAYOUT": "03_gui.ipynb",
+         "INITIAL_WIDGET_PARAMS": "03_gui.ipynb",
+         "Gui": "03_gui.ipynb",
+         "Select_stats_widget": "03_gui.ipynb",
+         "Select_plots_widget": "03_gui.ipynb",
+         "Select_downloads_widget": "03_gui.ipynb",
+         "Customization_widget": "03_gui.ipynb",
+         "Customize_annotations": "03_gui.ipynb",
+         "Select_annotations": "03_gui.ipynb",
+         "Customize_y_axis": "03_gui.ipynb",
+         "Customize_x_axis": "03_gui.ipynb",
+         "Customize_both_axes": "03_gui.ipynb",
+         "Customize_other_features": "03_gui.ipynb"}
 
-modules = ["stats.py"]
+modules = ["stats.py",
+           "gui.py"]
 
 doc_url = "https://DSegebarth.github.io/dcl_stats_n_plots/"
 
