@@ -7,7 +7,7 @@ entries:
 - folders:
   - folderitems:
     - output: web,pdf
-      title: Getting Started
+      title: Overview
       url: /
       subfolders:
       - output: web
@@ -29,6 +29,6 @@ entries:
           url: gui.html
         title: API
     output: web
-    title: deepflash2
+    title: dcl_stats_n_plots
   output: web
   title: Sidebar
