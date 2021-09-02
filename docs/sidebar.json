@@ -1,12 +1,14 @@
 {
-  "dcl_stats_n_plots": {
-    "Overview": "/",
-    "API": {
-      "Stats": "stats.html",
-      "Plots": "plots.html",
-      "Annotations": "annotations.html",
-      "Downloads": "downloads.html",
-      "GUI": "gui.html" 
+  "deepflash2": {
+    "Getting Started": "/", 
+    "": {
+        "API" : {
+          "Stats": "stats.html",
+          "Plots": "plots.html",
+          "Annotations": "annotations.html",
+          "Downloads": "downloads.html",
+          "GUI": "gui.html" 
+           }
     }
   }
 }
