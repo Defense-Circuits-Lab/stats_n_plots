@@ -1,6 +1,6 @@
 {
-  "deepflash2": {
-    "Getting Started": "/", 
+  "dcl_stats_n_plots": {
+    "Overview": "/", 
     "": {
         "API" : {
           "Stats": "stats.html",
