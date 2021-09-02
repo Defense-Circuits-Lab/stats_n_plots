@@ -1,0 +1,40 @@
+package:
+  name: dcl_stats_n_plots
+  version: 0.0.5
+source:
+  sha256: dd28818f77d9592c508a6bd3249a2928fa95c6ee36d55556a2c65350000a6235
+  url: https://files.pythonhosted.org/packages/73/05/2db5cbc5a5b7d3724cd230ed5d8462c671b5f0004dfc27539ed2bea66b9a/dcl_stats_n_plots-0.0.5.tar.gz
+about:
+  dev_url: https://DSegebarth.github.io
+  doc_url: https://DSegebarth.github.io
+  home: https://DSegebarth.github.io
+  license: Apache Software
+  license_family: APACHE
+  summary: coming soon
+build:
+  noarch: python
+  number: '0'
+  script: '{{ PYTHON }} -m pip install . -vv'
+extra:
+  recipe-maintainers:
+  - DSegebarth
+requirements:
+  host:
+  - pip
+  - python
+  - packaging
+  - ipywidgets
+  - matplotlib>=3.3.4
+  - pingouin>=0.3.12
+  - seaborn>=0.11.0
+  run:
+  - pip
+  - python
+  - packaging
+  - ipywidgets
+  - matplotlib>=3.3.4
+  - pingouin>=0.3.12
+  - seaborn>=0.11.0
+test:
+  imports:
+  - dcl_stats_n_plots
