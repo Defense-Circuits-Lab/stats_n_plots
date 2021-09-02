@@ -1,6 +1,12 @@
 {
   "dcl_stats_n_plots": {
     "Overview": "/",
-    "stats": "stats.html"
+    "API": {
+      "Stats": "stats.html",
+      "Plots": "plots.html",
+      "Annotations": "annotations.html",
+      "Downloads": "downloads.html",
+      "GUI": "gui.html" 
+    }
   }
 }
