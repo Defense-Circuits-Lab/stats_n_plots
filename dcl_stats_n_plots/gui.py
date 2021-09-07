@@ -114,6 +114,9 @@ class Gui:
         self.params['set_xaxis_label_fontsize'] = self.customization.xaxis.set_xaxis_label_fontsize.value
         self.params['set_xaxis_label_text'] = self.customization.xaxis.set_xaxis_label_text.value
 
+
+        self.params['set_annotate_all'] = self.customization.select_annotations.set_annotate_all.value
+
         self.params['distance_stars_to_brackets'] = self.customization.customize_annotations.set_distance_stars_to_brackets.value
         self.params['distance_brackets_to_data'] = self.customization.customize_annotations.set_distance_brackets_to_data.value
         self.params['fontsize_stars'] = self.customization.customize_annotations.set_fontsize_stars.value
@@ -289,7 +292,7 @@ class Select_stats_widget:
             params = self.create_checkboxes_pairwise_comparisons(params)
         elif stats_value == 1:
             params['data_col'], params['group_col'], params['results'], params['l_groups'], params['performed_test'], params['fixed_val_col'], params['fixed_value'] = stats.one_sample(df)
-            params = self.create_checkboxes_pairwise_comparisons()
+            params = self.create_checkboxes_pairwise_comparisons(params)
         elif stats_value == 2:
             params['results'], params['data_col'], params['group_col'], params['subject_col'], params['session_col'], params['l_groups'], params['l_sessions'], params['performed_test'] = stats.mixed_model_ANOVA(df)
             params = self.create_checkboxes_pairwise_comparisons_mma(params)
@@ -424,7 +427,13 @@ class Select_plots_widget:
     def on_button_clicked(self, params):
         stats_value = params['widgets']['stats_dropdown']['value']
         plots_value = params['widgets']['plots_dropdown']['value']
+
         df = params['data']
+        data_col = params['data_col']
+        group_col = params['group_col']
+        l_xlabel_order = params['l_xlabel_order']
+        color_palette = params['color_palette']
+        set_marker_size = params['set_marker_size']
 
         params['widgets']['plots_button']['description'] = 'Refresh the plot'
 
@@ -442,36 +451,73 @@ class Select_plots_widget:
 
         if stats_value == 0: # independent_samples()
             if plots_value == 0:
-                sns.stripplot(data=df, x=params['group_col'], y=params['data_col'], order=params['l_xlabel_order'],
-                              palette=params['color_palette'], size=params['set_marker_size'])
+                sns.stripplot(data=df, x=group_col, y=data_col, order=l_xlabel_order,
+                              palette=color_palette, size=set_marker_size)
             elif plots_value == 1:
-                sns.boxplot(data=df, x=params['group_col'], y=params['data_col'], order=params['l_xlabel_order'], palette=params['color_palette'])
+                sns.boxplot(data=df, x=group_col, y=data_col, order=l_xlabel_order, palette=color_palette)
             elif plots_value == 2:
-                sns.boxplot(data=df, x=params['group_col'], y=params['data_col'], order=params['l_xlabel_order'],
-                            palette=params['color_palette'], showfliers=False)
-                sns.stripplot(data=df, x=params['group_col'], y=params['data_col'], order=params['l_xlabel_order'],
-                              color='k', size=params['set_marker_size'])
+                sns.boxplot(data=df, x=group_col, y=data_col, order=l_xlabel_order,
+                            palette=color_palette, showfliers=False)
+                sns.stripplot(data=df, x=group_col, y=data_col, order=l_xlabel_order,
+                              color='k', size=set_marker_size)
             elif plots_value == 3:
-                sns.violinplot(data=df, x=params['group_col'], y=params['data_col'], order=params['l_xlabel_order'],
-                               palette=params['color_palette'], cut=0)
-                sns.stripplot(data=df, x=params['group_col'], y=params['data_col'], order=params['l_xlabel_order'],
-                              color='k', size=params['set_marker_size'])
+                sns.violinplot(data=df, x=group_col, y=data_col, order=l_xlabel_order,
+                               palette=color_palette, cut=0)
+                sns.stripplot(data=df, x=group_col, y=data_col, order=l_xlabel_order,
+                              color='k', size=set_marker_size)
             else:
                 print("Function not implemented. Please go and annoy Dennis to finally do it")
 
-
         elif stats_value == 1: # one_sample()
-            pass
+            fixed_value = params['fixed_value']
+            if plots_value == 0:
+                sns.stripplot(data=df, x=group_col, y=data_col, order=l_xlabel_order,
+                              palette=color_palette, size=set_marker_size)
+                plt.hlines(y=fixed_value, xmin=-0.5, xmax=0.5, color='gray', linestyle='dashed')
+            elif plots_value == 1:
+                sns.boxplot(data=df, x=group_col, y=data_col, order=l_xlabel_order, palette=color_palette)
+                plt.hlines(y=fixed_value, xmin=-0.5, xmax=0.5, color='gray', linestyle='dashed')
+            elif plots_value == 2:
+                sns.boxplot(data=df, x=group_col, y=data_col, order=l_xlabel_order, palette=color_palette, showfliers=False)
+                sns.stripplot(data=df, x=group_col, y=data_col, color='k', order=l_xlabel_order, size=set_marker_size)
+                plt.hlines(y=fixed_value, xmin=-0.5, xmax=0.5, color='gray', linestyle='dashed')
+            elif plots_value == 3:
+                sns.violinplot(data=df, x=group_col, y=data_col, order=l_xlabel_order, palette=color_palette, cut=0)
+                sns.stripplot(data=df, x=group_col, y=data_col, color='k', order=l_xlabel_order, size=set_marker_size)
+                plt.hlines(y=fixed_value, xmin=-0.5, xmax=0.5, color='gray', linestyle='dashed')
+            else:
+                print("Function not implemented. Please go and annoy Dennis to finally do it")
 
         elif stats_value == 2: # MMA
+            session_col = params['session_col']
+            l_hue_order = params['l_hue_order']
+
+            if plots_value == 0:
+                sns.pointplot(data=df, x=session_col, y=data_col, order=l_xlabel_order, hue=group_col, hue_order=l_hue_order,
+                              palette=color_palette, dodge=True, ci='sd', err_style='bars', capsize=0)
+            elif plots_value == 1:
+                sns.boxplot(data=df, x=session_col, y=data_col, order=l_xlabel_order, hue=group_col, hue_order=l_hue_order,
+                            palette=color_palette)
+            elif plots_value == 2:
+                sns.boxplot(data=df, x=session_col, y=data_col, order=l_xlabel_order, hue=group_col, hue_order=l_hue_order,
+                            palette=color_palette, showfliers=False)
+                sns.stripplot(data=df, x=session_col, y=data_col, order=l_xlabel_order, hue=group_col, hue_order=l_hue_order,
+                              dodge=True, color='k', size=set_marker_size)
+            elif plots_value == 3:
+                sns.violinplot(data=df, x=session_col, y=data_col, order=l_xlabel_order, hue=group_col, hue_order=l_hue_order,
+                               width=0.8, cut=0, palette=color_palette)
+                sns.stripplot(data=df, x=session_col, y=data_col, order=l_xlabel_order, hue=group_col, hue_order=l_hue_order,
+                              dodge=True, color='k', size=set_marker_size)
+            else:
+                print("Function not implemented. Please go and annoy Dennis to finally do it")
 
             if params['set_show_legend'] == True:
                 if plots_value == 0:
                     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)
                 elif plots_value in [1, 2, 3]:
                     handles, labels = ax.get_legend_handles_labels()
-                    new_handles = handles[:len(params['l_hue_order'])]
-                    new_labels = labels[:len(params['l_hue_order'])]
+                    new_handles = handles[:len(l_hue_order)]
+                    new_labels = labels[:len(l_hue_order)]
                     ax.legend(new_handles, new_labels, loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)
             else:
                 ax.get_legend().remove()
@@ -481,6 +527,26 @@ class Select_plots_widget:
 
 
         # Code to annotate stats
+        if stats_value == 0: # independent_samples()
+            params = self.get_l_stats_to_annotate_independent_samples(params)
+            self.annotate_stats_independent_samples(params['l_stats_to_annotate'], params)
+
+        elif stats_value == 1: # one_sample()
+            params = self.get_l_stats_to_annotate_independent_samples(params)
+            if plots_value in [0, 1, 2, 3]:
+                self.annotate_stats_one_sample(params['l_stats_to_annotate'], params)
+            else:
+                print("Function not implemented. Please go and annoy Dennis to finally do it")
+
+        elif stats_value == 2: # mixed_model_ANOVA()
+            params = self.get_l_stats_to_annotate_mma(params)
+            if plots_value == 0:
+                self.annotate_stats_mma_pointplot(params['l_stats_to_annotate'], params)
+            elif plots_value in [1, 2, 3]:
+                self.annotate_stats_mma_violinplot(params['l_stats_to_annotate'], params)
+            else:
+                print("Function not implemented. Please go and annoy Dennis to finally do it")
+
 
         plt.ylabel(params['set_yaxis_label_text'], fontsize=params['set_yaxis_label_fontsize'], color=params['set_yaxis_label_color'])
         plt.xlabel(params['set_xaxis_label_text'], fontsize=params['set_xaxis_label_fontsize'], color=params['set_xaxis_label_color'])
@@ -498,6 +564,236 @@ class Select_plots_widget:
         return params
 
 
+    def get_l_stats_to_annotate_independent_samples(self, params):
+
+        l_checkboxes = params['l_checkboxes']
+        l_stats_to_annotate = []
+        if params['set_annotate_all']==True:
+            for i in range(len(l_checkboxes)):
+                l_checkboxes[i].value = True
+        for i in range(len(l_checkboxes)):
+            if l_checkboxes[i].value:
+                checkbox_description = l_checkboxes[i].description
+                group1 = checkbox_description[:checkbox_description.index(' ')]
+                group2 = checkbox_description[checkbox_description.index(' vs. ') + 5 :]
+                l_stats_to_annotate.append((group1, group2))
+
+        params['l_stats_to_annotate'] = l_stats_to_annotate
+        return params
+
+
+    def get_l_stats_to_annotate_mma(self, params):
+
+        l_checkboxes = params['l_checkboxes']
+        l_stats_to_annotate = []
+        if params['set_annotate_all']==True:
+            for i in range(len(l_checkboxes)):
+                l_checkboxes[i][1].value = True
+        for i in range(len(l_checkboxes)):
+            if l_checkboxes[i][1].value:
+                checkbox_description = l_checkboxes[i][1].description
+                group1 = checkbox_description[:checkbox_description.index(' ')]
+                group2 = checkbox_description[checkbox_description.index(' vs. ') + 5 :]
+                session_id = l_checkboxes[i][0]
+                l_stats_to_annotate.append((group1, group2, session_id))
+
+        params['l_stats_to_annotate'] =  l_stats_to_annotate
+        return params
+
+
+    def get_stars_str(self, df_tmp, group1, group2):
+
+        if df_tmp.loc[(df_tmp['A'] == group1) & (df_tmp['B'] == group2)].shape[0] > 0:
+            if 'p-corr' in df_tmp.loc[(df_tmp['A'] == group1) & (df_tmp['B'] == group2)].columns:
+                pval = df_tmp.loc[(df_tmp['A'] == group1) & (df_tmp['B'] == group2), 'p-corr'].iloc[0]
+            else:
+                pval = df_tmp.loc[(df_tmp['A'] == group1) & (df_tmp['B'] == group2), 'p-unc'].iloc[0]
+
+        elif df_tmp.loc[(df_tmp['B'] == group1) & (df_tmp['A'] == group2)].shape[0] > 0:
+            if 'p-corr' in df_tmp.loc[(df_tmp['B'] == group1) & (df_tmp['A'] == group2)].columns:
+                pval = df_tmp.loc[(df_tmp['B'] == group1) & (df_tmp['A'] == group2), 'p-corr'].iloc[0]
+            else:
+                pval = df_tmp.loc[(df_tmp['B'] == group1) & (df_tmp['A'] == group2), 'p-unc'].iloc[0]
+        else:
+            print('There was an error with annotating the stats!')
+        if pval <= 0.001:
+            stars = '***'
+        elif pval <= 0.01:
+            stars = '**'
+        elif pval <= 0.05:
+            stars = '*'
+        else:
+            stars = 'n.s.'
+
+        return stars
+
+
+    def annotate_stats_independent_samples(self, l_stats_to_annotate, params):
+        if len(l_stats_to_annotate) > 0:
+            df = params['data']
+
+            max_total = df[params['data_col']].max()
+            y_shift_annotation_line = max_total * params['distance_brackets_to_data']
+            brackets_height = y_shift_annotation_line*0.5*params['annotation_brackets_factor']
+            y_shift_annotation_text = brackets_height + y_shift_annotation_line*0.5*params['distance_stars_to_brackets']
+
+            # Set initial y
+            y = max_total + y_shift_annotation_line
+
+            # Add check whether group level ANOVA / Kruska-Wallis-ANOVA is significant
+            df_temp = params['results']['summary']['pairwise_comparisons'].copy()
+
+            for group1, group2 in l_stats_to_annotate:
+
+                x1 = params['l_xlabel_order'].index(group1)
+                x2 = params['l_xlabel_order'].index(group2)
+
+                stars = self.get_stars_str(df_temp, group1, group2, params)
+
+                plt.plot([x1, x1, x2, x2], [y, y+brackets_height, y+brackets_height, y], c='k', lw=params['linewidth_annotations'])
+                plt.text((x1+x2)*.5, y+y_shift_annotation_text, stars, ha='center', va='bottom', color='k',
+                         fontsize=params['fontsize_stars'], fontweight=params['fontweight_stars'])
+
+                # With set_distance_stars_to_brackets being limited to 5, stars will always be closer than next annotation line
+                y = y+3*y_shift_annotation_line
+
+
+    def annotate_stats_one_sample(self, l_stats_to_annotate, params):
+        df = params['data']
+        if len(l_stats_to_annotate) > 0:
+            max_total = df[params['data_col']].max()
+            y_shift_annotation_line = max_total * params['distance_brackets_to_data']
+            y_shift_annotation_text = y_shift_annotation_line*0.5*params['distance_stars_to_brackets']
+
+            # Set initial y
+            y = max_total + y_shift_annotation_line
+
+            # Add check whether group level ANOVA / Kruska-Wallis-ANOVA is significant
+            pval = params['results']['summary']['pairwise_comparisons'].iloc[0, :]['p-val']
+            if pval <= 0.001:
+                stars = '***'
+            elif pval <= 0.01:
+                stars = '**'
+            elif pval <= 0.05:
+                stars = '*'
+            else:
+                stars = 'n.s.'
+            print('I tried to annotate - I swear!')
+            plt.text(0, y+y_shift_annotation_text, stars, ha='center', va='bottom', color='k',
+                         fontsize=params['fontsize_stars'], fontweight=params['fontweight_stars'])
+
+
+    def annotate_stats_mma_pointplot(self, l_stats_to_annotate, params):
+
+        df = params['data']
+        group_col = params['group_col']
+        data_col = params['data_col']
+        session_col = params['session_col']
+        l_sessions = params['l_sessions']
+        distance_brackets_to_data = params['distance_brackets_to_data']
+        annotation_brackets_factor = params['annotation_brackets_factor']
+        distance_stars_to_brackets = params['distance_stars_to_brackets']
+        l_xlabel_order = params['l_xlabel_order']
+
+        if len(l_stats_to_annotate) > 0:
+            l_to_annotate_ordered = []
+            for session_id in l_sessions:
+                l_temp = [elem for elem in l_stats_to_annotate if elem[2]==session_id]
+                for elem in l_temp:
+                    abs_mean_difference = abs(df.loc[(df[group_col]==elem[0]) & (df[session_col]==elem[2]), data_col].mean()-
+                                              df.loc[(df[group_col]==elem[1]) & (df[session_col]==elem[2]), data_col].mean())
+                    l_temp[l_temp.index(elem)] = elem+(abs_mean_difference,)
+                l_temp.sort(key=self.sort_by_third)
+                l_to_annotate_ordered = l_to_annotate_ordered+l_temp
+
+            df_temp = params['results']['summary']['pairwise_comparisons'].copy()
+
+            for elem in l_to_annotate_ordered:
+                group1, group2, session_id, abs_mean_difference = elem
+
+                if l_to_annotate_ordered.index(elem) == 0:
+                    n_previous_annotations_in_this_session_id = 0
+                elif session_id == prev_session:
+                    n_previous_annotations_in_this_session_id = n_previous_annotations_in_this_session_id + 1
+                else:
+                    n_previous_annotations_in_this_session_id = 0
+
+                x_shift_annotation_line = distance_brackets_to_data + distance_brackets_to_data * n_previous_annotations_in_this_session_id * 1.5
+                brackets_height = distance_brackets_to_data*0.5*annotation_brackets_factor
+                x_shift_annotation_text = brackets_height + distance_brackets_to_data*0.5*distance_stars_to_brackets
+
+                x = l_xlabel_order.index(session_id) + x_shift_annotation_line
+                y1=df.loc[(df[group_col] == group1) & (df[session_col] == session_id), data_col].mean()
+                y2=df.loc[(df[group_col] == group2) & (df[session_col] == session_id), data_col].mean()
+
+                stars = self.get_stars_str(df_temp.loc[df_temp[session_col] == session_id], group1, group2)
+
+                plt.plot([x, x+brackets_height, x+brackets_height, x], [y1, y1, y2, y2], color='k', lw=params['linewidth_annotations'])
+                plt.text(x+x_shift_annotation_text, (y1+y2)/2, stars, rotation=-90, ha='center', va='center',
+                         fontsize=params['fontsize_stars'], fontweight=params['fontweight_stars'])
+
+                prev_session = session_id
+
+
+    def sort_by_third(self, e):
+        return e[3]
+
+
+    def annotate_stats_mma_violinplot(self, l_stats_to_annotate, params):
+
+        df = params['data']
+        group_col = params['group_col']
+        data_col = params['data_col']
+        session_col = params['session_col']
+        l_sessions = params['l_sessions']
+        distance_brackets_to_data = params['distance_brackets_to_data']
+        annotation_brackets_factor = params['annotation_brackets_factor']
+        distance_stars_to_brackets = params['distance_stars_to_brackets']
+        l_xlabel_order = params['l_xlabel_order']
+        l_hue_order = params['l_hue_order']
+
+        if len(l_stats_to_annotate) > 0:
+            l_to_annotate_ordered = []
+            for session_id in l_sessions:
+                l_temp = [elem for elem in l_stats_to_annotate if elem[2]==session_id]
+                for elem in l_temp:
+                    abs_mean_difference = abs(df.loc[(df[group_col]==elem[0]) & (df[session_col]==elem[2]), data_col].mean()-
+                                              df.loc[(df[group_col]==elem[1]) & (df[session_col]==elem[2]), data_col].mean())
+                    l_temp[l_temp.index(elem)] = elem+(abs_mean_difference,)
+                l_temp.sort(key=self.sort_by_third)
+                l_to_annotate_ordered = l_to_annotate_ordered+l_temp
+
+            df_temp = params['results']['summary']['pairwise_comparisons'].copy()
+
+            max_total = df[data_col].max()
+            y_shift_annotation_line = max_total * distance_brackets_to_data
+            brackets_height = y_shift_annotation_line*0.5*annotation_brackets_factor
+            y_shift_annotation_text = brackets_height + y_shift_annotation_line*0.5*distance_stars_to_brackets
+
+            for elem in l_to_annotate_ordered:
+                group1, group2, session_id, abs_mean_difference = elem
+
+                if l_to_annotate_ordered.index(elem) == 0:
+                    n_previous_annotations_in_this_session_id = 0
+                elif session_id == prev_session:
+                    n_previous_annotations_in_this_session_id = n_previous_annotations_in_this_session_id + 1
+                else:
+                    n_previous_annotations_in_this_session_id = 0
+
+                y = max_total + y_shift_annotation_line + y_shift_annotation_line*n_previous_annotations_in_this_session_id*3
+
+                width = 0.8
+                x_base = l_xlabel_order.index(session_id) - width/2 + width/(2*len(l_hue_order))
+                x1 = x_base + width/len(l_hue_order)*l_hue_order.index(group1)
+                x2 = x_base + width/len(l_hue_order)*l_hue_order.index(group2)
+
+                stars = self.get_stars_str(df_temp.loc[df_temp[session_col] == session_id], group1, group2)
+
+                plt.plot([x1, x1, x2, x2], [y, y+brackets_height, y+brackets_height, y], color='k', lw=params['linewidth_annotations'])
+                plt.text((x1+x2)/2, y+y_shift_annotation_text, stars, ha='center', va='bottom',
+                         fontsize=params['fontsize_stars'], fontweight=params['fontweight_stars'])
+
+                prev_session = session_id
 
 
 # Cell
