@@ -9,9 +9,12 @@ from dcl_stats_n_plots import stats
 from dcl_stats_n_plots import plots
 
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import pingouin as pg
 import itertools
+import math
 
 import ipywidgets as w
 from IPython.display import display
@@ -85,7 +88,6 @@ class Gui:
     # Update params
     def get_updated_params(self):
 
-
         # Dropdowns
         self.params['widgets']['stats_dropdown']['value'] = self.stats_selection.dropdown.value
         self.params['widgets']['plots_dropdown']['value'] = self.plots_selection.dropdown.value
@@ -102,7 +104,6 @@ class Gui:
         self.params['set_axes_color'] = self.customization.both_axes.set_axes_color.value
         self.params['set_axes_tick_size'] = self.customization.both_axes.set_axes_tick_size.value
 
-
         self.params['set_yaxis_label_text'] = self.customization.yaxis.set_yaxis_label_text.value
         self.params['set_yaxis_label_fontsize'] = self.customization.yaxis.set_yaxis_label_fontsize.value
         self.params['set_yaxis_label_color'] = self.customization.yaxis.set_yaxis_label_color.value
@@ -113,7 +114,6 @@ class Gui:
         self.params['set_xaxis_label_color'] = self.customization.xaxis.set_xaxis_label_color.value
         self.params['set_xaxis_label_fontsize'] = self.customization.xaxis.set_xaxis_label_fontsize.value
         self.params['set_xaxis_label_text'] = self.customization.xaxis.set_xaxis_label_text.value
-
 
         self.params['set_annotate_all'] = self.customization.select_annotations.set_annotate_all.value
 
@@ -138,8 +138,6 @@ class Gui:
                 color_palette[group_id] = self.customization.other_features.group_colors_vbox.children[self.params['l_groups'].index(group_id)].value
             self.params['color_palette'] = color_palette
 
-
-
         l_xlabel_order = []
         l_xlabel_string = self.customization.xaxis.set_xlabel_order.value
         while ', ' in l_xlabel_string:
@@ -156,9 +154,7 @@ class Gui:
             l_hue_string = l_hue_string[l_hue_string.index(', ')+2:]
 
         l_hue_order.append(l_hue_string)
-
         self.params['l_hue_order'] = l_hue_order
-
 
 
     # Update widgets according to params
@@ -239,7 +235,19 @@ class Gui:
 
     # Downloads button
     def on_downloads_button_clicked(self, b):
-        pass
+        self.get_updated_params()
+
+        with self.out:
+            self.out.clear_output()
+            self.downloads_selection.on_button_clicked(self.params)
+
+            if self.downloads_selection.dropdown.value in [1, 2]:
+                self.params['save_plot'] = True
+                self.params = self.plots_selection.on_button_clicked(self.params)
+                self.params['save_plot'] = False
+
+        # Finally, update all widgets according to the newly specified params:
+        self.set_updated_params()
 
 # Cell
 class Select_stats_widget:
@@ -811,7 +819,100 @@ class Select_downloads_widget:
 
 
     def on_button_clicked(self, params):
-        pass
+        downloads_value = params['widgets']['downloads_dropdown']['value']
+        stats_value = params['widgets']['stats_dropdown']['value']
+
+        if downloads_value == 0 or downloads_value == 2:
+            if stats_value == 0:
+                df_individual_group_stats = self.get_individual_group_stats_for_download(False, params)
+                df_group_level_overview = self.get_group_level_stats_for_download(params)
+                df_pairwise_comparisons = params['results']['summary']['pairwise_comparisons'].copy()
+
+            elif stats_value == 1:
+                df_individual_group_stats = self.get_individual_group_stats_for_download(False, params)
+                df_pairwise_comparisons = params['results']['summary']['pairwise_comparisons'].copy()
+
+            elif stats_value == 2:
+                df_individual_group_stats = self.get_individual_group_stats_for_download(True, params)
+                df_group_level_overview = self.get_group_level_stats_for_download(params)
+                df_pairwise_comparisons = params['results']['summary']['pairwise_comparisons'].copy()
+
+            with pd.ExcelWriter('statistic_results.xlsx') as writer:
+                df_individual_group_stats.to_excel(writer, sheet_name='Individual group statistics')
+                if stats_value in [0, 2]:
+                    df_group_level_overview.to_excel(writer, sheet_name='Whole-group statistics')
+                df_pairwise_comparisons.to_excel(writer, sheet_name='Pairwise comparisons')
+
+
+    def calculate_individual_group_stats(self, d, key, params):
+        group_data = params['results'][key]['data']
+        d['means'].append(np.mean(group_data))
+        d['medians'].append(np.median(group_data))
+        d['stddevs'].append(np.std(group_data))
+        d['stderrs'].append(np.std(group_data) / math.sqrt(group_data.shape[0]))
+        d['tests'].append('Shapiro-Wilk')
+        d['test_stats'].append(params['results'][key]['normality_full'].iloc[0,0])
+        d['pvals'].append(params['results'][key]['normality_full'].iloc[0,1])
+        d['bools'].append(params['results'][key]['normality_full'].iloc[0,2])
+        return d
+
+
+    def get_individual_group_stats_for_download(self, include_sessions, params):
+        d_individual_group_stats = {'means': [],
+                                    'medians': [],
+                                    'stddevs': [],
+                                    'stderrs': [],
+                                    'tests': [],
+                                    'test_stats': [],
+                                    'pvals': [],
+                                    'bools': []}
+
+        l_for_index = []
+
+        if include_sessions == False:
+            # for independent samples & one sample:
+            for group_id in params['l_groups']:
+                d_individual_group_stats = self.calculate_individual_group_stats(d_individual_group_stats, group_id, params)
+                l_for_index.append(group_id)
+            l_index = l_for_index
+        else:
+            # for mma:
+            for group_id in params['l_groups']:
+                for session_id in params['l_sessions']:
+                    d_individual_group_stats = self.calculate_individual_group_stats(d_individual_group_stats, (group_id, session_id), params)
+                    l_for_index.append((group_id, session_id))
+                l_index = pd.MultiIndex.from_tuples(l_for_index)
+
+        df_individual_group_stats = pd.DataFrame(data=d_individual_group_stats)
+
+        multi_index_columns = pd.MultiIndex.from_tuples([('Group statistics', 'Mean'), ('Group statistics', 'Median'), ('Group statistics', 'Standard deviation'), ('Group statistics', 'Standard error'),
+                                                 ('Test for normal distribution', 'Test'), ('Test for normal distribution', 'Test statistic'), ('Test for normal distribution', 'p-value'),
+                                                 ('Test for normal distribution', 'Normally distributed?')])
+
+        df_individual_group_stats.columns = multi_index_columns
+        df_individual_group_stats.index = l_index
+
+        return df_individual_group_stats
+
+
+    def get_group_level_stats_for_download(self, params):
+        df_group_level_overview = pg.homoscedasticity([params['results'][key]['data'] for key in params['results'].keys() if key != 'summary'])
+        df_group_level_overview.index = [0]
+        df_group_level_overview.columns = pd.MultiIndex.from_tuples([('Levene', 'W statistic'), ('Levene', 'p value'), ('Levene', 'Equal variances?')])
+
+        df_group_level_overview[('', 'all normally distributed?')] = False
+        df_group_level_overview[('', 'critera for parametric test fulfilled?')] = False
+        df_group_level_overview[('', 'performed test')] = params['performed_test']
+        df_group_level_overview[' '] = ''
+
+        df_group_statistics = params['results']['summary']['group_level_statistic'].copy()
+
+        df_group_statistics.index = list(range(df_group_statistics.shape[0]))
+        df_group_statistics.columns = pd.MultiIndex.from_tuples([(params['performed_test'], elem) for elem in df_group_statistics.columns])
+
+        df_group_level_overview = pd.concat([df_group_level_overview, df_group_statistics], axis=1)
+
+        return df_group_level_overview
 
 # Cell
 class Customization_widget:
