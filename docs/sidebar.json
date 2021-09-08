@@ -1,6 +1,7 @@
 {
   "dcl_stats_n_plots": {
-    "Overview": "/", 
+    "Overview": "/",
+    "GUI Tutorial": "gui_tutorial.html",
     "": {
         "API" : {
           "Stats": "stats.html",
