@@ -24,7 +24,7 @@ DEFAULT_PARAMS = {'set_fig_width': 20,
                   'set_xaxis_label_text': 'groups',
                   'set_xaxis_label_fontsize': 15,
                   'set_xaxis_label_color': 'black',
-                  'set_yaxis_scaling_mode': 1,
+                  'set_yaxis_scaling_mode': 'auto',
                   'set_yaxis_lower_lim_value': 0.3,
                   'set_yaxis_upper_lim_value': 0.9,
                   'distance_brackets_to_data': 0.05,
@@ -33,7 +33,11 @@ DEFAULT_PARAMS = {'set_fig_width': 20,
                   'linewidth_annotations': 1.5,
                   'fontsize_stars': 15,
                   'fontweight_stars': 'bold',
-                  'set_show_legend': True
+                  'set_show_legend': True,
+                  'l_stats_to_annotate': [],
+                  'color_palette': 'colorblind',
+                  'set_marker_size': 5,
+                  'save_plot': False
                  }
 
 l_required_keys_ind_samples = list(DEFAULT_PARAMS.keys())
@@ -49,7 +53,7 @@ def plot_independent_samples(df, plot_type = 'stripplot', params = DEFAULT_PARAM
     if 'data_col' not in list(params.keys()):
         params['data_col'] = df.columns[0]
         params['group_col'] = df.columns[1]
-        #params['l_x_order'] = list(df[params['group_col']].unique())
+        params['l_xlabel_order'] = list(df[params['group_col']].unique())
 
     for elem in l_required_keys_ind_samples:
         if elem not in list(params.keys()):
@@ -91,9 +95,6 @@ def plot_independent_samples(df, plot_type = 'stripplot', params = DEFAULT_PARAM
             raise ValueError('plot_type must be one of the following options:\n \
                              ["stripplot", "boxplot", "boxplot with stripplot overlay", "violinplot", "violinplot with stripplot overlay"]')
 
-
-
-
 # Cell
 def initialize_plot(params):
 
@@ -110,8 +111,6 @@ def initialize_plot(params):
     ax.tick_params(labelsize=params['set_axes_tick_size'], colors=params['set_axes_color'])
 
     return fig, ax
-
-
 
 # Cell
 def finish_show_and_save_plot(ax, params):
@@ -195,7 +194,7 @@ def plot_one_sample(df, plot_type = 'stripplot', params = DEFAULT_PARAMS):
         params['data_col'] = df.columns[0]
         params['group_col'] = df.columns[1]
         params['fixed_value'] = df.columns[2]
-        #params['l_x_order'] = list(df[params['group_col']].unique())
+        params['l_xlabel_order'] = list(df[params['group_col']].unique())
 
     for elem in l_required_keys_one_sample:
         if elem not in list(params.keys()):
@@ -247,9 +246,6 @@ def plot_one_sample(df, plot_type = 'stripplot', params = DEFAULT_PARAMS):
             raise ValueError('plot_type must be one of the following options:\n \
                              ["stripplot", "boxplot", "boxplot with stripplot overlay", "violinplot", "violinplot with stripplot overlay", "histogram"]')
 
-
-
-
 # Cell
 def annotate_stats_one_sample(ax, df, params):
     l_stats_to_annotate = params['l_stats_to_annotate']
@@ -286,8 +282,8 @@ def plot_mma(df, plot_type = 'boxplot with stripplot overlay', params = DEFAULT_
         params['data_col'] = df.columns[0]
         params['group_col'] = df.columns[1]
         params['session_col'] = df.columns[2]
-        #params['l_x_order'] = list(df[params['session_col']].unique())
-        #params['l_hue_order'] = list(df[params['group_col']].unique())
+        params['l_xlabel_order'] = list(df[params['session_col']].unique())
+        params['l_hue_order'] = list(df[params['group_col']].unique())
 
     for elem in l_required_keys_mma:
         if elem not in list(params.keys()):
@@ -345,9 +341,6 @@ def plot_mma(df, plot_type = 'boxplot with stripplot overlay', params = DEFAULT_
         else:
             raise ValueError('plot_type must be one of the following options:\n \
                              ["stripplot", "boxplot", "boxplot with stripplot overlay", "violinplot", "violinplot with stripplot overlay"]')
-
-
-
 
 # Cell
 def annotate_stats_mma(ax, df, params):

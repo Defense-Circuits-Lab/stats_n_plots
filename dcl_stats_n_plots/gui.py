@@ -204,12 +204,12 @@ class Gui:
         if list(self.uploader.value.keys())[0].endswith('.csv'):
             with open("input.csv", "w+b") as i:
                 i.write(self.uploader.value[list(self.uploader.value.keys())[0]]['content'])
-            df = pd.read_csv('input.csv', index_col=0)
+            df = pd.read_csv('input.csv')
 
         elif list(self.uploader.value.keys())[0].endswith('.xlsx'):
             with open("input.xlsx", "w+b") as i:
                 i.write(self.uploader.value[list(self.uploader.value.keys())[0]]['content'])
-            df = pd.read_excel('input.xlsx', index_col=0)
+            df = pd.read_excel('input.xlsx')
 
         self.params['data'] = df
 
@@ -300,13 +300,21 @@ class Select_stats_widget:
             print('Function not implemented. Please go and annoy Dennis to finally do it')
 
         if stats_value == 0:
-            params['data_col'], params['group_col'], params['results'], params['l_groups'], params['performed_test'] = stats.independent_samples(df)
+            results = stats.independent_samples(df)
+            params['data_col'], params['group_col'], params['l_groups'] = results['data_col'], results['group_col'], results['l_groups']
+            params['results'], params['performed_test'] = results, results['performed_test']
             params = self.create_checkboxes_pairwise_comparisons(params)
         elif stats_value == 1:
-            params['data_col'], params['group_col'], params['results'], params['l_groups'], params['performed_test'], params['fixed_val_col'], params['fixed_value'] = stats.one_sample(df)
+            results = stats.one_sample(df)
+            params['data_col'], params['group_col'], params['l_groups'] = results['data_col'], results['group_col'], results['l_groups']
+            params['fixed_val_col'], params['fixed_value'] = results['fixed_val_col'], results['fixed_value']
+            params['results'], params['performed_test'] = results, results['performed_test']
             params = self.create_checkboxes_pairwise_comparisons(params)
         elif stats_value == 2:
-            params['results'], params['data_col'], params['group_col'], params['subject_col'], params['session_col'], params['l_groups'], params['l_sessions'], params['performed_test'] = stats.mixed_model_ANOVA(df)
+            results = stats.mixed_model_ANOVA(df)
+            params['data_col'], params['group_col'], params['l_groups'] = results['data_col'], results['group_col'], results['l_groups']
+            params['subject_col'], params['session_col'], params['l_sessions'] = results['subject_col'], results['session_col'], results['l_sessions']
+            params['results'], params['performed_test'] = results, results['performed_test']
             params = self.create_checkboxes_pairwise_comparisons_mma(params)
 
         params = self.create_group_order_text(params, stats_value)

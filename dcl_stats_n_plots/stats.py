@@ -3,13 +3,22 @@
 __all__ = ['independent_samples', 'one_sample', 'mixed_model_ANOVA']
 
 # Cell
+import pandas as pd
+import numpy as np
+import pingouin as pg
+import itertools
+
+# Cell
 def independent_samples(df):
     "Compare two or more independent samples"
     data_col = df.columns[0]
     group_col = df.columns[1]
-
-    d_results = {}
     l_groups = list(df[group_col].unique())
+
+    d_results = {'data_col': data_col,
+                 'group_col': group_col,
+                 'l_groups': l_groups}
+
     for group_id in l_groups:
         d_results[group_id] = {'data': df.loc[df[group_col] == group_id, data_col].values,
                             'normality_full': pg.normality(df.loc[df[group_col] == group_id, data_col].values),
@@ -29,6 +38,7 @@ def independent_samples(df):
         else:
             d_results['summary']['group_level_statistic'] = pg.kruskal(data=df, dv=data_col, between=group_col)
             performed_test = 'Kruskal-Wallis-ANOVA'
+        d_results['performed_test'] = performed_test
 
     if len(l_groups) > 1:
         d_results['summary']['pairwise_comparisons'] = pg.pairwise_ttests(data=df, dv=data_col, between=group_col, parametric=parametric, padjust='holm')
@@ -37,17 +47,21 @@ def independent_samples(df):
         print('Error: The group_id column has to contain at least two different group_ids for this selection.\
         \nDid you mean to perform a one-sample test?')
 
-    return data_col, group_col, d_results, l_groups, performed_test
+    return d_results
 
 # Cell
 def one_sample(df):
     data_col = df.columns[0]
     group_col = df.columns[1]
     fixed_val_col = df.columns[2]
-
-    d_results = {}
     fixed_value = df[fixed_val_col].values[0]
     l_groups = list(df[group_col].unique())
+
+    d_results = {'data_col': data_col,
+                 'group_col': group_col,
+                 'fixed_val_col': fixed_val_col,
+                 'fixed_value': fixed_value,
+                 'l_groups': l_groups}
 
     group_id = l_groups[0]
     d_results[group_id] = {'data': df.loc[df[group_col] == group_id, data_col].values,
@@ -65,7 +79,9 @@ def one_sample(df):
         d_results['summary']['pairwise_comparisons'] = pg.wilcoxon(df[data_col].values - fixed_value, correction='auto')
         performed_test = 'one sample wilcoxon rank-sum test'
 
-    return data_col, group_col, d_results, l_groups, performed_test, fixed_val_col, fixed_value
+    d_results['performed_test'] = performed_test
+
+    return d_results
 
 # Cell
 def mixed_model_ANOVA(df):
@@ -73,10 +89,15 @@ def mixed_model_ANOVA(df):
     group_col = df.columns[1]
     subject_col = df.columns[2]
     session_col = df.columns[3]
-
-    d_results = {}
     l_groups = list(df[group_col].unique())
     l_sessions = list(df[session_col].unique())
+
+    d_results = {'data_col': data_col,
+                 'group_col': group_col,
+                 'subject_col': subject_col,
+                 'session_col': session_col,
+                 'l_groups': l_groups,
+                 'l_sessions': l_sessions}
 
     for group_id in l_groups:
         for session_id in l_sessions:
@@ -106,4 +127,6 @@ def mixed_model_ANOVA(df):
                                                                    within=session_col, subject=subject_col,
                                                                    between=group_col, padjust='holm')
 
-    return d_results, data_col, group_col, subject_col, session_col, l_groups, l_sessions, performed_test
+    d_results['performed_test'] = performed_test
+
+    return d_results
