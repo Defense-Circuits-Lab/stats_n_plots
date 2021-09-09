@@ -2,10 +2,10 @@
   "dcl_stats_n_plots": {
     "Overview": "/",
     "": {
-        "Tutorials" : {
-          "GUI": "gui_tutorial.html",
-          "API": "gui_tutorial.html"
-          }
+      "Tutorials" : {
+        "GUI": "gui_tutorial.html",
+        "API": "gui_tutorial.html"
+      }
     },
     "": {
         "API" : {
