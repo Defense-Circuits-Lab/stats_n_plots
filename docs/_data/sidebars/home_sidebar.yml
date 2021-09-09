@@ -9,6 +9,12 @@ entries:
     - output: web,pdf
       title: Overview
       url: /
+    - output: web,pdf
+      title: GUI tutorial
+      url: gui_tutorial.html
+    - output: web,pdf
+      title: API tutorial
+      url: api_tutorial.html
       subfolders:
       - output: web
         subfolderitems:
@@ -18,12 +24,6 @@ entries:
         - output: web,pdf
           title: Plots
           url: plots.html
-        - output: web,pdf
-          title: Annotations
-          url: annotations.html
-        - output: web,pdf
-          title: Downloads
-          url: downloads.html
         - output: web,pdf
           title: GUI
           url: gui.html
