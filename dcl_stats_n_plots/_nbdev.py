@@ -36,8 +36,7 @@ index = {"independent_samples": "00_stats.ipynb",
 
 modules = ["stats.py",
            "plots.py",
-           "gui.py",
-           "api_tutorial.py"]
+           "gui.py"]
 
 doc_url = "https://DSegebarth.github.io/dcl_stats_n_plots/"
 
