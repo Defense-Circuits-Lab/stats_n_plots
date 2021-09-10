@@ -207,13 +207,13 @@ def plot_one_sample(df, plot_type = 'stripplot', params = None):
         for key in ['data_col', 'group_col', 'fixed_value', 'l_xlabel_order']:
             if key not in list(params.keys()):
                 idx = ['data_col', 'group_col', 'fixed_value', 'l_xlabel_order'].index(key)
-                params[key] = [df.columns[0], df.columns[1], df.columns[2], list(df.iloc[:, 1].unique())][idx]
+                params[key] = [df.columns[0], df.columns[1], df.iloc[0,2], list(df.iloc[:, 1].unique())][idx]
     elif params==None:
         params = DEFAULT_PARAMS
         for key in ['data_col', 'group_col', 'fixed_value', 'l_xlabel_order']:
             if key not in list(params.keys()):
                 idx = ['data_col', 'group_col', 'fixed_value', 'l_xlabel_order'].index(key)
-                params[key] = [df.columns[0], df.columns[1], df.columns[2], list(df.iloc[:, 1].unique())][idx]
+                params[key] = [df.columns[0], df.columns[1], df.iloc[0,2], list(df.iloc[:, 1].unique())][idx]
     else:
         raise TypeError('params must be a dictionary')
 

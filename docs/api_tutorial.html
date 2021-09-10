@@ -48,7 +48,36 @@ In the following, you will find some examples for each type of implemented stati
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Comparison-of-two-of-more-independent-samples">Comparison of two of more independent samples<a class="anchor-link" href="#Comparison-of-two-of-more-independent-samples"> </a></h2>
+<h2 id="Comparison-of-two-or-more-independent-samples">Comparison of two or more independent samples<a class="anchor-link" href="#Comparison-of-two-or-more-independent-samples"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Representative-experiment">Representative experiment<a class="anchor-link" href="#Representative-experiment"> </a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The comparison of two or more independent samples is probably one of the most frequently performed analyses in the lab. You can use this type of analysis if you:</p>
+<ul>
+<li>have multiple experimental subjects (&gt;3) </li>
+<li>that belong to at least two different groups</li>
+<li>and the given experiment is perfomed only once with each experimental subject (no repeated measurements)</li>
+</ul>
+<p>For instance, if you record a single open field session with mice of three different genotypes:
+1) Twelve homozygous transgenic mice (tg / tg)
+2) Twelve heterozygous transgenic mice (tg / +)
+3) Twelve wildtype mice (+ / +)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>{% include note.html content='Equal samples sizes per group would be ideal, yet are no prerequisite for this analysis.' %}</p>
+
 </div>
 </div>
 </div>
@@ -88,28 +117,16 @@ In the following, you will find some examples for each type of implemented stati
 </div>
 </div>
 </div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="n">file_url</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/DSegebarth/dcl_stats_n_plots/raw/a4037a716556cf1080a1cb83e40130727a3e103b/test_data/independent_samples.xlsx&#39;</span>
-
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">file_url</span><span class="p">)</span>
-<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>import pandas as pd</p>
+<p>file_url = '<a href="https://github.com/DSegebarth/dcl_stats_n_plots/raw/a4037a716556cf1080a1cb83e40130727a3e103b/test_data/independent_samples.xlsx">https://github.com/DSegebarth/dcl_stats_n_plots/raw/a4037a716556cf1080a1cb83e40130727a3e103b/test_data/independent_samples.xlsx</a>'</p>
+<p>df = pd.read_excel(file_url)
+df.head()</p>
 
 </div>
-    {% endraw %}
-
+</div>
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>To perform the statistical analysis, all we now have to do is pass this data as Pandas DataFrame to the <a href="/dcl_stats_n_plots/stats.html#independent_samples"><code>independent_samples</code></a> function of the stats module.
@@ -124,27 +141,15 @@ This will return a dictionary containing the results of the statistical analysis
 </div>
 </div>
 </div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">dcl_stats_n_plots</span> <span class="kn">import</span> <span class="n">stats</span>
-
-<span class="n">results</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">independent_samples</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-
-<span class="n">results</span><span class="p">[</span><span class="s1">&#39;summary&#39;</span><span class="p">][</span><span class="s1">&#39;pairwise_comparisons&#39;</span><span class="p">]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>from dcl_stats_n_plots import stats</p>
+<p>results = stats.independent_samples(df)</p>
+<p>results['summary']['pairwise_comparisons']</p>
 
 </div>
-    {% endraw %}
-
+</div>
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>If there were more than two groups present, the results of the group level statistical test can be accessed as:</p>
@@ -152,23 +157,13 @@ This will return a dictionary containing the results of the statistical analysis
 </div>
 </div>
 </div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;summary&#39;</span><span class="p">][</span><span class="s1">&#39;group_level_statistic&#39;</span><span class="p">]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>results['summary']['group_level_statistic']</p>
 
 </div>
-    {% endraw %}
-
+</div>
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>{% include note.html content='Again, for more detailed information about the statistical tests, as well as the generated output, please have a look at the documentation of the <a href="/dcl_stats_n_plots/stats.html#independent_samples"><code>independent_samples</code></a> function. Here you will also find links to the corresponding functions of the python package "pingouin", which is used for statistical testing.' %}</p>
@@ -189,6 +184,279 @@ This will return a dictionary containing the results of the statistical analysis
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>from dcl_stats_n_plots import plots</p>
+<p>plots.plot_independent_samples(df, plot_type = 'stripplot')</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For all types of statistical analyses that are implemented in dcl_stats_n_plots, we also provide several options of how to visualize your data. In order to change the type of plot, simply choose from the range of currently supported plots (see <a href="/dcl_stats_n_plots/plots.html#plot_independent_samples"><code>plot_independent_samples</code></a>) and change the string you pass to the function accordingly:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>plots.plot_independent_samples(df, plot_type = 'violinplot with stripplot overlay')</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>Error:The annotation of the statistical results via the API is not yet implemented. This is one of the next features that will be added within one of the following patch releases - if not <em>the</em> next.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Customize-the-plot">Customize the plot<a class="anchor-link" href="#Customize-the-plot"> </a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>dcl_stats_n_plots provides you with a bunch of customization options. A comprehensive list will be made available <a href="https://dsegebarth.github.io/dcl_stats_n_plots/plots.html">here</a> shortly. Probably the easiest way to explore them all is by using our GUI, where you can play arround with all parameters and interactively change them back and forth until you found the perfect settings for your plot. Since the customization parameters work in the same manner for all types of analyses and plots, you can also have a look at the other provided customization examples.</p>
+<p>In order to customize your plots using our API, you have to pass a dictionary to the plotting function, which contains all parameters that you would like to change. We designed our API in such a way, that you only have to pass those parameters to the function, which you want to customize. The default settings will be used for all remaining parameters.</p>
+<p>For instance, you can specify the exact label of the y-axis, change its fontsize, increase the marker size of the stripplot overlay, and use a different color palette for the violin plots</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>params = {'yaxis_label_text': 'delta heart rate',
+          'yaxis_label_fontsize': 25,
+          'marker_size': 12,
+          'color_palette': 'rocket'}</p>
+<p>plots.plot_independent_samples(df, plot_type = 'violinplot with stripplot overlay', params = params)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Comparison-of-a-single-group-to-a-fixed-value">Comparison of a single group to a fixed value<a class="anchor-link" href="#Comparison-of-a-single-group-to-a-fixed-value"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Representative-experiment">Representative experiment<a class="anchor-link" href="#Representative-experiment"> </a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>{% include note.html content='will be added soon.' %}</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Expected-input-data-format">Expected input data format<a class="anchor-link" href="#Expected-input-data-format"> </a></h3><p>For this analysis, you have to provide three columns. The first column must contain the data, the second column provides the corresponding group_id (see note below the image), and the third column provides the fixed value against which the group shall be compared.</p>
+<p>In Microsoft Excel, this might look like the following:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>{% include note.html content='Of course, the second column (&#8217;group column&#8217;) will only contain one group_id, since this is a <em>one sample</em> analysis. However, keeping the expected input data structure consistent across functions (data, group, ..) is supposed to make the use of dcl_stats_n_plots a little easier for the user. On top, it allows the user to provide the x-axis-label (= group column header) and the corresponding x-axis-tick-label (= the group_id that is provided in the group column).' %}</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Compute-the-stats">Compute the stats<a class="anchor-link" href="#Compute-the-stats"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">file_url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/DSegebarth/dcl_stats_n_plots/master/test_data/one_sample_significant.csv&#39;</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_url</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>data</th>
+      <th>group_id</th>
+      <th>fixed_value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>20.803300</td>
+      <td>group_a</td>
+      <td>50.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>38.016262</td>
+      <td>group_a</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>49.724380</td>
+      <td>group_a</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>35.418847</td>
+      <td>group_a</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>36.050618</td>
+      <td>group_a</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">dcl_stats_n_plots</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">one_sample</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="n">results</span><span class="p">[</span><span class="s1">&#39;summary&#39;</span><span class="p">][</span><span class="s1">&#39;pairwise_comparisons&#39;</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>T</th>
+      <th>dof</th>
+      <th>alternative</th>
+      <th>p-val</th>
+      <th>CI95%</th>
+      <th>cohen-d</th>
+      <th>BF10</th>
+      <th>power</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>T-test</th>
+      <td>-2.692558</td>
+      <td>9</td>
+      <td>two-sided</td>
+      <td>0.024693</td>
+      <td>[24.34, 47.77]</td>
+      <td>0.851462</td>
+      <td>3.032</td>
+      <td>0.669742</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Plot-the-data-and-annotate-the-stats:">Plot the data and annotate the stats:<a class="anchor-link" href="#Plot-the-data-and-annotate-the-stats:"> </a></h3>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -198,16 +466,135 @@ This will return a dictionary containing the results of the statistical analysis
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">dcl_stats_n_plots</span> <span class="kn">import</span> <span class="n">plots</span>
 
-<span class="n">plots</span><span class="o">.</span><span class="n">plot_independent_samples</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">plot_type</span> <span class="o">=</span> <span class="s1">&#39;stripplot&#39;</span><span class="p">)</span>
+<span class="n">plots</span><span class="o">.</span><span class="n">plot_one_sample</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">plot_type</span> <span class="o">=</span> <span class="s1">&#39;stripplot&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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ACgmJAAAgGJCAgAAKCYkAACAYkICAAAoJiQAAIBiQgIAACgmJAAAgGJCAgAAKCYkAACAYkICAAAoVldy523btmXp0qVZt25dqtVq2+1nnXXWfh8MAADovNodEgsXLswFF1yQrVu3ZuPGjenXr182bdqUI488MsuXLz+QMwIAAJ1Mu7c2XXnllfnzP//ztLS0pG/fvmlpack111yTP/mTPzmQ8wEAAJ1Qpfr2PUp70b9//6xfvz7dunXLwIEDs379+mzbti3HHHNMVq9efaDnbFOpVNLOkQEAgAOk3SsS/fv3z8aNG5Mk9fX1+c1vfpP169dn8+bNB2w4AACgc2p3SMyYMSP33XdfkuRLX/pSzjzzzIwfPz4XXHDBARsOAADonNq9temdFi5cmE2bNmXq1KmpVCr7e649srUJAABqr90rEpdffvkux6eddlo+9alP5corr9zvQwEAAJ1bu1ck+vXr13aNxNsNHjw4r7322n4fbE+sSAAAQO295/dI/P3f/32SpLW1te3n31u+fHkOPfTQAzMZAADQab1nSNx2221Jfvet1r//OfndysDQoUPT1NR04KYDAAA6pXZvbbr66qtzww03HOh53pOtTQAAUHvv61ObqtXqLv8x361bu6/Z3mdCAgAAaq/dBfDyyy/nvPPOy+DBg1NXV5cePXq0/QMAAHywtDskvvzlL+eggw7K/Pnz06dPnyxevDjTpk3LD37wgwM5HwAA0Am1e2vT4MGDs3LlyvTu3TsDBgzIhg0b0tLSko9//ON57rnn9vrYLVu25PTTT8/WrVvT2tqa888/P9dff31aWloya9asrFixIkcffXRuv/32DBw4cO8D29oEAAA11+4Vie7du6eu7ncf8jRgwIC8+uqr6d27d1avXv2ej+3Zs2f+7d/+LU899VSWLFmS+++/P4888kjmzJmTyZMnZ9myZZk8eXLmzJnz/t8JAADQYdodEhMnTsx9992XJPnkJz+ZWbNmZcaMGZkwYcJ7PrZSqaRPnz5Jku3bt2f79u2pVCqZN29eGhoakiQNDQ2555573sdbAAAAOlq7tzZt2LAh1Wo1AwcOzFtvvZXvfve72bRpU6688socfvjh7/n4HTt2ZPz48XnhhRfyla98JTfddFPbFqnfGzhwYNavX7/bYxsbG9PY2JgkeeKJJ2xtAgCAGttrSFx77bXtepJvfetb7X7BDRs25Lzzzsv3vve9nHbaae0KibdzjQQAANTeXr/ZetWqVW0/b9myJXfeeWdOOeWUHHXUUVm5cmUee+yxfPazny16wQEDBmTSpEm5//77M3To0DQ3N6e+vj7Nzc0ZMmTI+3sXAABAh9rrNRK33HJL2z/VajX/9E//lIceeij/+I//mIULF+af//mf2/Uir776atvKw1tvvZVf/OIXGT16dKZNm5ampqYkSVNTU6ZPn75v7wYAAOgQ7b5Gon///mlpaUn37t3bbtuxY0cGDRqU119/fa+Pffrpp9PQ0JAdO3Zk586dmTlzZq699tq89tprmTlzZlauXJkRI0bkjjvuyKBBg/Y+sK1NAABQc+0OifHjx6ehoSGXX355223f+973csstt2Tx4sUHbMB3EhIAAFB77Q6JJ598Muedd15aW1tzxBFHZPXq1amrq8tdd92VcePGHeg52wgJAACovXaHRPK774B45JFH8vLLL6e+vj6nnnpqevTocSDn242QAACA2isKic5ASAAAQO21+5utAQAAfk9IAAAAxYQEAABQTEgAAADFhAQAAFBMSAAAAMWEBAAAUExIAAAAxYQEAABQTEgAAADFhAQAAFBMSAAAAMWEBAAAUExIAAAAxYQEAABQTEgAAADFhAQAAFBMSAAAAMWEBAAAUExIAAAAxYQEAABQTEgAAADFhAQAAFBMSAAAAMWEBAAAUExIAAAAxYQEAABQTEgAAADFhAQAAFBMSAAAAMWEBAAAUExIAAAAxYQEAABQTEgAAADFhAQAAFBMSAAAAMWEBAAAUExIAAAAxepqPQAAdEbbd+zMT/79lWzeuiPTjhuafr161HokgE5FSADAO7Tu2JlJ//1XefjF9UmSI/r3yqOXfyLD+veq8WQAnYetTQDwDj99bm1bRCTJ6te3pPGRF2s4EUDnIyQA4B3e3L6jXbcBfJAJCQB4h3PHDM3RAw9uOz6kR/dccsqRNZwIoPOpVKvVaq2HKFGpVNLFRgagC1q7aWt+9NjKbNramoYJR2bUkD61HgmgUxESAABAMVubAACAYkICAAAoJiQAAIBiQgIAACgmJAAAgGJCAqCDPLtmUxa/tKHWYwDAflFX6wEA/rPbubOaWbc9kTt/3ZwkOe2YQfnppRPTu6c/ggHouqxIABxgP31ubVtEJMnC37akadFLNZwIAPad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SADwrh555JG0trbm8ssvT48ePTJjxox89KMfbTvfrVu3XH/99enZs2cOPvjgzJ07N9dee22GDBmSww47LN/85jdz2223tfv1zjnnnJx++unp2bNnbrzxxjz88MNZtWpVevTokU2bNuW5555LtVrNmDFjUl9ffyDeMgAFhAQA7+rll1/OEUcckUql0nbbkUce2fbzYYcdll69eu1y/6OOOqrt+KijjsrLL7/c7td7+3P36dMngwYNyssvv5yzzjorf/qnf5qvfOUrGTp0aGbPnp2NGze+37cFwH4iJAB4V/X19Vm9enWq1WrbbatWrWr7+e2BkSTDhg1ru64hSVauXJlhw4YlSXr37p0333yz7dyaNWt2e723P/fmzZvT0tLS9vjLL788TzzxRJ599tk8//zz+eu//ut9fHcA7CshAcC7OvXUU9O9e/f87d/+bVpbWzNv3rw89thje7z/hRdemBtuuCGvvvpq1q1bl29961v5/Oc/nyQ58cQT8+yzz2bJkiXZsmVLrrvuut0ef99992XhwoXZtm1brrnmmkycODFHHnlkHn/88Tz66KPZvn17evfunV69eqV79+4H6m0D0E5CAoB3ddBBB+Wuu+7Kj370owwYMCD/8A//kHPPPTc9e/Z81/tfffXVmTBhQk444YSMHTs248aNy9VXX50kOfbYY3Pttdfm7LPPzsiRI3f7BKck+dznPpfrr78+gwYNyhNPPJG5c+cmSTZu3Jg/+qM/ysCBA3PUUUdl8ODB+frXv37g3jgA7VKpvn3NGgD2YuLEibnssstyySWX7NfnvfjiizN8+PCiT3kCoLasSACwRw888EDWrFmT1tbWNDU15emnn87UqVNrPRYAnUBdrQcAoPNaunRpZs6cmc2bN+fDH/5w/vVf/9VHrwKQxNYmAADgfbC1CQAAKCYkAACAYkICAAAoJiQAAIBiQgIAACgmJAAAgGL/P00GLxwVHEf7AAAAAElFTkSuQmCC
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;color_palette&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;group_a&#39;</span><span class="p">:</span> <span class="s1">&#39;forestgreen&#39;</span><span class="p">},</span>
+          <span class="s1">&#39;marker_size&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+          <span class="s1">&#39;fig_width&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">,</span>
+          <span class="s1">&#39;yaxis_scaling_mode&#39;</span><span class="p">:</span> <span class="s1">&#39;manual&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;yaxis_lower_lim_value&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+          <span class="s1">&#39;yaxis_upper_lim_value&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+          <span class="s1">&#39;yaxis_label_text&#39;</span><span class="p">:</span> <span class="s1">&#39;time spent in target half [%]&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;xaxis_label_text&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">}</span>
+
+<span class="n">plots</span><span class="o">.</span><span class="n">plot_one_sample</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">plot_type</span> <span class="o">=</span> <span class="s1">&#39;boxplot with stripplot overlay&#39;</span><span class="p">,</span> <span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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P/xQN9xwg0aNGqVly5Zp0aJFKikp0QsvvKATJ07onXfecVdOAIAbWDr76NSpU5o3b5527dqll156SdHR0e7IdknYfQQATXfRUti+fbsOHDig6OhoVVZW6l/+5V80cuRIPf300/L19XVXzouiFACg6RrdffTII48oKSlJq1ev1j//8z9r69at2rp1q8LDw3Xttdfq3XffdVdOAIAbNDpT6NGjh7Kzs+Xn56cTJ05o9OjR2rFjhySpoKBAjzzyiNLT090WtjHMFACg6RqdKURERGjFihXKysrSn//8Z0VFRZltgYGBHlMIAIDm0ehM4ejRo5o/f76ys7M1ePBgzZkzR127dnVnPsuYKQBA07H2EQDAaHD30Z/+9CdLL7BkyZJmCwMAsFeDMwV/f3+dPHmy0b++nU6nevbsqeLiYpcFtIqZAgA0XYPLXJSVlcnbu/FFVJ1Opzp27NjsoQAA9mjwUz87O9vSCzgcjmYLAwCwFweaAQDGJd1PAQDQulEKAACjwVLYuXOnO3MAADxAg6Vwww03mK+5mQ4AtA0Nnn102WWXad26dYqOjlZubq6ys7PrPZAbHh7u0oAAAPdp8Oyj9957T4888ogOHTqkmpqaegvB4XCourra5SGt4OwjAGg6S6ek+vn56dSpU+7I87NRCgDQdJZKobKyUu3bt3dHnp+NUgCApmvwmMK0adMsXa385ptvNmsgAIB9GiyF/v37uzMHAMADsMwFAMBofBnUH6msrNT+/ftVWFhY68M3Pj7eJcEAAO5nqRQ+++wzTZo0SWfPnlVpaan8/f116tQphYaG6sCBA67OCABwE0trH/3ud7/To48+quLiYvn5+am4uFjz5s3T/fff7+p8AAA3snRMISAgQCUlJWrXrp26du2qkpISVVZWql+/fsrJyXFHzovimAIANJ2lmUJAQIBKS0slScHBwdq7d69KSkpUVlbm0nAAAPeyVAoTJ07UBx98IEm69957NXr0aA0bNkyTJk1yaTgAgHv9rFNS//73v6usrExjxoxRu3aecUsGdh8BQNPZfp3CiRMndN9992n37t1yOBx6/fXXFRUVpTvuuEMHDx5U37599fbbb6tr166Nvg6lAABNZ+nP/OzsbN15552Kjo5WWFhYrX+aatasWbrlllu0b98+7dy5UwMHDlRqaqoSEhKUlZWlhIQEpaamNvl9AAAX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
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>df</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Customize-the-plot">Customize the plot<a class="anchor-link" href="#Customize-the-plot"> </a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Mixed-Model-ANOVA">Mixed-Model ANOVA<a class="anchor-link" href="#Mixed-Model-ANOVA"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>{% include warning.html content='This function is currently only implemented in a parametric variant (there is no non-parametric equivalent available via pingouin). This affects only the group level statistics (main effects), while pairwise comparisons are again performed either using parametric or non-parametric tests, depending on the respective data.' %}</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Representative-experiment">Representative experiment<a class="anchor-link" href="#Representative-experiment"> </a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Expected-input-data-format">Expected input data format<a class="anchor-link" href="#Expected-input-data-format"> </a></h3><p>For this analysis, you only have to provide two columns. The first one that contains the actual data values, and the second column that specifies to which group the respective data value belongs. In Microsoft Excel, this might look like the following:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Compute-the-stats">Compute the stats<a class="anchor-link" href="#Compute-the-stats"> </a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Plot-the-data-and-annotate-the-stats:">Plot the data and annotate the stats:<a class="anchor-link" href="#Plot-the-data-and-annotate-the-stats:"> </a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Customize-the-plot">Customize the plot<a class="anchor-link" href="#Customize-the-plot"> </a></h3>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>{% include warning.html content='To be continued...' %}</p>
