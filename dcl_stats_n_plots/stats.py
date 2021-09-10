@@ -24,8 +24,6 @@ def independent_samples(df):
                             'normality_full': pg.normality(df.loc[df[group_col] == group_id, data_col].values),
                             'normality_bool': pg.normality(df.loc[df[group_col] == group_id, data_col].values)['normal'][0]}
 
-    n_groups = len(l_groups)
-
     d_results['summary'] = {'normality': all([d_results[elem]['normality_bool'] for elem in l_groups]),
                          'homoscedasticity': pg.homoscedasticity([d_results[elem]['data'] for elem in l_groups])['equal_var'][0]}
 
@@ -92,12 +90,7 @@ def mixed_model_ANOVA(df):
     l_groups = list(df[group_col].unique())
     l_sessions = list(df[session_col].unique())
 
-    d_results = {'data_col': data_col,
-                 'group_col': group_col,
-                 'subject_col': subject_col,
-                 'session_col': session_col,
-                 'l_groups': l_groups,
-                 'l_sessions': l_sessions}
+    d_results = {}
 
     for group_id in l_groups:
         for session_id in l_sessions:
@@ -108,9 +101,7 @@ def mixed_model_ANOVA(df):
                                             'normality_bool': pg.normality(df.loc[(df[group_col] == group_id)
                                                                                   & (df[session_col] == session_id), data_col].values)['normal'][0]}
 
-    n_groups = len(l_groups)*len(l_sessions)
     d_results['summary'] = {}
-
     d_results['summary'] = {'normality': all([d_results[key]['normality_bool'] for key in d_results.keys() if key != 'summary']),
                          'homoscedasticity': pg.homoscedasticity([d_results[key]['data'] for key in d_results.keys() if key != 'summary'])['equal_var'][0]}
 
@@ -127,6 +118,12 @@ def mixed_model_ANOVA(df):
                                                                    within=session_col, subject=subject_col,
                                                                    between=group_col, padjust='holm')
 
+    d_results['data_col'] = data_col
+    d_results['group_col'] = group_col
+    d_results['subject_col'] = subject_col
+    d_results['session_col'] = session_col
+    d_results['l_groups'] = l_groups
+    d_results['l_sessions'] = l_sessions
     d_results['performed_test'] = performed_test
 
     return d_results

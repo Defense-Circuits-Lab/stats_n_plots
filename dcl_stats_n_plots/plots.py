@@ -13,31 +13,36 @@ import numpy as np
 
 # Cell
 
-DEFAULT_PARAMS = {'set_fig_width': 20,
-                  'set_fig_height': 20,
-                  'set_axes_linewidth': 1.5,
-                  'set_axes_color': 'black',
-                  'set_axes_tick_size': 15,
-                  'set_yaxis_label_text': 'data',
-                  'set_yaxis_label_fontsize': 15,
-                  'set_yaxis_label_color': 'black',
-                  'set_xaxis_label_text': 'groups',
-                  'set_xaxis_label_fontsize': 15,
-                  'set_xaxis_label_color': 'black',
-                  'set_yaxis_scaling_mode': 'auto',
-                  'set_yaxis_lower_lim_value': 0.3,
-                  'set_yaxis_upper_lim_value': 0.9,
-                  'distance_brackets_to_data': 0.05,
-                  'annotation_brackets_factor': 1,
-                  'distance_stars_to_brackets': 0.05,
-                  'linewidth_annotations': 1.5,
-                  'fontsize_stars': 15,
-                  'fontweight_stars': 'bold',
-                  'set_show_legend': True,
-                  'l_stats_to_annotate': [],
+DEFAULT_PARAMS = {# General features:
+                  'fig_width': 28,
+                  'fig_height': 16,
+                  'show_legend': True,
+                  'marker_size': 5,
                   'color_palette': 'colorblind',
-                  'set_marker_size': 5,
-                  'save_plot': False
+                  'save_plot': False,
+
+                  # Axes of the plot:
+                  'axes_linewidth': 1,
+                  'axes_color': '#000000',
+                  'axes_tick_size': 10,
+                  'yaxis_label_text': 'data',
+                  'yaxis_label_fontsize': 12,
+                  'yaxis_label_color': '#000000',
+                  'xaxis_label_text': 'groups',
+                  'xaxis_label_fontsize': 12,
+                  'xaxis_label_color': '#000000',
+                  'yaxis_scaling_mode': 'auto',
+                  'yaxis_lower_lim_value': 0,
+                  'yaxis_upper_lim_value': 1,
+
+                  # Annotations:
+                  'distance_brackets_to_data': 0.1,
+                  'annotation_brackets_factor': 1,
+                  'distance_stars_to_brackets': 0.5,
+                  'linewidth_annotations': 1.5,
+                  'fontsize_stars': 10,
+                  'fontweight_stars': 'bold',
+                  'l_stats_to_annotate': []
                  }
 
 l_required_keys_ind_samples = list(DEFAULT_PARAMS.keys())
@@ -45,19 +50,27 @@ l_required_keys_one_sample = list(DEFAULT_PARAMS.keys())
 l_required_keys_mma = list(DEFAULT_PARAMS.keys())
 
 # Cell
-def plot_independent_samples(df, plot_type = 'stripplot', params = DEFAULT_PARAMS):
+def plot_independent_samples(df, plot_type = 'stripplot', params = None):
     "Handles all the plotting that is currently available for the comparison of two or more independent samples."
-    if type(params) != dict:
+    if type(params)==dict:
+        for key in l_required_keys_ind_samples:
+            if key not in list(params.keys()):
+                params[key] = DEFAULT_PARAMS[key]
+        for key in ['data_col', 'group_col', 'l_xlabel_order']:
+            if key not in list(params.keys()):
+                idx = ['data_col', 'group_col', 'l_xlabel_order'].index(key)
+                params[key] = [df.columns[0], df.columns[1], list(df.iloc[:, 1].unique())][idx]
+
+    elif params==None:
+        params = DEFAULT_PARAMS
+        for key in ['data_col', 'group_col', 'l_xlabel_order']:
+            if key not in list(params.keys()):
+                idx = ['data_col', 'group_col', 'l_xlabel_order'].index(key)
+                params[key] = [df.columns[0], df.columns[1], list(df.iloc[:, 1].unique())][idx]
+
+    else:
         raise TypeError('params must be a dictionary')
 
-    if 'data_col' not in list(params.keys()):
-        params['data_col'] = df.columns[0]
-        params['group_col'] = df.columns[1]
-        params['l_xlabel_order'] = list(df[params['group_col']].unique())
-
-    for elem in l_required_keys_ind_samples:
-        if elem not in list(params.keys()):
-            params[elem] = DEFAULT_PARAMS[elem]
 
     if plot_type in ['stripplot', 'boxplot', 'boxplot with stripplot overlay', 'violinplot', 'violinplot with stripplot overlay']:
 
@@ -65,7 +78,7 @@ def plot_independent_samples(df, plot_type = 'stripplot', params = DEFAULT_PARAM
 
         if plot_type == 'stripplot':
             sns.stripplot(data = df, x = params['group_col'], y = params['data_col'], order = params['l_xlabel_order'],
-                          palette = params['color_palette'], size = params['set_marker_size'], ax=ax)
+                          palette = params['color_palette'], size = params['marker_size'], ax=ax)
         elif plot_type == 'boxplot':
             sns.boxplot(data = df, x = params['group_col'], y = params['data_col'], order = params['l_xlabel_order'],
                         palette = params['color_palette'], ax=ax)
@@ -73,7 +86,7 @@ def plot_independent_samples(df, plot_type = 'stripplot', params = DEFAULT_PARAM
             sns.boxplot(data = df, x = params['group_col'], y = params['data_col'], order = params['l_xlabel_order'],
                         palette = params['color_palette'], ax=ax, showfliers=False)
             sns.stripplot(data = df, x = params['group_col'], y = params['data_col'], order = params['l_xlabel_order'],
-                          color = 'k', size = params['set_marker_size'], ax=ax)
+                          color = 'k', size = params['marker_size'], ax=ax)
         elif plot_type == 'violinplot':
             sns.violinplot(data = df, x = params['group_col'], y = params['data_col'], order = params['l_xlabel_order'],
                            palette = params['color_palette'], cut=0, ax=ax)
@@ -81,7 +94,7 @@ def plot_independent_samples(df, plot_type = 'stripplot', params = DEFAULT_PARAM
             sns.violinplot(data = df, x = params['group_col'], y = params['data_col'], order = params['l_xlabel_order'],
                            palette = params['color_palette'], cut=0, ax=ax)
             sns.stripplot(data = df, x = params['group_col'], y = params['data_col'], order = params['l_xlabel_order'],
-                          color = 'k', size = params['set_marker_size'], ax=ax)
+                          color = 'k', size = params['marker_size'], ax=ax)
 
         ax = annotate_stats_independent_samples(ax, df, params)
 
@@ -98,27 +111,27 @@ def plot_independent_samples(df, plot_type = 'stripplot', params = DEFAULT_PARAM
 # Cell
 def initialize_plot(params):
 
-    fig = plt.figure(figsize=(params['set_fig_width']/2.54 , params['set_fig_height']/2.54), facecolor='white')
+    fig = plt.figure(figsize=(params['fig_width']/2.54 , params['fig_height']/2.54), facecolor='white')
     ax = fig.add_subplot()
 
     for axis in ['top', 'right']:
         ax.spines[axis].set_visible(False)
 
     for axis in ['bottom','left']:
-        ax.spines[axis].set_linewidth(params['set_axes_linewidth'])
-        ax.spines[axis].set_color(params['set_axes_color'])
+        ax.spines[axis].set_linewidth(params['axes_linewidth'])
+        ax.spines[axis].set_color(params['axes_color'])
 
-    ax.tick_params(labelsize=params['set_axes_tick_size'], colors=params['set_axes_color'])
+    ax.tick_params(labelsize=params['axes_tick_size'], colors=params['axes_color'])
 
     return fig, ax
 
 # Cell
 def finish_show_and_save_plot(ax, params):
-    ax.set_ylabel(params['set_yaxis_label_text'], fontsize=params['set_yaxis_label_fontsize'], color=params['set_yaxis_label_color'])
-    ax.set_xlabel(params['set_xaxis_label_text'], fontsize=params['set_xaxis_label_fontsize'], color=params['set_xaxis_label_color'])
+    ax.set_ylabel(params['yaxis_label_text'], fontsize=params['yaxis_label_fontsize'], color=params['yaxis_label_color'])
+    ax.set_xlabel(params['xaxis_label_text'], fontsize=params['xaxis_label_fontsize'], color=params['xaxis_label_color'])
 
-    if params['set_yaxis_scaling_mode'] in [1, 'manual']: #1 for GUI, manual for API
-        ax.set_ylim(params['set_yaxis_lower_lim_value'], params['set_yaxis_upper_lim_value'])
+    if params['yaxis_scaling_mode'] in [1, 'manual']: #1 for GUI, manual for API
+        ax.set_ylim(params['yaxis_lower_lim_value'], params['yaxis_upper_lim_value'])
 
     plt.tight_layout()
 
@@ -185,20 +198,24 @@ def get_stars_str(df_tmp, group1, group2, params):
     return stars
 
 # Cell
-def plot_one_sample(df, plot_type = 'stripplot', params = DEFAULT_PARAMS):
+def plot_one_sample(df, plot_type = 'stripplot', params = None):
     "Handles all the plotting that is currently available for the comparison of one group to a fixed value."
-    if type(params) != dict:
+    if type(params)==dict:
+        for key in l_required_keys_one_sample:
+            if key not in list(params.keys()):
+                params[key] = DEFAULT_PARAMS[key]
+        for key in ['data_col', 'group_col', 'fixed_value', 'l_xlabel_order']:
+            if key not in list(params.keys()):
+                idx = ['data_col', 'group_col', 'fixed_value', 'l_xlabel_order'].index(key)
+                params[key] = [df.columns[0], df.columns[1], df.columns[2], list(df.iloc[:, 1].unique())][idx]
+    elif params==None:
+        params = DEFAULT_PARAMS
+        for key in ['data_col', 'group_col', 'fixed_value', 'l_xlabel_order']:
+            if key not in list(params.keys()):
+                idx = ['data_col', 'group_col', 'fixed_value', 'l_xlabel_order'].index(key)
+                params[key] = [df.columns[0], df.columns[1], df.columns[2], list(df.iloc[:, 1].unique())][idx]
+    else:
         raise TypeError('params must be a dictionary')
-
-    if 'data_col' not in list(params.keys()):
-        params['data_col'] = df.columns[0]
-        params['group_col'] = df.columns[1]
-        params['fixed_value'] = df.columns[2]
-        params['l_xlabel_order'] = list(df[params['group_col']].unique())
-
-    for elem in l_required_keys_one_sample:
-        if elem not in list(params.keys()):
-            params[elem] = DEFAULT_PARAMS[elem]
 
     if plot_type in ['stripplot', 'boxplot', 'boxplot with stripplot overlay', 'violinplot', 'violinplot with stripplot overlay', 'histogram']:
 
@@ -206,7 +223,7 @@ def plot_one_sample(df, plot_type = 'stripplot', params = DEFAULT_PARAMS):
 
         if plot_type == 'stripplot':
             sns.stripplot(data = df, x = params['group_col'], y = params['data_col'], order = params['l_xlabel_order'],
-                          palette = params['color_palette'], size = params['set_marker_size'], ax=ax)
+                          palette = params['color_palette'], size = params['marker_size'], ax=ax)
             ax.hlines(y = params['fixed_value'], xmin = -0.5, xmax = 0.5, color = 'gray', linestyle = 'dashed')
         elif plot_type == 'boxplot':
             sns.boxplot(data = df, x = params['group_col'], y = params['data_col'], order = params['l_xlabel_order'],
@@ -216,7 +233,7 @@ def plot_one_sample(df, plot_type = 'stripplot', params = DEFAULT_PARAMS):
             sns.boxplot(data = df, x = params['group_col'], y = params['data_col'], order = params['l_xlabel_order'],
                         palette = params['color_palette'], ax=ax, showfliers=False)
             sns.stripplot(data = df, x = params['group_col'], y = params['data_col'], order = params['l_xlabel_order'],
-                          color = 'k', size = params['set_marker_size'], ax=ax)
+                          color = 'k', size = params['marker_size'], ax=ax)
             ax.hlines(y = params['fixed_value'], xmin = -0.5, xmax = 0.5, color = 'gray', linestyle = 'dashed')
         elif plot_type == 'violinplot':
             sns.violinplot(data = df, x = params['group_col'], y = params['data_col'], order = params['l_xlabel_order'],
@@ -226,7 +243,7 @@ def plot_one_sample(df, plot_type = 'stripplot', params = DEFAULT_PARAMS):
             sns.violinplot(data = df, x = params['group_col'], y = params['data_col'], order = params['l_xlabel_order'],
                            palette = params['color_palette'], cut=0, ax=ax)
             sns.stripplot(data = df, x = params['group_col'], y = params['data_col'], order = params['l_xlabel_order'],
-                          color = 'k', size = params['set_marker_size'], ax=ax)
+                          color = 'k', size = params['marker_size'], ax=ax)
             ax.hlines(y = params['fixed_value'], xmin = -0.5, xmax = 0.5, color = 'gray', linestyle = 'dashed')
         elif plot_type == 'histogram':
             print('This function (plot one sample data as histogram) is not yet implemented.')
@@ -273,21 +290,25 @@ def annotate_stats_one_sample(ax, df, params):
     return ax
 
 # Cell
-def plot_mma(df, plot_type = 'boxplot with stripplot overlay', params = DEFAULT_PARAMS):
+def plot_mma(df, plot_type = 'boxplot with stripplot overlay', params = None):
     "Handles all the plotting that is currently available for datasets analyzed with a Mixed-Model ANOVA."
-    if type(params) != dict:
+    if type(params)==dict:
+        for key in l_required_keys_mma:
+            if key not in list(params.keys()):
+                params[key] = DEFAULT_PARAMS[key]
+        for key in ['data_col', 'group_col', 'session_col', 'l_xlabel_order', 'l_hue_order']:
+            if key not in list(params.keys()):
+                idx = ['data_col', 'group_col', 'session_col', 'l_xlabel_order', 'l_hue_order'].index(key)
+                params[key] = [df.columns[0], df.columns[1], df.columns[2], list(df.iloc[:, 2].unique()), list(df.iloc[:, 1].unique())][idx]
+    elif params==None:
+        params = DEFAULT_PARAMS
+        for key in ['data_col', 'group_col', 'session_col', 'l_xlabel_order', 'l_hue_order']:
+            if key not in list(params.keys()):
+                idx = ['data_col', 'group_col', 'session_col', 'l_xlabel_order', 'l_hue_order'].index(key)
+                params[key] = [df.columns[0], df.columns[1], df.columns[2], list(df.iloc[:, 2].unique()), list(df.iloc[:, 1].unique())][idx]
+    else:
         raise TypeError('params must be a dictionary')
 
-    if 'data_col' not in list(params.keys()):
-        params['data_col'] = df.columns[0]
-        params['group_col'] = df.columns[1]
-        params['session_col'] = df.columns[2]
-        params['l_xlabel_order'] = list(df[params['session_col']].unique())
-        params['l_hue_order'] = list(df[params['group_col']].unique())
-
-    for elem in l_required_keys_mma:
-        if elem not in list(params.keys()):
-            params[elem] = DEFAULT_PARAMS[elem]
 
     if plot_type in ['pointplot', 'boxplot', 'boxplot with stripplot overlay', 'violinplot', 'violinplot with stripplot overlay']:
 
@@ -304,7 +325,7 @@ def plot_mma(df, plot_type = 'boxplot with stripplot overlay', params = DEFAULT_
             sns.boxplot(data = df, x = params['session_col'], y = params['data_col'], order = params['l_xlabel_order'],
                         hue = params['group_col'], hue_order = params['l_hue_order'], palette = params['color_palette'], ax = ax, showfliers = False)
             sns.stripplot(data = df, x = params['session_col'], y = params['data_col'], order = params['l_xlabel_order'],
-                          hue = params['group_col'], hue_order = params['l_hue_order'], dodge = True, color = 'k', size = params['set_marker_size'])
+                          hue = params['group_col'], hue_order = params['l_hue_order'], dodge = True, color = 'k', size = params['marker_size'])
         elif plot_type == 'violinplot':
             sns.violinplot(data = df, x = params['session_col'], y = params['data_col'], order = params['l_xlabel_order'],
                            hue = params['group_col'], hue_order = params['l_hue_order'], palette = params['color_palette'],
@@ -314,14 +335,14 @@ def plot_mma(df, plot_type = 'boxplot with stripplot overlay', params = DEFAULT_
                            hue = params['group_col'], hue_order = params['l_hue_order'], palette = params['color_palette'],
                            width = 0.8, cut = 0, ax = ax)
             sns.stripplot(data = df, x = params['session_col'], y = params['data_col'], order = params['l_xlabel_order'],
-                          hue = params['group_col'], hue_order = params['l_hue_order'], dodge = True, color = 'k', size = params['set_marker_size'])
+                          hue = params['group_col'], hue_order = params['l_hue_order'], dodge = True, color = 'k', size = params['marker_size'])
 
         if plot_type in ['boxplot', 'boxplot with stripplot overlay', 'violinplot', 'violinplot with stripplot overlay']:
             ax = annotate_stats_mma(ax, df, params)
         elif plot_type == 'pointplot':
             ax = annotate_stats_mma_pointplot(ax, df, params)
 
-        if params['set_show_legend'] == True:
+        if params['show_legend'] == True:
             if plot_type == 'pointplot':
                 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)
             if plot_type in ['boxplot', 'boxplot with stripplot overlay', 'violinplot', 'violinplot with stripplot overlay']:

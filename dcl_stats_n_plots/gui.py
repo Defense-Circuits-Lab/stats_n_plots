@@ -42,9 +42,9 @@ INITIAL_WIDGET_PARAMS = {'uploader': {'visibility': 'visible'},
                          'downloads_dropdown': {'visibility': 'hidden',
                                                 'value': 2},
                          'customization_accordion': {'visibility': 'hidden'},
-                         'set_xlabel_order': {'visibility': 'hidden',
+                         'xlabel_order': {'visibility': 'hidden',
                                               'value': ' '},
-                         'set_hue_order': {'visibility': 'hidden',
+                         'hue_order': {'visibility': 'hidden',
                                               'value': ' '},
                          'group_colors_vbox': {'children': ()}}
 
@@ -96,33 +96,33 @@ class Gui:
 
 
         # Customization
-        self.params['set_fig_width'] = self.customization.other_features.set_fig_width.value
-        self.params['set_fig_height'] = self.customization.other_features.set_fig_height.value
-        self.params['set_marker_size'] = self.customization.other_features.set_marker_size.value
-        self.params['set_show_legend'] = self.customization.other_features.set_show_legend.value
+        self.params['fig_width'] = self.customization.other_features.set_fig_width.value
+        self.params['fig_height'] = self.customization.other_features.set_fig_height.value
+        self.params['marker_size'] = self.customization.other_features.set_marker_size.value
+        self.params['show_legend'] = self.customization.other_features.set_show_legend.value
 
-        self.params['set_axes_linewidth'] = self.customization.both_axes.set_axes_linewidth.value
-        self.params['set_axes_color'] = self.customization.both_axes.set_axes_color.value
-        self.params['set_axes_tick_size'] = self.customization.both_axes.set_axes_tick_size.value
+        self.params['axes_linewidth'] = self.customization.both_axes.set_axes_linewidth.value
+        self.params['axes_color'] = self.customization.both_axes.set_axes_color.value
+        self.params['axes_tick_size'] = self.customization.both_axes.set_axes_tick_size.value
 
-        self.params['set_yaxis_label_text'] = self.customization.yaxis.set_yaxis_label_text.value
-        self.params['set_yaxis_label_fontsize'] = self.customization.yaxis.set_yaxis_label_fontsize.value
-        self.params['set_yaxis_label_color'] = self.customization.yaxis.set_yaxis_label_color.value
-        self.params['set_yaxis_scaling_mode'] = self.customization.yaxis.set_yaxis_scaling_mode.value
-        self.params['set_yaxis_lower_lim_value'] = self.customization.yaxis.set_yaxis_lower_lim.value
-        self.params['set_yaxis_upper_lim_value'] = self.customization.yaxis.set_yaxis_upper_lim.value
+        self.params['yaxis_label_text'] = self.customization.yaxis.set_yaxis_label_text.value
+        self.params['yaxis_label_fontsize'] = self.customization.yaxis.set_yaxis_label_fontsize.value
+        self.params['yaxis_label_color'] = self.customization.yaxis.set_yaxis_label_color.value
+        self.params['yaxis_scaling_mode'] = self.customization.yaxis.set_yaxis_scaling_mode.value
+        self.params['yaxis_lower_lim_value'] = self.customization.yaxis.set_yaxis_lower_lim.value
+        self.params['yaxis_upper_lim_value'] = self.customization.yaxis.set_yaxis_upper_lim.value
 
-        self.params['set_xaxis_label_color'] = self.customization.xaxis.set_xaxis_label_color.value
-        self.params['set_xaxis_label_fontsize'] = self.customization.xaxis.set_xaxis_label_fontsize.value
-        self.params['set_xaxis_label_text'] = self.customization.xaxis.set_xaxis_label_text.value
+        self.params['xaxis_label_color'] = self.customization.xaxis.set_xaxis_label_color.value
+        self.params['xaxis_label_fontsize'] = self.customization.xaxis.set_xaxis_label_fontsize.value
+        self.params['xaxis_label_text'] = self.customization.xaxis.set_xaxis_label_text.value
 
-        self.params['set_annotate_all'] = self.customization.select_annotations.set_annotate_all.value
+        self.params['annotate_all'] = self.customization.select_annotations.set_annotate_all.value
 
         self.params['distance_stars_to_brackets'] = self.customization.customize_annotations.set_distance_stars_to_brackets.value
         self.params['distance_brackets_to_data'] = self.customization.customize_annotations.set_distance_brackets_to_data.value
         self.params['fontsize_stars'] = self.customization.customize_annotations.set_fontsize_stars.value
         self.params['linewidth_annotations'] = self.customization.customize_annotations.set_linewidth_annotations.value
-        if self.customization.customize_annotations.select_bracket_no_bracket.value == 'Brackets':
+        if self.customization.customize_annotations.select_bracket_no_bracket.value == 'brackets':
             self.params['annotation_brackets_factor'] = 1
         else:
             self.params['annotation_brackets_factor'] = 0
@@ -181,13 +181,13 @@ class Gui:
 
         ## Customize axes
         ### x-axis
-        self.customization.xaxis.set_xlabel_order.value = self.params['widgets']['set_xlabel_order']['value']
-        self.customization.xaxis.set_xlabel_order.layout.visibility = self.params['widgets']['set_xlabel_order']['visibility']
-        self.customization.xaxis.set_hue_order.value = self.params['widgets']['set_hue_order']['value']
-        self.customization.xaxis.set_hue_order.layout.visibility = self.params['widgets']['set_hue_order']['visibility']
+        self.customization.xaxis.set_xlabel_order.value = self.params['widgets']['xlabel_order']['value']
+        self.customization.xaxis.set_xlabel_order.layout.visibility = self.params['widgets']['xlabel_order']['visibility']
+        self.customization.xaxis.set_hue_order.value = self.params['widgets']['hue_order']['value']
+        self.customization.xaxis.set_hue_order.layout.visibility = self.params['widgets']['hue_order']['visibility']
         ### y-axis
-        self.customization.yaxis.set_yaxis_lower_lim.value = self.params['set_yaxis_lower_lim_value']
-        self.customization.yaxis.set_yaxis_upper_lim.value = self.params['set_yaxis_upper_lim_value']
+        self.customization.yaxis.set_yaxis_lower_lim.value = self.params['yaxis_lower_lim_value']
+        self.customization.yaxis.set_yaxis_upper_lim.value = self.params['yaxis_upper_lim_value']
 
         ## Customize other features
         if len(self.customization.other_features.group_colors_vbox.children) == 0:
@@ -382,11 +382,11 @@ class Select_stats_widget:
                     l_xlabel_string = group_id
                 else:
                     l_xlabel_string = l_xlabel_string + ', {}'.format(group_id)
-            params['widgets']['set_xlabel_order']['value'] = l_xlabel_string
-            params['widgets']['set_xlabel_order']['visibility'] = 'visible'
+            params['widgets']['xlabel_order']['value'] = l_xlabel_string
+            params['widgets']['xlabel_order']['visibility'] = 'visible'
 
         elif stats_value == 1:
-            params['widgets']['set_xlabel_order']['value'] = l_groups[0]
+            params['widgets']['xlabel_order']['value'] = l_groups[0]
 
         elif stats_value == 2:
             l_sessions = params['l_sessions']
@@ -395,29 +395,29 @@ class Select_stats_widget:
                     l_xlabel_string = session_id
                 else:
                     l_xlabel_string = l_xlabel_string + ', {}'.format(session_id)
-            params['widgets']['set_xlabel_order']['value'] = l_xlabel_string
-            params['widgets']['set_xlabel_order']['visibility'] = 'visible'
+            params['widgets']['xlabel_order']['value'] = l_xlabel_string
+            params['widgets']['xlabel_order']['visibility'] = 'visible'
 
             for group_id in l_groups:
                 if l_groups.index(group_id) == 0:
                     l_hue_string = group_id
                 else:
                     l_hue_string = l_hue_string + ', {}'.format(group_id)
-            params['widgets']['set_hue_order']['value'] = l_hue_string
-            params['widgets']['set_hue_order']['visibility'] = 'visible'
+            params['widgets']['hue_order']['value'] = l_hue_string
+            params['widgets']['hue_order']['visibility'] = 'visible'
 
         return params
 
     def create_ylims(self, params, df, data_col):
         if df[data_col].min() < 0:
-            params['set_yaxis_lower_lim_value'] = round(df[data_col].min() + df[data_col].min()*0.1, 2)
+            params['yaxis_lower_lim_value'] = round(df[data_col].min() + df[data_col].min()*0.1, 2)
         else:
-            params['set_yaxis_lower_lim_value'] = round(df[data_col].min() - df[data_col].min()*0.1, 2)
+            params['yaxis_lower_lim_value'] = round(df[data_col].min() - df[data_col].min()*0.1, 2)
 
         if df[data_col].max() < 0:
-            params['set_yaxis_upper_lim_value'] = round(df[data_col].max() - df[data_col].max()*0.1, 2)
+            params['yaxis_upper_lim_value'] = round(df[data_col].max() - df[data_col].max()*0.1, 2)
         else:
-            params['set_yaxis_upper_lim_value'] = round(df[data_col].max() + df[data_col].max()*0.1, 2)
+            params['yaxis_upper_lim_value'] = round(df[data_col].max() + df[data_col].max()*0.1, 2)
 
         return params
 
@@ -447,13 +447,7 @@ class Select_plots_widget:
     def on_button_clicked(self, params):
         stats_value = params['widgets']['stats_dropdown']['value']
         plots_value = params['widgets']['plots_dropdown']['value']
-
         df = params['data']
-        data_col = params['data_col']
-        group_col = params['group_col']
-        l_xlabel_order = params['l_xlabel_order']
-        color_palette = params['color_palette']
-        set_marker_size = params['set_marker_size']
 
         params['widgets']['plots_button']['description'] = 'Refresh the plot'
 
@@ -474,7 +468,6 @@ class Select_plots_widget:
                 print("Function not implemented. Please go and annoy Dennis to finally do it")
 
         elif stats_value == 1: # one_sample()
-            fixed_value = params['fixed_value']
             params = self.get_l_stats_to_annotate_independent_samples(params)
             if plots_value == 0:
                 plots.plot_one_sample(df, plot_type = 'stripplot', params = params)
@@ -492,8 +485,6 @@ class Select_plots_widget:
                 print("Function not implemented. Please go and annoy Dennis to finally do it")
 
         elif stats_value == 2: # MMA
-            session_col = params['session_col']
-            l_hue_order = params['l_hue_order']
             params = self.get_l_stats_to_annotate_mma(params)
             if plots_value == 0:
                 plots.plot_mma(df, plot_type = 'pointplot', params = params)
@@ -517,7 +508,7 @@ class Select_plots_widget:
 
         l_checkboxes = params['l_checkboxes']
         l_stats_to_annotate = []
-        if params['set_annotate_all']==True:
+        if params['annotate_all']==True:
             for i in range(len(l_checkboxes)):
                 l_checkboxes[i].value = True
         for i in range(len(l_checkboxes)):
@@ -535,7 +526,7 @@ class Select_plots_widget:
 
         l_checkboxes = params['l_checkboxes']
         l_stats_to_annotate = []
-        if params['set_annotate_all']==True:
+        if params['annotate_all']==True:
             for i in range(len(l_checkboxes)):
                 l_checkboxes[i][1].value = True
         for i in range(len(l_checkboxes)):
@@ -712,8 +703,8 @@ class Customize_annotations:
         # Determines annotation_brackets_factor: 0 for 'No brackets', 1 for 'brackets'
         # brackets_height = y_shift_annotation_line*0.5*annotation_brackets_factor
         self.select_bracket_no_bracket = w.RadioButtons(description='Annotation bar style:',
-                                                        options=['Brackets', 'No brackets'],
-                                                        value=('Brackets'),
+                                                        options=['brackets', 'no brackets'],
+                                                        value=('brackets'),
                                                         style={'description_width': 'initial'},
                                                         layout={'width': '50%', 'height': '50px'})
         # How far will the annotation stars be shifted from the annotation lines? Calculates as:
@@ -813,8 +804,8 @@ class Customize_other_features:
         self.set_marker_size = w.FloatText(value=5,description='marker size (if applicable):', style={'description_width': 'initial'})
         # Empty VBox which will be filled as soon as groups are determined (stats_button.click())
         self.group_colors_vbox = w.VBox([])
-        self.set_fig_width = w.FloatSlider(value=28, min=3, max=30, description='Figure width:', style={'description_width': 'inital'})
-        self.set_fig_height = w.FloatSlider(value=16, min=3, max=30, description='Figure height:', style={'description_width': 'inital'})
+        self.set_fig_width = w.FloatSlider(value=28, min=1, max=50, description='Figure width:', style={'description_width': 'inital'})
+        self.set_fig_height = w.FloatSlider(value=16, min=1, max=50, description='Figure height:', style={'description_width': 'inital'})
         self.widget = w.VBox([self.select_palette_or_individual_color,
                               w.HBox([self.select_color_palettes, self.group_colors_vbox]),
                               w.HBox([self.set_fig_width, self.set_fig_height]),
