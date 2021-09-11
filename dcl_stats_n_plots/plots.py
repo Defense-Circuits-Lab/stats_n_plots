@@ -296,16 +296,18 @@ def plot_mma(df, plot_type = 'boxplot with stripplot overlay', params = None):
         for key in l_required_keys_mma:
             if key not in list(params.keys()):
                 params[key] = DEFAULT_PARAMS[key]
-        for key in ['data_col', 'group_col', 'session_col', 'l_xlabel_order', 'l_hue_order']:
+        for key in ['data_col', 'group_col', 'session_col', 'l_xlabel_order', 'l_hue_order', 'l_sessions']:
             if key not in list(params.keys()):
-                idx = ['data_col', 'group_col', 'session_col', 'l_xlabel_order', 'l_hue_order'].index(key)
-                params[key] = [df.columns[0], df.columns[1], df.columns[2], list(df.iloc[:, 2].unique()), list(df.iloc[:, 1].unique())][idx]
+                idx = ['data_col', 'group_col', 'session_col', 'l_xlabel_order', 'l_hue_order', 'l_sessions'].index(key)
+                params[key] = [df.columns[0], df.columns[1], df.columns[3], list(df.iloc[:, 3].unique()),
+                               list(df.iloc[:, 1].unique()), list(df.iloc[:, 3].unique())][idx]
     elif params==None:
         params = DEFAULT_PARAMS
-        for key in ['data_col', 'group_col', 'session_col', 'l_xlabel_order', 'l_hue_order']:
+        for key in ['data_col', 'group_col', 'session_col', 'l_xlabel_order', 'l_hue_order', 'l_sessions']:
             if key not in list(params.keys()):
-                idx = ['data_col', 'group_col', 'session_col', 'l_xlabel_order', 'l_hue_order'].index(key)
-                params[key] = [df.columns[0], df.columns[1], df.columns[2], list(df.iloc[:, 2].unique()), list(df.iloc[:, 1].unique())][idx]
+                idx = ['data_col', 'group_col', 'session_col', 'l_xlabel_order', 'l_hue_order', 'l_sessions'].index(key)
+                params[key] = [df.columns[0], df.columns[1], df.columns[3], list(df.iloc[:, 3].unique()),
+                               list(df.iloc[:, 1].unique()), list(df.iloc[:, 3].unique())][idx]
     else:
         raise TypeError('params must be a dictionary')
 
