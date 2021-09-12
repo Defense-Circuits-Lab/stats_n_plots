@@ -1,3 +1,9 @@
+input.csv
+input.xlsx
+customized_plot.png
+statistic_results.xlsx
+
+
 *.bak
 .gitattributes
 .last_checked

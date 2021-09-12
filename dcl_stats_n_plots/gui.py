@@ -812,6 +812,5 @@ class Customize_other_features:
                               w.HBox([self.set_show_legend, self.set_marker_size])])
 
 # Cell
-
 def launch():
     display(Gui().widget)
