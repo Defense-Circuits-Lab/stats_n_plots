@@ -2,7 +2,7 @@
 
 __all__ = ['STYLE', 'INITIAL_WIDGET_PARAMS', 'Gui', 'Select_stats_widget', 'Select_plots_widget',
            'Select_downloads_widget', 'Customization_widget', 'Customize_annotations', 'Select_annotations',
-           'Customize_y_axis', 'Customize_x_axis', 'Customize_both_axes', 'Customize_other_features']
+           'Customize_y_axis', 'Customize_x_axis', 'Customize_both_axes', 'Customize_other_features', 'launch']
 
 # Cell
 from dcl_stats_n_plots import stats
@@ -454,48 +454,48 @@ class Select_plots_widget:
         if stats_value == 0: # independent_samples()
             params = self.get_l_stats_to_annotate_independent_samples(params)
             if plots_value == 0:
-                plots.plot_independent_samples(df, plot_type = 'stripplot', params = params)
+                plots.plot_independent_samples(df, plot_type = 'stripplot', **params)
                 #plots.annotate_stats_independent_samples(ax, df, params)
             elif plots_value == 1:
-                plots.plot_independent_samples(df, plot_type = 'boxplot', params = params)
+                plots.plot_independent_samples(df, plot_type = 'boxplot', **params)
             elif plots_value == 2:
-                plots.plot_independent_samples(df, plot_type = 'boxplot with stripplot overlay', params = params)
+                plots.plot_independent_samples(df, plot_type = 'boxplot with stripplot overlay', **params)
             elif plots_value == 3:
-                plots.plot_independent_samples(df, plot_type = 'violinplot', params = params)
+                plots.plot_independent_samples(df, plot_type = 'violinplot', **params)
             elif plots_value == 4:
-                plots.plot_independent_samples(df, plot_type = 'violinplot with stripplot overlay', params = params)
+                plots.plot_independent_samples(df, plot_type = 'violinplot with stripplot overlay', **params)
             else:
                 print("Function not implemented. Please go and annoy Dennis to finally do it")
 
         elif stats_value == 1: # one_sample()
             params = self.get_l_stats_to_annotate_independent_samples(params)
             if plots_value == 0:
-                plots.plot_one_sample(df, plot_type = 'stripplot', params = params)
+                plots.plot_one_sample(df, plot_type = 'stripplot', **params)
             elif plots_value == 1:
-                plots.plot_one_sample(df, plot_type = 'boxplot', params = params)
+                plots.plot_one_sample(df, plot_type = 'boxplot', **params)
             elif plots_value == 2:
-                plots.plot_one_sample(df, plot_type = 'boxplot with stripplot overlay', params = params)
+                plots.plot_one_sample(df, plot_type = 'boxplot with stripplot overlay', **params)
             elif plots_value == 3:
-                plots.plot_one_sample(df, plot_type = 'violinplot', params = params)
+                plots.plot_one_sample(df, plot_type = 'violinplot', **params)
             elif plots_value == 4:
-                plots.plot_one_sample(df, plot_type = 'violinplot with stripplot overlay', params = params)
+                plots.plot_one_sample(df, plot_type = 'violinplot with stripplot overlay', **params)
             elif plots_value == 5:
-                plots.plot_one_sample(df, plot_type = 'histogram', params = params)
+                plots.plot_one_sample(df, plot_type = 'histogram', **params)
             else:
                 print("Function not implemented. Please go and annoy Dennis to finally do it")
 
         elif stats_value == 2: # MMA
             params = self.get_l_stats_to_annotate_mma(params)
             if plots_value == 0:
-                plots.plot_mma(df, plot_type = 'pointplot', params = params)
+                plots.plot_mma(df, plot_type = 'pointplot', **params)
             elif plots_value == 1:
-                plots.plot_mma(df, plot_type = 'boxplot', params = params)
+                plots.plot_mma(df, plot_type = 'boxplot', **params)
             elif plots_value == 2:
-                plots.plot_mma(df, plot_type = 'boxplot with stripplot overlay', params = params)
+                plots.plot_mma(df, plot_type = 'boxplot with stripplot overlay', **params)
             elif plots_value == 3:
-                plots.plot_mma(df, plot_type = 'violinplot', params = params)
+                plots.plot_mma(df, plot_type = 'violinplot', **params)
             elif plots_value == 4:
-                plots.plot_mma(df, plot_type = 'violinplot with stripplot overlay', params = params)
+                plots.plot_mma(df, plot_type = 'violinplot with stripplot overlay', **params)
             else:
                 print("Function not implemented. Please go and annoy Dennis to finally do it")
         else:
@@ -810,3 +810,8 @@ class Customize_other_features:
                               w.HBox([self.select_color_palettes, self.group_colors_vbox]),
                               w.HBox([self.set_fig_width, self.set_fig_height]),
                               w.HBox([self.set_show_legend, self.set_marker_size])])
+
+# Cell
+
+def launch():
+    display(Gui().widget)

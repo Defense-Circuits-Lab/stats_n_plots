@@ -32,7 +32,8 @@ index = {"independent_samples": "00_stats.ipynb",
          "Customize_y_axis": "02_gui.ipynb",
          "Customize_x_axis": "02_gui.ipynb",
          "Customize_both_axes": "02_gui.ipynb",
-         "Customize_other_features": "02_gui.ipynb"}
+         "Customize_other_features": "02_gui.ipynb",
+         "launch": "02_gui.ipynb"}
 
 modules = ["stats.py",
            "plots.py",
