@@ -45,7 +45,8 @@ nb_path: "01_plots.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Independent-sample-plots:">Independent sample plots:<a class="anchor-link" href="#Independent-sample-plots:"> </a></h2>
+<h2 id="Utilities:">Utilities:<a class="anchor-link" href="#Utilities:"> </a></h2><p>Some general functions that are used by several of the analysis-specific plotting functions</p>
+
 </div>
 </div>
 </div>
@@ -60,7 +61,137 @@ nb_path: "01_plots.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="plot_independent_samples" class="doc_header"><code>plot_independent_samples</code><a href="https://github.com/DSegebarth/dcl_stats_n_plots/tree/master/dcl_stats_n_plots/plots.py#L53" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>plot_independent_samples</code>(<strong><code>df</code></strong>, <strong><code>plot_type</code></strong>=<em><code>'stripplot'</code></em>, <strong><code>params</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="initialize_plot" class="doc_header"><code>initialize_plot</code><a href="https://github.com/DSegebarth/dcl_stats_n_plots/tree/master/dcl_stats_n_plots/plots.py#L52" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>initialize_plot</code>(<strong><code>params</code></strong>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="finish_show_and_save_plot" class="doc_header"><code>finish_show_and_save_plot</code><a href="https://github.com/DSegebarth/dcl_stats_n_plots/tree/master/dcl_stats_n_plots/plots.py#L69" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>finish_show_and_save_plot</code>(<strong><code>ax</code></strong>, <strong><code>params</code></strong>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="get_stars_str" class="doc_header"><code>get_stars_str</code><a href="https://github.com/DSegebarth/dcl_stats_n_plots/tree/master/dcl_stats_n_plots/plots.py#L84" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_stars_str</code>(<strong><code>df_tmp</code></strong>, <strong><code>group1</code></strong>, <strong><code>group2</code></strong>, <strong><code>params</code></strong>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="sort_by_third" class="doc_header"><code>sort_by_third</code><a href="https://github.com/DSegebarth/dcl_stats_n_plots/tree/master/dcl_stats_n_plots/plots.py#L110" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>sort_by_third</code>(<strong><code>e</code></strong>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Functions-for-the-comparison-of-two-or-more-independent-samples:">Functions for the comparison of two or more independent samples:<a class="anchor-link" href="#Functions-for-the-comparison-of-two-or-more-independent-samples:"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="plot_independent_samples" class="doc_header"><code>plot_independent_samples</code><a href="https://github.com/DSegebarth/dcl_stats_n_plots/tree/master/dcl_stats_n_plots/plots.py#L114" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>plot_independent_samples</code>(<strong><code>df</code></strong>, <strong><code>plot_type</code></strong>=<em><code>'stripplot'</code></em>, <strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 <p>Handles all the plotting that is currently available for the comparison of two or more independent samples.</p>
 
@@ -92,100 +223,7 @@ nb_path: "01_plots.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="initialize_plot" class="doc_header"><code>initialize_plot</code><a href="https://github.com/DSegebarth/dcl_stats_n_plots/tree/master/dcl_stats_n_plots/plots.py#L112" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>initialize_plot</code>(<strong><code>params</code></strong>)</p>
-</blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="finish_show_and_save_plot" class="doc_header"><code>finish_show_and_save_plot</code><a href="https://github.com/DSegebarth/dcl_stats_n_plots/tree/master/dcl_stats_n_plots/plots.py#L129" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>finish_show_and_save_plot</code>(<strong><code>ax</code></strong>, <strong><code>params</code></strong>)</p>
-</blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="annotate_stats_independent_samples" class="doc_header"><code>annotate_stats_independent_samples</code><a href="https://github.com/DSegebarth/dcl_stats_n_plots/tree/master/dcl_stats_n_plots/plots.py#L144" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>annotate_stats_independent_samples</code>(<strong><code>ax</code></strong>, <strong><code>df</code></strong>, <strong><code>params</code></strong>)</p>
-</blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_stars_str" class="doc_header"><code>get_stars_str</code><a href="https://github.com/DSegebarth/dcl_stats_n_plots/tree/master/dcl_stats_n_plots/plots.py#L175" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_stars_str</code>(<strong><code>df_tmp</code></strong>, <strong><code>group1</code></strong>, <strong><code>group2</code></strong>, <strong><code>params</code></strong>)</p>
+<h4 id="annotate_stats_independent_samples" class="doc_header"><code>annotate_stats_independent_samples</code><a href="https://github.com/DSegebarth/dcl_stats_n_plots/tree/master/dcl_stats_n_plots/plots.py#L165" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>annotate_stats_independent_samples</code>(<strong><code>ax</code></strong>, <strong><code>df</code></strong>, <strong><code>params</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -207,7 +245,7 @@ nb_path: "01_plots.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="One-sample-plots:">One sample plots:<a class="anchor-link" href="#One-sample-plots:"> </a></h2>
+<h2 id="Functions-for-the-comparisons-of-a-single-group-to-a-fixed-value:">Functions for the comparisons of a single group to a fixed value:<a class="anchor-link" href="#Functions-for-the-comparisons-of-a-single-group-to-a-fixed-value:"> </a></h2>
 </div>
 </div>
 </div>
@@ -222,7 +260,7 @@ nb_path: "01_plots.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="plot_one_sample" class="doc_header"><code>plot_one_sample</code><a href="https://github.com/DSegebarth/dcl_stats_n_plots/tree/master/dcl_stats_n_plots/plots.py#L201" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>plot_one_sample</code>(<strong><code>df</code></strong>, <strong><code>plot_type</code></strong>=<em><code>'stripplot'</code></em>, <strong><code>params</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="plot_one_sample" class="doc_header"><code>plot_one_sample</code><a href="https://github.com/DSegebarth/dcl_stats_n_plots/tree/master/dcl_stats_n_plots/plots.py#L196" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>plot_one_sample</code>(<strong><code>df</code></strong>, <strong><code>plot_type</code></strong>=<em><code>'stripplot'</code></em>, <strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 <p>Handles all the plotting that is currently available for the comparison of one group to a fixed value.</p>
 
@@ -254,7 +292,7 @@ nb_path: "01_plots.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="annotate_stats_one_sample" class="doc_header"><code>annotate_stats_one_sample</code><a href="https://github.com/DSegebarth/dcl_stats_n_plots/tree/master/dcl_stats_n_plots/plots.py#L267" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>annotate_stats_one_sample</code>(<strong><code>ax</code></strong>, <strong><code>df</code></strong>, <strong><code>params</code></strong>)</p>
+<h4 id="annotate_stats_one_sample" class="doc_header"><code>annotate_stats_one_sample</code><a href="https://github.com/DSegebarth/dcl_stats_n_plots/tree/master/dcl_stats_n_plots/plots.py#L257" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>annotate_stats_one_sample</code>(<strong><code>ax</code></strong>, <strong><code>df</code></strong>, <strong><code>params</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -276,7 +314,7 @@ nb_path: "01_plots.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Mixed-Model-ANOVA-plots">Mixed-Model ANOVA plots<a class="anchor-link" href="#Mixed-Model-ANOVA-plots"> </a></h2>
+<h2 id="Functions-for-Mixed-Model-ANOVA-analyses:">Functions for Mixed-Model ANOVA analyses:<a class="anchor-link" href="#Functions-for-Mixed-Model-ANOVA-analyses:"> </a></h2>
 </div>
 </div>
 </div>
@@ -291,7 +329,7 @@ nb_path: "01_plots.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="plot_mma" class="doc_header"><code>plot_mma</code><a href="https://github.com/DSegebarth/dcl_stats_n_plots/tree/master/dcl_stats_n_plots/plots.py#L293" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>plot_mma</code>(<strong><code>df</code></strong>, <strong><code>plot_type</code></strong>=<em><code>'boxplot with stripplot overlay'</code></em>, <strong><code>params</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="plot_mma" class="doc_header"><code>plot_mma</code><a href="https://github.com/DSegebarth/dcl_stats_n_plots/tree/master/dcl_stats_n_plots/plots.py#L283" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>plot_mma</code>(<strong><code>df</code></strong>, <strong><code>plot_type</code></strong>=<em><code>'boxplot with stripplot overlay'</code></em>, <strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 <p>Handles all the plotting that is currently available for datasets analyzed with a Mixed-Model ANOVA.</p>
 
@@ -323,7 +361,7 @@ nb_path: "01_plots.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="annotate_stats_mma" class="doc_header"><code>annotate_stats_mma</code><a href="https://github.com/DSegebarth/dcl_stats_n_plots/tree/master/dcl_stats_n_plots/plots.py#L369" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>annotate_stats_mma</code>(<strong><code>ax</code></strong>, <strong><code>df</code></strong>, <strong><code>params</code></strong>)</p>
+<h4 id="annotate_stats_mma" class="doc_header"><code>annotate_stats_mma</code><a href="https://github.com/DSegebarth/dcl_stats_n_plots/tree/master/dcl_stats_n_plots/plots.py#L352" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>annotate_stats_mma</code>(<strong><code>ax</code></strong>, <strong><code>df</code></strong>, <strong><code>params</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -354,38 +392,7 @@ nb_path: "01_plots.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="annotate_stats_mma_pointplot" class="doc_header"><code>annotate_stats_mma_pointplot</code><a href="https://github.com/DSegebarth/dcl_stats_n_plots/tree/master/dcl_stats_n_plots/plots.py#L428" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>annotate_stats_mma_pointplot</code>(<strong><code>ax</code></strong>, <strong><code>df</code></strong>, <strong><code>params</code></strong>)</p>
-</blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="sort_by_third" class="doc_header"><code>sort_by_third</code><a href="https://github.com/DSegebarth/dcl_stats_n_plots/tree/master/dcl_stats_n_plots/plots.py#L482" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>sort_by_third</code>(<strong><code>e</code></strong>)</p>
+<h4 id="annotate_stats_mma_pointplot" class="doc_header"><code>annotate_stats_mma_pointplot</code><a href="https://github.com/DSegebarth/dcl_stats_n_plots/tree/master/dcl_stats_n_plots/plots.py#L411" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>annotate_stats_mma_pointplot</code>(<strong><code>ax</code></strong>, <strong><code>df</code></strong>, <strong><code>params</code></strong>)</p>
 </blockquote>
 
 </div>
