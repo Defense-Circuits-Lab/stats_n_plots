@@ -45,7 +45,92 @@ nb_path: "01_plots.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Utilities:">Utilities:<a class="anchor-link" href="#Utilities:"> </a></h2><p>Some general functions that are used by several of the analysis-specific plotting functions</p>
+<h2 id="Customizable-features">Customizable features<a class="anchor-link" href="#Customizable-features"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>dcl_stats_n_plots provides you with several options to customize the plot or the annotation of the statistical results. Here you can find a list of all features that can currently be customized, which follows the scheme: <code>feature</code>: default_value (<code>accepted types</code>) - description and/or additional information</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="General-features-of-the-plot">General features of the plot<a class="anchor-link" href="#General-features-of-the-plot"> </a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li><code>fig_width</code>: 28 (<code>int</code>, <code>float</code>) - width of the figure in cm</li>
+<li><code>fig_height</code>: 16 (<code>int</code>, <code>float</code>) - height of the figure in cm</li>
+<li><code>show_legend</code>: True (<code>bool</code>) - whether to show the legend (implemented for mixed-model ANOVA plots)</li>
+<li><code>marker_size</code>: 5 (<code>int</code>, <code>float</code>) - size of the markers (i.e. individual data points)</li>
+<li><code>save_plot</code>: False (<code>bool</code>) - whether to write the created plot to disk or not</li>
+<li><code>color_palette</code>: 'colorblind' (<code>str</code> if one of the available <a href="https://matplotlib.org/stable/tutorials/colors/colormaps.html">matplotlib color palettes</a> shall be used, <code>dict</code> if you would like to specify the colors individually for each group, where the <code>key</code> must be the group name and <code>value</code> the <a href="https://matplotlib.org/stable/gallery/color/named_colors.html">color name</a>)</li>
+<li><code>save_plot</code>: False (<code>bool</code>) - whether you want to write the generated plot to disk</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Features-of-the-x--and-y-axes:">Features of the x- and y-axes:<a class="anchor-link" href="#Features-of-the-x--and-y-axes:"> </a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li><code>axes_linewidth</code>: 1 (<code>int</code>, <code>float</code>) - width of the axis (affects both x- and y-axis)</li>
+<li><code>axes_color</code>: 'k' (<code>str</code>) - <a href="https://matplotlib.org/stable/gallery/color/named_colors.html">color name</a> of the axis (affects both x- and y-axis)</li>
+<li><code>axes_tick_size</code>: 10 (<code>int</code>, <code>float</code>) - size of axis ticks (affects both x- and y-axis)</li>
+</ul>
+<ul>
+<li><code>yaxis_label_text</code>: 'data' (<code>str</code>) - label of y-axis</li>
+<li><code>yaxis_label_fontsize</code>: 12 (<code>int</code>, <code>float</code>) - font size of y-axis label</li>
+<li><code>yaxis_label_color</code>: 'k' (<code>str</code>) - <a href="https://matplotlib.org/stable/gallery/color/named_colors.html">color name</a> of the y-axis label</li>
+<li><code>yaxis_scaling_mode</code>: 'auto' (<code>str</code>) - whether the y-axis shall be scaled automatically according to the plot ('auto'), or whether you would like to scale it manually ('manual'). If 'manual', the y-axis upper and lower limit will be set to <code>yaxis_upper_lim_value</code> and <code>yaxis_lower_lim_value</code>, respectively.</li>
+<li><code>yaxis_uppwer_lim_value</code>: 1 (<code>int</code>, <code>float</code>) - upper limit of the y-axis (will only be applied if <code>yaxis_scaling_mode</code> is set to 'manual')</li>
+<li><code>yaxis_lower_lim_value</code>: 0 (<code>int</code>, <code>float</code>) - lower limit of the y-axis (will only be applied if <code>yaxis_scaling_mode</code> is set to 'manual')</li>
+</ul>
+<ul>
+<li><code>xaxis_label_text</code>: 'group' (<code>str</code>) - label of x-axis</li>
+<li><code>xaxis_label_fontsize</code>: 12 (<code>int</code>, <code>float</code>) - font size of x-axis label</li>
+<li><code>xaxis_label_color</code>: 'k' (<code>str</code>) - <a href="https://matplotlib.org/stable/gallery/color/named_colors.html">color name</a> of the x-axis label</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Features-of-the-annotations:">Features of the annotations:<a class="anchor-link" href="#Features-of-the-annotations:"> </a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li><code>distance_brackets_to_data</code>: 0.1 (<code>int</code>, <code>float</code>) - factor that controls the distance of the brackets to the plotted data (be careful with major changes to this value - it might be useful to use the GUI to determine the optimal value)</li>
+<li><code>distance_stars_to_brackets</code>: 0.5 (<code>int</code>, <code>float</code>) - factor that controls the distance of the text that indicates the statistical results (e.g. 'n.s.' or '**') to the brackets (be careful with major changes to this value - it might be useful to use the GUI to determine the optimal value)</li>
+<li><code>annotation_brackets_factor</code>: 1 (<code>int</code>: must be either 0 or 1) - whether the annotation that indicates which groups were compared is a bracket (1) or a plain line (0)</li>
+<li><code>linewidth_annotations</code>: 1 (<code>int</code>, <code>float</code>) - width of the annotation lines (applies to both, brackets and plain lines)</li>
+<li><code>fontsize_stars</code>: 10 (<code>int</code>, <code>float</code>) - font size of the text that indicates the statistical results (e.g. 'n.s.' or '**') </li>
+<li><code>fontweight_stars</code>: 'bold' (<code>str</code>) - font weight of the text that indicates the statistical results (e.g. 'n.s.' or '**'), must be one of: 'normal' | 'bold' | 'heavy' | 'light' | 'ultrabold' | 'ultralight'</li>
+<li><code>l_stats_to_annotate</code>: [] (<code>list</code>) - list of pairwise comparisons whose statistical results shall be annotated (function not yet implemented)</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Utilities">Utilities<a class="anchor-link" href="#Utilities"> </a></h2><p>Some general functions that are used by several of the analysis-specific plotting functions</p>
 
 </div>
 </div>
@@ -176,7 +261,13 @@ nb_path: "01_plots.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Functions-for-the-comparison-of-two-or-more-independent-samples:">Functions for the comparison of two or more independent samples:<a class="anchor-link" href="#Functions-for-the-comparison-of-two-or-more-independent-samples:"> </a></h2>
+<h2 id="Analysis-specific-plotting-&amp;-annotation-functions">Analysis-specific plotting &amp; annotation functions<a class="anchor-link" href="#Analysis-specific-plotting-&amp;-annotation-functions"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Comparison-of-two-or-more-independent-samples:">Comparison of two or more independent samples:<a class="anchor-link" href="#Comparison-of-two-or-more-independent-samples:"> </a></h3>
 </div>
 </div>
 </div>
@@ -245,7 +336,7 @@ nb_path: "01_plots.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Functions-for-the-comparisons-of-a-single-group-to-a-fixed-value:">Functions for the comparisons of a single group to a fixed value:<a class="anchor-link" href="#Functions-for-the-comparisons-of-a-single-group-to-a-fixed-value:"> </a></h2>
+<h3 id="Comparisons-of-a-single-group-to-a-fixed-value">Comparisons of a single group to a fixed value<a class="anchor-link" href="#Comparisons-of-a-single-group-to-a-fixed-value"> </a></h3>
 </div>
 </div>
 </div>
@@ -314,7 +405,7 @@ nb_path: "01_plots.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Functions-for-Mixed-Model-ANOVA-analyses:">Functions for Mixed-Model ANOVA analyses:<a class="anchor-link" href="#Functions-for-Mixed-Model-ANOVA-analyses:"> </a></h2>
+<h3 id="Mixed-Model-ANOVA-analyses">Mixed-Model ANOVA analyses<a class="anchor-link" href="#Mixed-Model-ANOVA-analyses"> </a></h3>
 </div>
 </div>
 </div>
