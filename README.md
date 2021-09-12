@@ -17,30 +17,35 @@ List of all repositories of the DCLwidgets series:
 ## About this widget
 
 The purpose of this widget is to make everyday life in the lab a little easier, as it helps you to compute statistical tests and to create
-highly customizable plots that visualize your data. The widget also enables you to select exactly which statistical results you would like to annotate 
-within the plots, so that you are directly ready to go for your next presentation!
+highly customizable plots that visualize your data. The widget also enables you to select exactly which statistical results you would like to annotate within the plots. This way, statistical analysis and visualization of your data is what it should be - simple & fast!
 
 Please get in touch if you have any feedback, questions, or feature requests for us!
 
 ---
 
-## Install
+## How to use
+
+We provide comprehensive tutorials that explain step-by-step how to use dcl_stats_n_plots.
+
+If you would like to use our GUI, please check out our [GUI tutorial](https://dsegebarth.github.io/dcl_stats_n_plots/gui_tutorial.html).
+
+If you would like to use our API instead, you can also find our [API tutorial here](https://dsegebarth.github.io/dcl_stats_n_plots/api_tutorial.html).
+
+For a detailed guide on how to install dcl_stats_n_plots, please find our installation guide below.
+
+## Installation
+
+Installation from PyPi:
 
 `pip install dcl-stats-n-plots`
 
-## How to use
-
-Examples and tutorials will be provided soon.
-
----
+{% include note.html content='Detailed installation guide to come' %}
 
 ## Next steps
 
-This repository is currently rebuild from an [earlier version](https://github.com/DSegebarth/DCL_stats_and_plots/) to enable the use of [nbdev](https://nbdev.fast.ai/).
-Alongside this rebuild, the code will be re-organized to foster the use of `dcl-stats-n-plots` also outside of the designated GUI.
-
 The next steps include:
 
-* finish rebuild to cover all functionalities of the [earlier version](https://github.com/DSegebarth/DCL_stats_and_plots/) 
+* complete GUI tutorial & extend documentation
 * implement tests & plots for repeated measurements
-* create tutorials & extend documentation
+* implement 'dashboard' functionalities for selected projects within the [DCL](https://www.defense-circuits-lab.com/) or the [CRC Retune](https://retune.science/)
+
