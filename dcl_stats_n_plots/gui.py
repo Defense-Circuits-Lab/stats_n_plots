@@ -632,7 +632,7 @@ class Select_downloads_widget:
 
 
     def get_group_level_stats_for_download(self, params):
-        df_group_level_overview = pg.homoscedasticity([params['results'][key]['data'] for key in params['results'].keys() if (type(gui.params['results'][key]) == dict) & (key != 'summary')])
+        df_group_level_overview = pg.homoscedasticity([params['results'][key]['data'] for key in params['results'].keys() if (type(params['results'][key]) == dict) & (key != 'summary')])
         df_group_level_overview.index = [0]
         df_group_level_overview.columns = pd.MultiIndex.from_tuples([('Levene', 'W statistic'), ('Levene', 'p value'), ('Levene', 'Equal variances?')])
 
