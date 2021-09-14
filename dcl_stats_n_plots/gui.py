@@ -544,7 +544,7 @@ class Select_plots_widget:
 class Select_downloads_widget:
     "Creates the part of the widget that allows the user to download the results"
     def __init__(self, params):
-        self.dropdown = w.Dropdown(description = 'Please select which type of plot you want to create:',
+        self.dropdown = w.Dropdown(description = 'Please select what output you would like to download:',
                                    options = [('statistical results only', 0), ('plot only', 1), ('both', 2)],
                                    value = params['widgets']['downloads_dropdown']['value'],
                                    layout = {'width': '100%',
@@ -632,7 +632,7 @@ class Select_downloads_widget:
 
 
     def get_group_level_stats_for_download(self, params):
-        df_group_level_overview = pg.homoscedasticity([params['results'][key]['data'] for key in params['results'].keys() if key != 'summary'])
+        df_group_level_overview = pg.homoscedasticity([params['results'][key]['data'] for key in params['results'].keys() if (type(gui.params['results'][key]) == dict) & (key != 'summary')])
         df_group_level_overview.index = [0]
         df_group_level_overview.columns = pd.MultiIndex.from_tuples([('Levene', 'W statistic'), ('Levene', 'p value'), ('Levene', 'Equal variances?')])
 
