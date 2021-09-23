@@ -9,12 +9,22 @@ entries:
     - output: web,pdf
       title: Overview
       url: /
-    - output: web,pdf
-      title: GUI tutorial
-      url: gui_tutorial.html
-    - output: web,pdf
-      title: API tutorial
-      url: api_tutorial.html
+    - output: web
+      subfolders:
+      - output: web
+        subfolderitems:
+        - output: web,pdf
+          title: GUI
+          url: gui_tutorial.html
+        - output: web,pdf
+          title: API
+          url: api_tutorial.html
+        - output: web,pdf
+          title: Run on DCL server
+          url: dcl_tutorial.html
+        title: Tutorials
+      title: Tutorials
+    - output: web
       subfolders:
       - output: web
         subfolderitems:
@@ -28,6 +38,7 @@ entries:
           title: GUI
           url: gui.html
         title: API
+      title: API
     output: web
     title: dcl_stats_n_plots
   output: web
