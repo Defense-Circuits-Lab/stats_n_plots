@@ -1,14 +1,14 @@
 {
   "dcl_stats_n_plots": {
     "Overview": "/",
-    "Tutorials": {
+    "": {
         "Tutorials" : {
           "GUI": "gui_tutorial.html",
           "API": "api_tutorial.html",
           "Run on DCL server": "dcl_tutorial.html" 
            }
     },
-    "API": {
+    "": {
         "API" : {
           "Stats": "stats.html",
           "Plots": "plots.html",
