@@ -760,8 +760,6 @@ class Alexia_patched_cells_vs_baseline:
         if self.params['yaxis_scaling_mode'] in [1, 'manual']: #1 for GUI, manual for API
             ax.set_ylim(self.params['yaxis_lower_lim_value'], self.params['yaxis_upper_lim_value'])
 
-
-
 # Cell
 def launch():
     display(Dashboards().widget)
