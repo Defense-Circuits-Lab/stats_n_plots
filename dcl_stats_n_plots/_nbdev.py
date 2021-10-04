@@ -20,8 +20,8 @@ index = {"independent_samples": "00_stats.ipynb",
          "plot_mma": "01_plots.ipynb",
          "annotate_stats_mma": "01_plots.ipynb",
          "annotate_stats_mma_pointplot": "01_plots.ipynb",
-         "STYLE": "02_gui.ipynb",
-         "INITIAL_WIDGET_PARAMS": "02_gui.ipynb",
+         "STYLE": "03_dashboards.ipynb",
+         "INITIAL_WIDGET_PARAMS": "03_dashboards.ipynb",
          "Gui": "02_gui.ipynb",
          "Select_stats_widget": "02_gui.ipynb",
          "Select_plots_widget": "02_gui.ipynb",
@@ -33,11 +33,14 @@ index = {"independent_samples": "00_stats.ipynb",
          "Customize_x_axis": "02_gui.ipynb",
          "Customize_both_axes": "02_gui.ipynb",
          "Customize_other_features": "02_gui.ipynb",
-         "launch": "02_gui.ipynb"}
+         "launch": "03_dashboards.ipynb",
+         "Dashboards": "03_dashboards.ipynb",
+         "Alexia_patched_cells_vs_baseline": "03_dashboards.ipynb"}
 
 modules = ["stats.py",
            "plots.py",
-           "gui.py"]
+           "gui.py",
+           "dashboards.py"]
 
 doc_url = "https://DSegebarth.github.io/dcl_stats_n_plots/"
 
