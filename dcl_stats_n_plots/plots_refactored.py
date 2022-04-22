@@ -225,26 +225,26 @@ class MixedModelANOVAPlots(PlotHandler):
         session_column_name = self.database.stats_results['df_infos']['session_column_name']
 
         if self.configs.plot_type == 'pointplot':
-            sns.pointplot(data = self.df, x = session_column_name, y = data_column_name, order = self.configs.l_xlabel_order,
+            sns.pointplot(data = self.data, x = session_column_name, y = data_column_name, order = self.configs.l_xlabel_order,
                           hue = group_column_name, hue_order = self.configs.l_hue_order, palette = self.configs.color_palette,
                           dodge = True, ci = 'sd', err_style = 'bars', capsize = 0, ax = ax)
         elif self.configs.plot_type == 'boxplot':
-            sns.boxplot(data = self.df, x = session_column_name, y = data_column_name, order = self.configs.l_xlabel_order,
+            sns.boxplot(data = self.data, x = session_column_name, y = data_column_name, order = self.configs.l_xlabel_order,
                         hue = group_column_name, hue_order = self.configs.l_hue_order, palette = self.configs.color_palette, ax = ax)
         elif self.configs.plot_type == 'boxplot with stripplot overlay':
-            sns.boxplot(data = self.df, x = session_column_name, y = data_column_name, order = self.configs.l_xlabel_order,
+            sns.boxplot(data = self.data, x = session_column_name, y = data_column_name, order = self.configs.l_xlabel_order,
                         hue = group_column_name, hue_order = self.configs.l_hue_order, palette = self.configs.color_palette, ax = ax, showfliers = False)
-            sns.stripplot(data = self.df, x = session_column_name, y = data_column_name, order = self.configs.l_xlabel_order,
+            sns.stripplot(data = self.data, x = session_column_name, y = data_column_name, order = self.configs.l_xlabel_order,
                           hue = group_column_name, hue_order = self.configs.l_hue_order, dodge = True, color = 'k', size = self.configs.marker_size)
         elif self.configs.plot_type == 'violinplot':
-            sns.violinplot(data = self.df, x = session_column_name, y = data_column_name, order = self.configs.l_xlabel_order,
+            sns.violinplot(data = self.data, x = session_column_name, y = data_column_name, order = self.configs.l_xlabel_order,
                            hue = group_column_name, hue_order = self.configs.l_hue_order, palette = self.configs.color_palette,
                            width = 0.8, cut = 0, ax = ax)
         elif self.configs.plot_type == 'violinplot with stripplot overlay':
-            sns.violinplot(data = self.df, x = session_column_name, y = data_column_name, order = self.configs.l_xlabel_order,
+            sns.violinplot(data = self.data, x = session_column_name, y = data_column_name, order = self.configs.l_xlabel_order,
                            hue = group_column_name, hue_order = self.configs.l_hue_order, palette = self.configs.color_palette,
                            width = 0.8, cut = 0, ax = ax)
-            sns.stripplot(data = self.df, x = session_column_name, y = data_column_name, order = self.configs.l_xlabel_order,
+            sns.stripplot(data = self.data, x = session_column_name, y = data_column_name, order = self.configs.l_xlabel_order,
                           hue = group_column_name, hue_order = self.configs.l_hue_order, dodge = True, color = 'k', size = self.configs.marker_size)
         return fig, ax
 

@@ -286,6 +286,7 @@ class MixedModelANOVAStats(StatisticalTest):
         summary_stats = self.lut['summary_stats'].copy()
         df_infos = self.lut['df_infos'].copy()
         print(self.lut)
-        pairwise_comparisons = pg.pairwise_ttests(data = self.df, dv = df_infos['data_column_name'], within = df_infos['session_column_name'],
-                                                  between = df_infos['group_column_name'], parametric = summary_stats['use_parametric'], padjust='holm')
+        pairwise_comparisons = pg.pairwise_ttests(data = self.df, dv = df_infos['data_column_name'], between = df_infos['group_column_name'],
+                                                  within = df_infos['session_column_name'], subject = df_infos['subject_column_name'],
+                                                  parametric = summary_stats['use_parametric'], padjust='holm')
         return pairwise_comparisons

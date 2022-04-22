@@ -37,7 +37,8 @@ DEFAULT_CONFIGS = {# General features:
                   'linewidth_annotations': 1.5,
                   'fontsize_stars': 10,
                   'fontweight_stars': 'bold',
-                  'l_stats_to_annotate': []
+                  'l_stats_to_annotate': [],
+                  'l_hue_order': []
                  }
 
 # Cell
