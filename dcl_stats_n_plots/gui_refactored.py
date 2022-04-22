@@ -10,7 +10,6 @@ import pandas as pd
 from pathlib import Path
 from ipywidgets.widgets.widget_box import VBox
 import ipywidgets as w
-from ipyfilechooser import FileChooser
 from IPython.display import display
 import inspect
 import itertools
