@@ -268,6 +268,7 @@ class MixedModelANOVAPlots(PlotHandler):
                 ax.legend(new_handles, new_labels, loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)
         else:
             ax.get_legend().remove()
+        return fig, ax
 
 
     def annotate_stats_mma(self) -> Tuple[plt.Figure, plt.Axes]:
@@ -282,7 +283,7 @@ class MixedModelANOVAPlots(PlotHandler):
         distance_stars_to_brackets = self.configs.distance_stars_to_brackets
         l_xlabel_order = self.configs.l_xlabel_order
         l_hue_order = self.configs.l_hue_order
-        df = self.df
+        df = self.data
         if len(l_stats_to_annotate) > 0:
             l_to_annotate_ordered = []
             for session_id in l_sessions:
@@ -337,7 +338,7 @@ class MixedModelANOVAPlots(PlotHandler):
         annotation_brackets_factor = self.configs.annotation_brackets_factor
         distance_stars_to_brackets = self.configs.distance_stars_to_brackets
         l_xlabel_order = self.configs.l_xlabel_order
-        df = self.df
+        df = self.data
         if len(l_stats_to_annotate) > 0:
             l_to_annotate_ordered = []
             for session_id in l_sessions:

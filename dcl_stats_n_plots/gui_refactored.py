@@ -454,6 +454,9 @@ class ConfigsTab(PlainTab):
             if attr == 'l_xlabel_order':
                 l_xlabel_order = self.handle_l_xlabel_order_exception()
                 setattr(configs, 'l_xlabel_order', l_xlabel_order)
+            elif attr == 'l_hue_order':
+                l_hue_order = self.handle_hue_order_exception()
+                setattr(configs, 'l_hue_order', l_hue_order)
             elif attr == 'color_palette':
                 color_palette = self.handle_color_palette_exception()
                 setattr(configs, 'color_palette', color_palette)
@@ -496,6 +499,19 @@ class ConfigsTab(PlainTab):
         else:
             l_xlabel_order.append(self.l_xlabel_order.value)
         return l_xlabel_order
+
+
+    def handle_hue_order_exception(self) -> List[str]:
+        l_hue_order = []
+        hue_order_string = self.l_hue_order.value
+        if ',' in hue_order_string:
+            while ', ' in hue_order_string:
+                l_hue_order.append(hue_order_string[:hue_order_string.index(', ')])
+                hue_order_string = hue_order_string[hue_order_string.index(', ')+2:]
+            l_hue_order.append(hue_order_string)
+        else:
+            l_hue_order.append(self.l_hue_order.value)
+        return l_hue_order
 
 
     def handle_annotate_all_exception(self) -> List[str]:
