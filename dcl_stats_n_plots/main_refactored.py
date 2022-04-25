@@ -60,15 +60,28 @@ class Session:
         self.database.plot_handler = statistical_test().plot_handler
 
 
-    def create_plot(self, show: bool=True, save: bool=False) -> None:
+    def create_plot(self, filepath: Optional[Path]=None, dpi: Optional[int]=None, show: bool=True, save: bool=False) -> None:
         self.database = self.database.plot_handler().plot(database = self.database)
         if show:
             plt.show()
+        if save:
+            if dpi == None:
+                dpi = 300
+            if filepath != None:
+                plt.savefig(filepath, dpi = dpi)
+                plt.close()
+            else:
+                plt.savefig('customized_plot.png', dpi = dpi)
+                plt.close()
 
 
-    def export_configs(self) -> None:
+    def export_configs(self, filepath: Path) -> None:
         self.configs.export_configs_to_file(filepath = filepath)
 
 
     def load_configs(self, filepath: Path) -> None:
         self.configs.load_configs_from_file(filepath = filepath)
+
+
+    def export_stats_results(self, filepath: Optional[Path]=None) -> None:
+        self.database.export_stats_results(filepath = filepath)

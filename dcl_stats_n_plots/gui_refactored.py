@@ -51,7 +51,7 @@ class GUI:
     def build_and_change_to_tabs_ui(self, b) -> None:
         self.session = Session()
         self.session.upload_data_via_gui(uploader_value = self.uploader.value)
-        self.session.calculate_stats(statistical_test = self.stats_selection.value)
+
 
         self.stats_tab = StatisticsTab(gui = self)
         self.plot_tab = PlotTab(gui = self)
@@ -85,15 +85,19 @@ class PlainTab(ABC):
 class StatisticsTab(PlainTab):
 
     def create_widget(self) -> VBox:
-        user_information_strings = self.create_user_information_strings()
-        user_information_labels = []
-        for user_info in user_information_strings:
-            user_information_labels.append(w.Label(value = user_info))
-        user_information = w.VBox(user_information_labels)
+        user_information = w.VBox([])
         self.display_stats_df = w.Output()
         self.export_stats = w.Button(description = 'export statistical results', layout = {'width': '25%'})
         widget = w.VBox([user_information, self.display_stats_df, self.export_stats])
+
+        self.export_stats.on_click(self.export_stats_results)
+
         with self.display_stats_df:
+            self.gui.session.calculate_stats(statistical_test = self.gui.stats_selection.value)
+            user_information_strings = self.create_user_information_strings()
+            user_information_labels = []
+            for user_info in user_information_strings:
+                user_information.children += (w.Label(value = user_info), )
             if type(self.gui.session.database.stats_results['pairwise_comparisons']) == pd.DataFrame:
                 display(self.gui.session.database.stats_results['pairwise_comparisons'])
             else:
@@ -118,6 +122,10 @@ class StatisticsTab(PlainTab):
             user_info_strings.append('ignore the results of pairwise comparisons that may be listed below, \
                                      even if they show p-values <= 0.05')
         return user_info_strings
+
+
+    def export_stats_results(self, b) -> None:
+        self.gui.session.export_stats_results()
 
 # Cell
 class PlotTab(PlainTab):
@@ -150,7 +158,8 @@ class PlotTab(PlainTab):
 
 
     def export_the_plot(self, b):
-        pass
+        self.gui.session.database.configs = self.gui.configurations_tab.update_configs()
+        self.gui.session.create_plot(filepath = None, dpi = None, show = False, save = True)
 
 # Cell
 class ConfigsTab(PlainTab):

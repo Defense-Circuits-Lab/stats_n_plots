@@ -75,6 +75,31 @@ class PlotHandler(ABC):
             ax.set_ylim(self.configs.yaxis_lower_lim_value, self.configs.yaxis_upper_lim_value)
         return fig, ax
 
+
+    def get_stars_str(self, df_tmp: pd.DataFrame, group1: str, group2: str) -> str:
+        if df_tmp.loc[(df_tmp['A'] == group1) & (df_tmp['B'] == group2)].shape[0] > 0:
+            if 'p-corr' in df_tmp.loc[(df_tmp['A'] == group1) & (df_tmp['B'] == group2)].columns:
+                pval = df_tmp.loc[(df_tmp['A'] == group1) & (df_tmp['B'] == group2), 'p-corr'].iloc[0]
+            else:
+                pval = df_tmp.loc[(df_tmp['A'] == group1) & (df_tmp['B'] == group2), 'p-unc'].iloc[0]
+
+        elif df_tmp.loc[(df_tmp['B'] == group1) & (df_tmp['A'] == group2)].shape[0] > 0:
+            if 'p-corr' in df_tmp.loc[(df_tmp['B'] == group1) & (df_tmp['A'] == group2)].columns:
+                pval = df_tmp.loc[(df_tmp['B'] == group1) & (df_tmp['A'] == group2), 'p-corr'].iloc[0]
+            else:
+                pval = df_tmp.loc[(df_tmp['B'] == group1) & (df_tmp['A'] == group2), 'p-unc'].iloc[0]
+        else:
+            print('There was an error with annotating the stats!')
+        if pval <= 0.001:
+            stars = '***'
+        elif pval <= 0.01:
+            stars = '**'
+        elif pval <= 0.05:
+            stars = '*'
+        else:
+            stars = 'n.s.'
+        return stars
+
 # Cell
 class OneSamplePlots(PlotHandler):
 
@@ -184,31 +209,6 @@ class MultipleIndependentSamplesPlots(PlotHandler):
                     # With set_distance_stars_to_brackets being limited to 5, stars will always be closer than next annotation line
                     y = y+3*y_shift_annotation_line
         return fig, ax
-
-
-    def get_stars_str(self, df_tmp: pd.DataFrame, group1: str, group2: str) -> str:
-        if df_tmp.loc[(df_tmp['A'] == group1) & (df_tmp['B'] == group2)].shape[0] > 0:
-            if 'p-corr' in df_tmp.loc[(df_tmp['A'] == group1) & (df_tmp['B'] == group2)].columns:
-                pval = df_tmp.loc[(df_tmp['A'] == group1) & (df_tmp['B'] == group2), 'p-corr'].iloc[0]
-            else:
-                pval = df_tmp.loc[(df_tmp['A'] == group1) & (df_tmp['B'] == group2), 'p-unc'].iloc[0]
-
-        elif df_tmp.loc[(df_tmp['B'] == group1) & (df_tmp['A'] == group2)].shape[0] > 0:
-            if 'p-corr' in df_tmp.loc[(df_tmp['B'] == group1) & (df_tmp['A'] == group2)].columns:
-                pval = df_tmp.loc[(df_tmp['B'] == group1) & (df_tmp['A'] == group2), 'p-corr'].iloc[0]
-            else:
-                pval = df_tmp.loc[(df_tmp['B'] == group1) & (df_tmp['A'] == group2), 'p-unc'].iloc[0]
-        else:
-            print('There was an error with annotating the stats!')
-        if pval <= 0.001:
-            stars = '***'
-        elif pval <= 0.01:
-            stars = '**'
-        elif pval <= 0.05:
-            stars = '*'
-        else:
-            stars = 'n.s.'
-        return stars
 
 # Cell
 class MixedModelANOVAPlots(PlotHandler):
@@ -370,28 +370,3 @@ class MixedModelANOVAPlots(PlotHandler):
                          fontsize=self.configs.fontsize_stars, fontweight=self.configs.fontweight_stars)
                 prev_session = session_id
         return fig, ax
-
-
-    def get_stars_str(self, df_tmp: pd.DataFrame, group1: str, group2: str) -> str:
-        if df_tmp.loc[(df_tmp['A'] == group1) & (df_tmp['B'] == group2)].shape[0] > 0:
-            if 'p-corr' in df_tmp.loc[(df_tmp['A'] == group1) & (df_tmp['B'] == group2)].columns:
-                pval = df_tmp.loc[(df_tmp['A'] == group1) & (df_tmp['B'] == group2), 'p-corr'].iloc[0]
-            else:
-                pval = df_tmp.loc[(df_tmp['A'] == group1) & (df_tmp['B'] == group2), 'p-unc'].iloc[0]
-
-        elif df_tmp.loc[(df_tmp['B'] == group1) & (df_tmp['A'] == group2)].shape[0] > 0:
-            if 'p-corr' in df_tmp.loc[(df_tmp['B'] == group1) & (df_tmp['A'] == group2)].columns:
-                pval = df_tmp.loc[(df_tmp['B'] == group1) & (df_tmp['A'] == group2), 'p-corr'].iloc[0]
-            else:
-                pval = df_tmp.loc[(df_tmp['B'] == group1) & (df_tmp['A'] == group2), 'p-unc'].iloc[0]
-        else:
-            print('There was an error with annotating the stats!')
-        if pval <= 0.001:
-            stars = '***'
-        elif pval <= 0.01:
-            stars = '**'
-        elif pval <= 0.05:
-            stars = '*'
-        else:
-            stars = 'n.s.'
-        return stars
