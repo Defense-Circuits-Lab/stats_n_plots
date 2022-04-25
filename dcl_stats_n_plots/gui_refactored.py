@@ -51,7 +51,7 @@ class GUI:
     def build_and_change_to_tabs_ui(self, b) -> None:
         self.session = Session()
         self.session.upload_data_via_gui(uploader_value = self.uploader.value)
-        self.session.calculate_stats(statistical_test = self.stats_selection.value)
+
 
         self.stats_tab = StatisticsTab(gui = self)
         self.plot_tab = PlotTab(gui = self)
@@ -85,15 +85,19 @@ class PlainTab(ABC):
 class StatisticsTab(PlainTab):
 
     def create_widget(self) -> VBox:
-        user_information_strings = self.create_user_information_strings()
-        user_information_labels = []
-        for user_info in user_information_strings:
-            user_information_labels.append(w.Label(value = user_info))
-        user_information = w.VBox(user_information_labels)
+        user_information = w.VBox([])
         self.display_stats_df = w.Output()
         self.export_stats = w.Button(description = 'export statistical results', layout = {'width': '25%'})
         widget = w.VBox([user_information, self.display_stats_df, self.export_stats])
+
+        self.export_stats.on_click(self.export_stats_results)
+
         with self.display_stats_df:
+            self.gui.session.calculate_stats(statistical_test = self.gui.stats_selection.value)
+            user_information_strings = self.create_user_information_strings()
+            user_information_labels = []
+            for user_info in user_information_strings:
+                user_information.children += (w.Label(value = user_info), )
             if type(self.gui.session.database.stats_results['pairwise_comparisons']) == pd.DataFrame:
                 display(self.gui.session.database.stats_results['pairwise_comparisons'])
             else:
@@ -118,6 +122,10 @@ class StatisticsTab(PlainTab):
             user_info_strings.append('ignore the results of pairwise comparisons that may be listed below, \
                                      even if they show p-values <= 0.05')
         return user_info_strings
+
+
+    def export_stats_results(self, b) -> None:
+        self.gui.session.export_stats_results()
 
 # Cell
 class PlotTab(PlainTab):
@@ -150,7 +158,8 @@ class PlotTab(PlainTab):
 
 
     def export_the_plot(self, b):
-        pass
+        self.gui.session.database.configs = self.gui.configurations_tab.update_configs()
+        self.gui.session.create_plot(filepath = None, dpi = None, show = False, save = True)
 
 # Cell
 class ConfigsTab(PlainTab):
@@ -198,16 +207,19 @@ class ConfigsTab(PlainTab):
         stats_results = self.gui.session.database.stats_results.copy()
         if stats_results['summary_stats']['performed_test'] == 'Mixed-model ANOVA':
             self._mma = True
-            self._pw_comparison_checkboxes = self.create_all_pw_comparison_checkboxes_mma(stats_results = stats_results)
-            select_individual_pw_comparisons_accordion = self.arrange_pw_comparison_checkboxes_into_accordion_mma()
+            l_all_sorted_checkboxes, self._pw_comparison_checkboxes = self.create_all_pw_comparison_checkboxes_mma(stats_results = stats_results)
+            select_individual_pw_comparisons_accordion = w.Accordion(l_all_sorted_checkboxes)
+            for i in range(len(stats_results['df_infos']['all_session_ids'])):
+                select_individual_pw_comparisons_accordion.set_title(i, stats_results['df_infos']['all_session_ids'][i])
         else:
             self._mma = False
-            self._pw_comparison_checkboxes = self.create_all_pw_comparison_checkboxes(stats_results = stats_results)
-            select_individual_pw_comparisons_accordion = self.arrange_pw_comparison_checkboxes_into_accordion()
+            l_checkboxes_sorted_into_hboxes, self._pw_comparison_checkboxes = self.create_all_pw_comparison_checkboxes(stats_results = stats_results)
+            select_individual_pw_comparisons_accordion = w.Accordion([w.VBox(l_checkboxes_sorted_into_hboxes)])
+            select_individual_pw_comparisons_accordion.set_title(0, 'Select individual comparisons for annotation')
         return w.VBox([user_information, self.annotate_all, select_individual_pw_comparisons_accordion])
 
 
-    def create_all_pw_comparison_checkboxes(self, stats_results: Dict) -> List:
+    def create_all_pw_comparison_checkboxes(self, stats_results: Dict) -> Tuple[List, List]:
         l_groups = stats_results['df_infos']['all_group_ids']
         if len(l_groups) == 1:
             fixed_value_colum_name = stats_results['df_infos']['fixed_value_column_name']
@@ -216,29 +228,33 @@ class ConfigsTab(PlainTab):
             # Create a checkbox for each pairwise comparison
             l_checkboxes = [w.Checkbox(value = False, description = f'{group1} vs. {group2}')
                             for group1, group2 in list(itertools.combinations(l_groups, 2))]
-        return l_checkboxes
+        l_checkboxes_sorted_into_hboxes = self.assign_checkboxes_to_rowwise_hboxes(l_checkboxes = l_checkboxes, checkboxes_per_row = 3)
+        return l_checkboxes_sorted_into_hboxes, l_checkboxes
 
 
-    def arrange_pw_comparison_checkboxes_into_accordion(self) -> VBox:
+    def assign_checkboxes_to_rowwise_hboxes(self, l_checkboxes: List, checkboxes_per_row: int) -> List:
         # Arrange checkboxes in a HBoxes with up to 3 checkboxes per HBox
         l_hboxes = []
         elem = 0
-        for i in range(int(len(self._pw_comparison_checkboxes)/3)):
-            l_hboxes.append(w.HBox(self._pw_comparison_checkboxes[elem:elem+3]))
-            elem = elem + 3
-        if len(self._pw_comparison_checkboxes) % 3 != 0:
-            l_hboxes.append(w.HBox(self._pw_comparison_checkboxes[elem:]))
-        accordion = w.Accordion([w.VBox(l_hboxes)])
-        accordion.set_title(0, 'Select individual comparisons for annotation')
-        return accordion
+        for i in range(int(len(l_checkboxes)/checkboxes_per_row)):
+            l_hboxes.append(w.HBox(l_checkboxes[elem:elem+checkboxes_per_row]))
+            elem = elem + checkboxes_per_row
+        if len(l_checkboxes) % checkboxes_per_row != 0:
+            l_hboxes.append(w.HBox(l_checkboxes[elem:]))
+        return l_hboxes
 
 
     def create_all_pw_comparison_checkboxes_mma(self, stats_results: Dict) -> List:
-        pass
+        l_sessions = stats_results['df_infos']['all_session_ids']
+        l_all_checkboxes = []
+        l_all_sorted_checkboxes = []
+        for session_id in l_sessions:
+            l_checkboxes_sorted_into_hboxes, l_checkboxes = self.create_all_pw_comparison_checkboxes(stats_results = stats_results)
+            l_checkboxes = [(session_id, checkbox) for checkbox in l_checkboxes]
+            l_all_checkboxes += l_checkboxes
+            l_all_sorted_checkboxes.append(w.VBox(l_checkboxes_sorted_into_hboxes))
+        return l_all_sorted_checkboxes, l_all_checkboxes
 
-
-    def arrange_pw_comparison_checkboxes_into_accordion_mma(self):
-        pass
 
 
     def initialize_customize_annotations_vbox(self):
@@ -266,7 +282,7 @@ class ConfigsTab(PlainTab):
         self.fontweight_stars = w.Checkbox(description = 'Stars bold', value = False, layout = {'width': '25%'})
         row_0 = w.HBox([self.fontweight_stars, self.annotation_brackets_factor])
         row_1 = self.distance_stars_to_brackets
-        row_2 = self.distance_stars_to_brackets
+        row_2 = self.distance_brackets_to_data
         row_3 = self.fontsize_stars
         row_4 = self.linewidth_annotations
         return w.VBox([row_0, row_1, row_2, row_3, row_4])
@@ -281,12 +297,7 @@ class ConfigsTab(PlainTab):
 
 
     def initialize_x_axis_vbox(self) -> VBox:
-        initial_xlabel_order = ''
-        for group_id in self.gui.session.database.stats_results['df_infos']['all_group_ids']:
-            if group_id != self.gui.session.database.stats_results['df_infos']['all_group_ids'][-1]:
-                initial_xlabel_order += f'{group_id}, '
-            else:
-                initial_xlabel_order += f'{group_id}'
+        initial_xlabel_order, initial_hue_order = self.create_group_order_text()
         self.l_xlabel_order = w.Text(value = initial_xlabel_order,
                                      placeholder = 'Specify the desired order of the x-axis \
                                      labels with individual labels separated by a comma',
@@ -299,17 +310,46 @@ class ConfigsTab(PlainTab):
                                                 step = 1, description = 'fontsize:', layout = {'width': '28%'})
         self.xaxis_label_color = w.ColorPicker(concise = False, description = 'font color',
                                                value = '#000000', layout = {'width': '28%'})
-        #needs to be implemented, also with corresponding exception to properly update configs
-        initial_hue_order = ''
-        self.hue_order = w.Text(value = initial_hue_order,
-                                 placeholder = 'Specify the desired group order with individual groups separated by a comma',
+        if initial_hue_order == '':
+            visibility = 'hidden'
+        else:
+            visibility = 'visible'
+        self.l_hue_order = w.Text(value = initial_hue_order,
+                                 placeholder = 'Specify the desired group order with individual groups separated by a comma (MMA only)',
                                  description = 'group order (separated by comma):',
-                                 layout = {'width': '90%', 'visibility': 'hidden'},
+                                 layout = {'width': '90%', 'visibility': visibility},
                                  style = {'description_width': 'initial'})
         row_0 = w.HBox([self.xaxis_label_text, self.xaxis_label_fontsize, self.xaxis_label_color])
         row_1 = self.l_xlabel_order
-        row_2 = self.hue_order
+        row_2 = self.l_hue_order
         return w.VBox([row_0, row_1, row_2])
+
+
+    def create_group_order_text(self):
+        df_infos = self.gui.session.database.stats_results['df_infos'].copy()
+        l_groups = df_infos['all_group_ids']
+        if self._mma == False:
+            initial_hue_order = ''
+            initial_xlabel_order = ''
+            for group_id in l_groups:
+                if group_id != l_groups[-1]:
+                    initial_xlabel_order += f'{group_id}, '
+                else:
+                    initial_xlabel_order += f'{group_id}'
+        else:
+            initial_hue_order = ''
+            initial_xlabel_order = ''
+            for session_id in df_infos['all_session_ids']:
+                if session_id != df_infos['all_session_ids'][-1]:
+                    initial_xlabel_order += f'{session_id}, '
+                else:
+                    initial_xlabel_order += f'{session_id}'
+            for group_id in l_groups:
+                if group_id != l_groups[-1]:
+                    initial_hue_order += f'{group_id}, '
+                else:
+                    initial_hue_order += f'{group_id}'
+        return initial_xlabel_order, initial_hue_order
 
 
     def initialize_y_axis_vbox(self) -> VBox:
@@ -360,9 +400,9 @@ class ConfigsTab(PlainTab):
 
 
     def initialize_additional_configs_accordion_tab(self) -> VBox:
-        self.fig_height = w.FloatSlider(value=28, min=1, max=50, description='Figure width:',
+        self.fig_width = w.FloatSlider(value=28, min=1, max=50, description='Figure width:',
                                        style={'description_width': 'inital'})
-        self.fig_width = w.FloatSlider(value=16, min=1, max=50, description='Figure height:',
+        self.fig_height = w.FloatSlider(value=16, min=1, max=50, description='Figure height:',
                                         style={'description_width': 'inital'})
         self._preset_color_palette = w.Dropdown(options = ['colorblind', 'Spectral', 'viridis', 'rocket', 'cubehelix'],
                                                 value = 'viridis',
@@ -423,6 +463,9 @@ class ConfigsTab(PlainTab):
             if attr == 'l_xlabel_order':
                 l_xlabel_order = self.handle_l_xlabel_order_exception()
                 setattr(configs, 'l_xlabel_order', l_xlabel_order)
+            elif attr == 'l_hue_order':
+                l_hue_order = self.handle_hue_order_exception()
+                setattr(configs, 'l_hue_order', l_hue_order)
             elif attr == 'color_palette':
                 color_palette = self.handle_color_palette_exception()
                 setattr(configs, 'color_palette', color_palette)
@@ -465,6 +508,19 @@ class ConfigsTab(PlainTab):
         else:
             l_xlabel_order.append(self.l_xlabel_order.value)
         return l_xlabel_order
+
+
+    def handle_hue_order_exception(self) -> List[str]:
+        l_hue_order = []
+        hue_order_string = self.l_hue_order.value
+        if ',' in hue_order_string:
+            while ', ' in hue_order_string:
+                l_hue_order.append(hue_order_string[:hue_order_string.index(', ')])
+                hue_order_string = hue_order_string[hue_order_string.index(', ')+2:]
+            l_hue_order.append(hue_order_string)
+        else:
+            l_hue_order.append(self.l_hue_order.value)
+        return l_hue_order
 
 
     def handle_annotate_all_exception(self) -> List[str]:
