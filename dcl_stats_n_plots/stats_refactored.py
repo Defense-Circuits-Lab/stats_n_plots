@@ -220,16 +220,31 @@ class MultipleIndependentSamplesStats(StatisticalTest):
     def add_test_specific_information_to_summary_stats(self) -> Dict:
         summary_stats = self.lut['summary_stats'].copy()
         df_infos = self.lut['df_infos'].copy()
-        if len(self.lut['df_infos']['all_group_ids']) > 2:
+        if len(df_infos['all_group_ids']) > 2:
             if summary_stats['use_parametric']:
                 performed_test = 'One-way ANOVA'
                 full_test_results = pg.anova(data = self.df, dv = df_infos['data_column_name'], between = df_infos['group_column_name'])
+                p_value = full_test_results['p-unc'].values[0]
             else:
                 performed_test = 'Kruskal-Wallis-ANOVA'
                 full_test_results = pg.kruskal(data = self.df, dv = df_infos['data_column_name'], between = df_infos['group_column_name'])
+                p_value = full_test_results['p-unc'].values[0]
+        if len(df_infos['all_group_ids']) == 2:
+            id_group_a, id_group_b = df_infos['all_group_ids']
+            group_column_name = df_infos['group_column_name']
+            data_group_a = self.df.loc[self.df[group_column_name] == id_group_a, df_infos['data_column_name']].values
+            data_group_b = self.df.loc[self.df[group_column_name] == id_group_b, df_infos['data_column_name']].values
+            if summary_stats['use_parametric']:
+                performed_test = 'unpaired two sample t-test (with Welch-correction if applicable)'
+                full_test_results = pg.ttest(x = data_group_a, y = data_group_b, alternative = 'two-sided', correction = 'auto')
+                p_value = full_test_results['p-val'].values[0]
+            else:
+                performed_test = 'Mann-Whitney U test'
+                full_test_results = pg.mwu(x = data_group_a, y = data_group_b, alternative = 'two-sided')
+                p_value = full_test_results['p-val'].values[0]
         summary_stats['performed_test'] = performed_test
         summary_stats['full_test_results'] = full_test_results
-        summary_stats['p_value'] = full_test_results['p-unc'].values[0]
+        summary_stats['p_value'] = p_value
         summary_stats['stars_str'] = self.get_stars_string(p = summary_stats['p_value'])
         return summary_stats
 

@@ -197,17 +197,16 @@ class MultipleIndependentSamplesPlots(PlotHandler):
             brackets_height = y_shift_annotation_line*0.5*self.configs.annotation_brackets_factor
             y_shift_annotation_text = brackets_height + y_shift_annotation_line*0.5*self.configs.distance_stars_to_brackets
             y = max_total + y_shift_annotation_line
-            if self.database.stats_results['summary_stats']['p_value'] <= 0.05:
-                df_temp = self.database.stats_results['pairwise_comparisons'].copy()
-                for group1, group2 in self.configs.l_stats_to_annotate:
-                    x1 = self.configs.l_xlabel_order.index(group1)
-                    x2 = self.configs.l_xlabel_order.index(group2)
-                    stars = self.get_stars_str(df_temp, group1, group2)
-                    ax.plot([x1, x1, x2, x2], [y, y+brackets_height, y+brackets_height, y], c='k', lw=self.configs.linewidth_annotations)
-                    ax.text((x1+x2)*.5, y+y_shift_annotation_text, stars, ha='center', va='bottom', color='k',
-                             fontsize=self.configs.fontsize_stars, fontweight=self.configs.fontweight_stars)
-                    # With set_distance_stars_to_brackets being limited to 5, stars will always be closer than next annotation line
-                    y = y+3*y_shift_annotation_line
+            df_temp = self.database.stats_results['pairwise_comparisons'].copy()
+            for group1, group2 in self.configs.l_stats_to_annotate:
+                x1 = self.configs.l_xlabel_order.index(group1)
+                x2 = self.configs.l_xlabel_order.index(group2)
+                stars = self.get_stars_str(df_temp, group1, group2)
+                ax.plot([x1, x1, x2, x2], [y, y+brackets_height, y+brackets_height, y], c='k', lw=self.configs.linewidth_annotations)
+                ax.text((x1+x2)*.5, y+y_shift_annotation_text, stars, ha='center', va='bottom', color='k',
+                         fontsize=self.configs.fontsize_stars, fontweight=self.configs.fontweight_stars)
+                # With set_distance_stars_to_brackets being limited to 5, stars will always be closer than next annotation line
+                y = y+3*y_shift_annotation_line
         return fig, ax
 
 # Cell
