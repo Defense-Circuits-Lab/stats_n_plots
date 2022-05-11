@@ -69,11 +69,27 @@ class PlotHandler(ABC):
 
     def finish_plot(self) -> Tuple[plt.Figure, plt.Axes]:
         fig, ax = self.fig, self.ax
-        ax.set_ylabel(self.configs.yaxis_label_text, fontsize=self.configs.yaxis_label_fontsize, color=self.configs.yaxis_label_color)
-        ax.set_xlabel(self.configs.xaxis_label_text, fontsize=self.configs.xaxis_label_fontsize, color=self.configs.xaxis_label_color)
+        yaxis_label = self.add_linebreaks_to_axis_labels(user_input = self.configs.yaxis_label_text)
+        xaxis_label = self.add_linebreaks_to_axis_labels(user_input = self.configs.xaxis_label_text)
+        ax.set_ylabel(yaxis_label, fontsize=self.configs.yaxis_label_fontsize, color=self.configs.yaxis_label_color)
+        ax.set_xlabel(xaxis_label, fontsize=self.configs.xaxis_label_fontsize, color=self.configs.xaxis_label_color)
         if self.configs.yaxis_scaling_mode == 'manual': #1 for GUI, manual for API
             ax.set_ylim(self.configs.yaxis_lower_lim_value, self.configs.yaxis_upper_lim_value)
         return fig, ax
+
+
+    def add_linebreaks_to_axis_labels(self, user_input: str) -> str:
+        all_lines = []
+        while '\\' in user_input:
+            all_lines.append(user_input[:user_input.find('\\n')-1])
+            user_input = user_input.replace(user_input[:user_input.find('\\n')+3], '')
+        all_lines.append(user_input)
+        for line_index in range(len(all_lines)):
+            if line_index == 0:
+                label_to_set = all_lines[line_index]
+            else:
+                label_to_set += f'\n{all_lines[line_index]}'
+        return label_to_set
 
 
     def get_stars_str(self, df_tmp: pd.DataFrame, group1: str, group2: str) -> str:
