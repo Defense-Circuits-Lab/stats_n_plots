@@ -63,14 +63,17 @@ class Session:
     def create_plot(self, filepath: Optional[Path]=None, dpi: Optional[int]=None, show: bool=True, save: bool=False) -> None:
         self.database = self.database.plot_handler().plot(database = self.database)
         if show:
+            plt.tight_layout()
             plt.show()
         if save:
             if dpi == None:
                 dpi = 300
             if filepath != None:
+                plt.tight_layout()
                 plt.savefig(filepath, dpi = dpi)
                 plt.close()
             else:
+                plt.tight_layout()
                 plt.savefig('customized_plot.png', dpi = dpi)
                 plt.close()
 
