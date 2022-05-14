@@ -293,6 +293,9 @@ class ConfigsTab(PlainTab):
         y_axis_vbox = self.initialize_y_axis_vbox()
         common_axis_features_vbox = self.initialize_common_axis_features_vbox()
         accordion = w.Accordion([x_axis_vbox, y_axis_vbox, common_axis_features_vbox])
+        accordion.set_title(0, 'Customize the x axis')
+        accordion.set_title(1, 'Customize the y axis')
+        accordion.set_title(2, 'Customize general axis features')
         return w.VBox([accordion])
 
 
