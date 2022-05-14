@@ -18,6 +18,8 @@ DEFAULT_CONFIGS = {# General features:
                   'marker_size': 5,
                   'color_palette': 'colorblind',
                   'save_plot': False,
+                  'boxplot_width': 0.8,
+                  'boxplot_linewidth': 1.5,
 
                   # Axes of the plot:
                   'axes_linewidth': 1,
