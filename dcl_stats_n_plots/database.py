@@ -30,8 +30,8 @@ DEFAULT_CONFIGS = {# General features:
                   'xaxis_label_fontsize': 12,
                   'xaxis_label_color': '#000000',
                   'yaxis_scaling_mode': 'auto',
-                  'yaxis_lower_lim_value': 0,
-                  'yaxis_upper_lim_value': 1,
+                  'yaxis_lower_lim': 0,
+                  'yaxis_upper_lim': 1,
 
                   # Annotations:
                   'distance_brackets_to_data': 0.1,

@@ -74,7 +74,7 @@ class PlotHandler(ABC):
         ax.set_ylabel(yaxis_label, fontsize=self.configs.yaxis_label_fontsize, color=self.configs.yaxis_label_color)
         ax.set_xlabel(xaxis_label, fontsize=self.configs.xaxis_label_fontsize, color=self.configs.xaxis_label_color)
         if self.configs.yaxis_scaling_mode == 'manual': #1 for GUI, manual for API
-            ax.set_ylim(self.configs.yaxis_lower_lim_value, self.configs.yaxis_upper_lim_value)
+            ax.set_ylim([self.configs.yaxis_lower_lim,self.configs.yaxis_upper_lim])
         return fig, ax
 
 
