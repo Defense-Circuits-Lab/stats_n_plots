@@ -74,7 +74,7 @@ class PlotHandler(ABC):
         ax.set_ylabel(yaxis_label, fontsize=self.configs.yaxis_label_fontsize, color=self.configs.yaxis_label_color)
         ax.set_xlabel(xaxis_label, fontsize=self.configs.xaxis_label_fontsize, color=self.configs.xaxis_label_color)
         if self.configs.yaxis_scaling_mode == 'manual': #1 for GUI, manual for API
-            ax.set_ylim(self.configs.yaxis_lower_lim_value, self.configs.yaxis_upper_lim_value)
+            ax.set_ylim([self.configs.yaxis_lower_lim,self.configs.yaxis_upper_lim])
         return fig, ax
 
 
@@ -135,11 +135,13 @@ class OneSamplePlots(PlotHandler):
             ax.hlines(y = fixed_value, xmin = -0.5, xmax = 0.5, color = 'gray', linestyle = 'dashed')
         elif self.configs.plot_type == 'boxplot':
             sns.boxplot(data = self.data, x = group_column_name, y = data_column_name, order = self.configs.l_xlabel_order,
-                        palette = self.configs.color_palette, ax=ax)
+                        palette = self.configs.color_palette, width = self.configs.boxplot_width,
+                        linewidth = self.configs.boxplot_linewidth, ax=ax)
             ax.hlines(y = fixed_value, xmin = -0.5, xmax = 0.5, color = 'gray', linestyle = 'dashed')
         elif self.configs.plot_type == 'boxplot with stripplot overlay':
             sns.boxplot(data = self.data, x = group_column_name, y = data_column_name, order = self.configs.l_xlabel_order,
-                        palette = self.configs.color_palette, ax=ax, showfliers=False)
+                        palette = self.configs.color_palette, width = self.configs.boxplot_width,
+                        linewidth = self.configs.boxplot_linewidth, ax=ax, showfliers=False)
             sns.stripplot(data = self.data, x = group_column_name, y = data_column_name, order = self.configs.l_xlabel_order,
                           color = 'k', size = self.configs.marker_size, ax=ax)
             ax.hlines(y = fixed_value, xmin = -0.5, xmax = 0.5, color = 'gray', linestyle = 'dashed')
@@ -186,10 +188,12 @@ class MultipleIndependentSamplesPlots(PlotHandler):
                           palette = self.configs.color_palette, size = self.configs.marker_size, ax=ax)
         elif self.configs.plot_type == 'boxplot':
             sns.boxplot(data = self.data, x = group_column_name, y = data_column_name, order = self.configs.l_xlabel_order,
-                        palette = self.configs.color_palette, ax=ax)
+                        palette = self.configs.color_palette, width = self.configs.boxplot_width,
+                        linewidth = self.configs.boxplot_linewidth, ax=ax)
         elif self.configs.plot_type == 'boxplot with stripplot overlay':
             sns.boxplot(data = self.data, x = group_column_name, y = data_column_name, order = self.configs.l_xlabel_order,
-                        palette = self.configs.color_palette, ax=ax, showfliers=False)
+                        palette = self.configs.color_palette, width = self.configs.boxplot_width,
+                        linewidth = self.configs.boxplot_linewidth, ax=ax, showfliers=False)
             sns.stripplot(data = self.data, x = group_column_name, y = data_column_name, order = self.configs.l_xlabel_order,
                           color = 'k', size = self.configs.marker_size, ax=ax)
         elif self.configs.plot_type == 'violinplot':
@@ -245,10 +249,12 @@ class MixedModelANOVAPlots(PlotHandler):
                           dodge = True, ci = 'sd', err_style = 'bars', capsize = 0, ax = ax)
         elif self.configs.plot_type == 'boxplot':
             sns.boxplot(data = self.data, x = session_column_name, y = data_column_name, order = self.configs.l_xlabel_order,
-                        hue = group_column_name, hue_order = self.configs.l_hue_order, palette = self.configs.color_palette, ax = ax)
+                        hue = group_column_name, hue_order = self.configs.l_hue_order, palette = self.configs.color_palette,
+                        width = self.configs.boxplot_width, linewidth = self.configs.boxplot_linewidth, ax = ax)
         elif self.configs.plot_type == 'boxplot with stripplot overlay':
             sns.boxplot(data = self.data, x = session_column_name, y = data_column_name, order = self.configs.l_xlabel_order,
-                        hue = group_column_name, hue_order = self.configs.l_hue_order, palette = self.configs.color_palette, ax = ax, showfliers = False)
+                        hue = group_column_name, hue_order = self.configs.l_hue_order, palette = self.configs.color_palette,
+                        width = self.configs.boxplot_width, linewidth = self.configs.boxplot_linewidth, ax = ax, showfliers = False)
             sns.stripplot(data = self.data, x = session_column_name, y = data_column_name, order = self.configs.l_xlabel_order,
                           hue = group_column_name, hue_order = self.configs.l_hue_order, dodge = True, color = 'k', size = self.configs.marker_size)
         elif self.configs.plot_type == 'violinplot':

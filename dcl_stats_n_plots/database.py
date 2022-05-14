@@ -18,6 +18,8 @@ DEFAULT_CONFIGS = {# General features:
                   'marker_size': 5,
                   'color_palette': 'colorblind',
                   'save_plot': False,
+                  'boxplot_width': 0.8,
+                  'boxplot_linewidth': 1.5,
 
                   # Axes of the plot:
                   'axes_linewidth': 1,
@@ -30,8 +32,8 @@ DEFAULT_CONFIGS = {# General features:
                   'xaxis_label_fontsize': 12,
                   'xaxis_label_color': '#000000',
                   'yaxis_scaling_mode': 'auto',
-                  'yaxis_lower_lim_value': 0,
-                  'yaxis_upper_lim_value': 1,
+                  'yaxis_lower_lim': 0,
+                  'yaxis_upper_lim': 1,
 
                   # Annotations:
                   'distance_brackets_to_data': 0.1,

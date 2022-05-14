@@ -293,6 +293,9 @@ class ConfigsTab(PlainTab):
         y_axis_vbox = self.initialize_y_axis_vbox()
         common_axis_features_vbox = self.initialize_common_axis_features_vbox()
         accordion = w.Accordion([x_axis_vbox, y_axis_vbox, common_axis_features_vbox])
+        accordion.set_title(0, 'Customize the x axis')
+        accordion.set_title(1, 'Customize the y axis')
+        accordion.set_title(2, 'Customize general axis features')
         return w.VBox([accordion])
 
 
@@ -306,7 +309,7 @@ class ConfigsTab(PlainTab):
                                      style = {'description_width': 'initial'})
         self.xaxis_label_text = w.Text(value = 'group_IDs', placeholder = 'group_IDs',
                                        description = 'x-axis title:', layout = {'width': '36%'})
-        self.xaxis_label_fontsize = w.IntSlider(value = 12, min = 8, max = 40,
+        self.xaxis_label_fontsize = w.IntSlider(value = 12, min = 6, max = 30,
                                                 step = 1, description = 'fontsize:', layout = {'width': '28%'})
         self.xaxis_label_color = w.ColorPicker(concise = False, description = 'font color',
                                                value = '#000000', layout = {'width': '28%'})
@@ -355,7 +358,7 @@ class ConfigsTab(PlainTab):
     def initialize_y_axis_vbox(self) -> VBox:
         self.yaxis_label_text = w.Text(value = 'data', placeholder = 'data', description = 'y-axis title:',
                                        layout = {'width': '36%'})
-        self.yaxis_label_fontsize = w.IntSlider(value = 12, min = 8, max = 40, step = 1,
+        self.yaxis_label_fontsize = w.IntSlider(value = 12, min = 6, max = 30, step = 1,
                                                 description = 'fontsize:', layout = {'width': '28%'})
         self.yaxis_label_color = w.ColorPicker(concise = False, description = 'font color',
                                                value = '#000000', layout = {'width': '28%'})
@@ -387,12 +390,12 @@ class ConfigsTab(PlainTab):
 
     def initialize_common_axis_features_vbox(self):
 
-        self.axes_linewidth = w.BoundedFloatText(value = 1, min = 0, max = 40, description = 'Axes linewidth',
+        self.axes_linewidth = w.BoundedFloatText(value = 1, min = 0, max = 5, step = 0.1, description = 'Axes linewidth',
                                                  style = {'description_width': 'initial'}, layout = {'width': '30%'})
         self.axes_color = w.ColorPicker(concise = False, description = 'Axes and tick label color',
                                         value = '#000000', style = {'description_width': 'initial'},
                                         layout={'width': '30%'})
-        self.axes_tick_size = w.BoundedFloatText(value = 10, min = 1, max = 40, description = 'Tick label size',
+        self.axes_tick_size = w.BoundedFloatText(value = 10, min = 1, max = 30, step = 0.5, description = 'Tick label size',
                                                 style = {'description_width': 'initial'}, layout = {'width': '30%'})
         row_0 = w.HBox([self.axes_linewidth, self.axes_color, self.axes_tick_size])
         return w.VBox([row_0])
@@ -422,12 +425,19 @@ class ConfigsTab(PlainTab):
                                       style={'description_width': 'initial'})
         self.marker_size = w.FloatText(value=5,description='marker size (if applicable):',
                                        style={'description_width': 'initial'})
+        self.boxplot_linewidth = w.BoundedFloatText(value = 1.5, min = 0, max = 10, step = 0.5,
+                                                    description = 'Boxplot linewidth (if applicable):',
+                                                    style = {'description_width': 'initial'})
+        self.boxplot_width = w.BoundedFloatText(value = 0.8, min = 0, max = 1, step = 0.1,
+                                                description = 'Boxplot width (if applicable):',
+                                                style = {'description_width': 'initial'})
 
         row_0 = w.HBox([self.fig_height, self.fig_width])
         row_1 = w.VBox([self.color_palette,
                         w.HBox([self._preset_color_palette, self._custom_color_palette])])
         row_2 = w.HBox([self.show_legend, self.marker_size])
-        return w.VBox([row_0, row_1, row_2])
+        row_3 = w.HBox([self.boxplot_width, self.boxplot_linewidth])
+        return w.VBox([row_0, row_1, row_2, row_3])
 
 
     def export_current_settings(self, b) -> None:
