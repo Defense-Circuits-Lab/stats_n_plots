@@ -14,6 +14,7 @@ from IPython.display import display
 import inspect
 import itertools
 import pickle
+import os
 
 from .main_refactored import Session
 from .database import Configs
@@ -134,14 +135,31 @@ class PlotTab(PlainTab):
         available_plot_types = self.get_available_plot_types()
         self.select_plot_type = w.Dropdown(description = 'Please select a plot type: ',
                                            options = available_plot_types,
-                                           layout = {'width': '65%'},
+                                           layout = {'width': '40%'},
                                            style = {'description_width': 'initial'})
-        self.update_plot = w.Button(description = 'update the plot', layout = {'width': '15%'})
-        self.export_plot = w.Button(description = 'export the plot', layout = {'width': '15%'})
+        self.update_plot = w.Button(description = 'update the plot', layout = {'width': '20%'})
+        self.export_plot = w.Button(description = 'export the plot', layout = {'width': '20%'})
+        self.select_export_type = w.Dropdown(description = 'Export filetype: ',
+                                             options = ['png', 'pdf', 'svg'],
+                                             layout = {'width': '35%'},
+                                             style = {'description_width': 'initial'})
+        self.export_dpi = w.IntSlider(description = 'Resolution (dpi): ', min = 100, max = 1200, value = 300, step = 50,
+                                      layout = {'width': '60%'},
+                                      style = {'description_width': 'initial'})
+        self.export_filename = w.Text(description = 'Filename (without filetpye extension): ',
+                                      value = 'customized_plot',
+                                      placeholder = 'Use no extension like .png or .pdf here!',
+                                      layout = {'width': '95%'},
+                                      style = {'description_width': 'initial'})
+        export_accordion = w.Accordion(children = [w.VBox([w.HBox([self.select_export_type, self.export_dpi]), self.export_filename])],
+                                      selected_index = None,
+                                      layout = {'width': '80%'})
+        export_accordion.set_title(0, 'Additional export settings')
         self.display_plot = w.Output()
         self.update_plot.on_click(self.update_the_plot)
         self.export_plot.on_click(self.export_the_plot)
         widget = w.VBox([w.HBox([self.select_plot_type, self.update_plot, self.export_plot]),
+                         export_accordion,
                          self.display_plot])
         return widget
 
@@ -159,7 +177,9 @@ class PlotTab(PlainTab):
 
     def export_the_plot(self, b):
         self.gui.session.database.configs = self.gui.configurations_tab.update_configs()
-        self.gui.session.create_plot(filepath = None, dpi = None, show = False, save = True)
+        current_working_directory = Path(os.getcwd())
+        export_filepath = current_working_directory.joinpath(f'{self.export_filename.value}.{self.select_export_type.value}')
+        self.gui.session.create_plot(filepath = export_filepath, dpi = self.export_dpi.value, show = False, save = True)
 
 # Cell
 class ConfigsTab(PlainTab):
