@@ -211,6 +211,7 @@ class MultipleIndependentSamplesPlots(PlotHandler):
         fig = self.fig
         ax = self.ax
         df = self.data
+        lower_xlim, upper_xlim = ax.get_xlim()
         if len(self.configs.l_stats_to_annotate) > 0:
             max_total = self.data[self.database.stats_results['df_infos']['data_column_name']].max()
             y_shift_annotation_line = max_total * self.configs.distance_brackets_to_data
@@ -227,6 +228,7 @@ class MultipleIndependentSamplesPlots(PlotHandler):
                          fontsize=self.configs.fontsize_stars, fontweight=self.configs.fontweight_stars)
                 # With set_distance_stars_to_brackets being limited to 5, stars will always be closer than next annotation line
                 y = y+3*y_shift_annotation_line
+            ax.set_xlim(lower_xlim, upper_xlim)
         return fig, ax
 
 # Cell
@@ -294,6 +296,7 @@ class MixedModelANOVAPlots(PlotHandler):
 
     def annotate_stats_mma(self) -> Tuple[plt.Figure, plt.Axes]:
         fig, ax = self.fig, self.ax
+        lower_xlim, upper_xlim = ax.get_xlim()
         l_stats_to_annotate = self.configs.l_stats_to_annotate
         group_col = self.database.stats_results['df_infos']['group_column_name']
         data_col = self.database.stats_results['df_infos']['data_column_name']
@@ -345,6 +348,7 @@ class MixedModelANOVAPlots(PlotHandler):
                          fontsize=self.configs.fontsize_stars, fontweight=self.configs.fontweight_stars)
 
                 prev_session = session_id
+            ax.set_xlim(lower_xlim, upper_xlim)
         return fig, ax
 
 
