@@ -20,6 +20,10 @@ DEFAULT_CONFIGS = {# General features:
                   'save_plot': False,
                   'boxplot_width': 0.8,
                   'boxplot_linewidth': 1.5,
+                  'rm_linewidth': 0.5,
+                  'rm_linestyle': 'dashed',
+                  'rm_linecolor': 'black',
+                  'rm_alpha': 0.8,
 
                   # Axes of the plot:
                   'axes_linewidth': 1,
