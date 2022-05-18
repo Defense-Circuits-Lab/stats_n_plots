@@ -164,7 +164,11 @@ class OneSamplePlots(PlotHandler):
         df = self.data
         if len(self.configs.l_stats_to_annotate) > 0:
             max_total = self.data[self.database.stats_results['df_infos']['data_column_name']].max()
-            y_shift_annotation_line = max_total * self.configs.distance_brackets_to_data
+            if max_total <= 0:
+                min_total = self.data[self.database.stats_results['df_infos']['data_column_name']].min()
+                y_shift_annotation_line = abs(min_total * self.configs.distance_brackets_to_data)
+            else:
+                y_shift_annotation_line = max_total * self.configs.distance_brackets_to_data
             y_shift_annotation_text = y_shift_annotation_line*0.5*self.configs.distance_stars_to_brackets
             y = max_total + y_shift_annotation_line
             ax.text(0, y+y_shift_annotation_text, self.database.stats_results['summary_stats']['stars_str'],
@@ -214,7 +218,11 @@ class MultipleIndependentSamplesPlots(PlotHandler):
         lower_xlim, upper_xlim = ax.get_xlim()
         if len(self.configs.l_stats_to_annotate) > 0:
             max_total = self.data[self.database.stats_results['df_infos']['data_column_name']].max()
-            y_shift_annotation_line = max_total * self.configs.distance_brackets_to_data
+            if max_total <= 0:
+                min_total = self.data[self.database.stats_results['df_infos']['data_column_name']].min()
+                y_shift_annotation_line = abs(min_total * self.configs.distance_brackets_to_data)
+            else:
+                y_shift_annotation_line = max_total * self.configs.distance_brackets_to_data
             brackets_height = y_shift_annotation_line*0.5*self.configs.annotation_brackets_factor
             y_shift_annotation_text = brackets_height + y_shift_annotation_line*0.5*self.configs.distance_stars_to_brackets
             y = max_total + y_shift_annotation_line
@@ -320,7 +328,11 @@ class MixedModelANOVAPlots(PlotHandler):
                 l_to_annotate_ordered = l_to_annotate_ordered+l_temp
             df_temp = self.database.stats_results['pairwise_comparisons'].copy()
             max_total = df[data_col].max()
-            y_shift_annotation_line = max_total * distance_brackets_to_data
+            if max_total <= 0:
+                min_total = df[data_col].min()
+                y_shift_annotation_line = abs(min_total * distance_brackets_to_data)
+            else:
+                y_shift_annotation_line = max_total * distance_brackets_to_data
             brackets_height = y_shift_annotation_line*0.5*annotation_brackets_factor
             y_shift_annotation_text = brackets_height + y_shift_annotation_line*0.5*distance_stars_to_brackets
 
