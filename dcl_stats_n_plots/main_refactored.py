@@ -56,6 +56,7 @@ class Session:
         pass
 
     def calculate_stats(self, statistical_test: StatisticalTest, show: bool=True, save: bool=False) -> None:
+        print('trying to compute the statistical test for: ', StatisticalTest)
         self.database = statistical_test().compute(database = self.database)
         self.database.plot_handler = statistical_test().plot_handler
 

@@ -90,9 +90,7 @@ class StatisticsTab(PlainTab):
         self.display_stats_df = w.Output()
         self.export_stats = w.Button(description = 'export statistical results', layout = {'width': '25%'})
         widget = w.VBox([user_information, self.display_stats_df, self.export_stats])
-
         self.export_stats.on_click(self.export_stats_results)
-
         with self.display_stats_df:
             self.gui.session.calculate_stats(statistical_test = self.gui.stats_selection.value)
             user_information_strings = self.create_user_information_strings()
@@ -441,23 +439,38 @@ class ConfigsTab(PlainTab):
                                                        ('Define colors individually', 'custom')],
                                             value = 'preset', layout = {'width': '80%', 'height': '75px'},
                                             style = {'description_width': 'initial'})
-        self.show_legend = w.Checkbox(value=True, description='Show legend (if applicable):',
+        user_info = w.Label(value = 'Below, you can find several additional customization features that are, however, applicable only for certain plots:')
+        self.show_legend = w.Checkbox(value=True, description='Show legend (MMA plots):',
                                       style={'description_width': 'initial'})
-        self.marker_size = w.FloatText(value=5,description='marker size (if applicable):',
+        self.marker_size = w.FloatText(value=5,description='marker size (any stripplot):',
                                        style={'description_width': 'initial'})
         self.boxplot_linewidth = w.BoundedFloatText(value = 1.5, min = 0, max = 10, step = 0.5,
-                                                    description = 'Boxplot linewidth (if applicable):',
+                                                    description = 'Boxplot linewidth:',
                                                     style = {'description_width': 'initial'})
         self.boxplot_width = w.BoundedFloatText(value = 0.8, min = 0, max = 1, step = 0.1,
-                                                description = 'Boxplot width (if applicable):',
+                                                description = 'Boxplot width:',
                                                 style = {'description_width': 'initial'})
+        self.rm_linewidth = w.BoundedFloatText(value = 0.5, min = 0, max = 10, step = 0.1,
+                                               description = 'Line width (repeated measurements):',
+                                               style = {'description_width': 'initial'})
+        self.rm_linestyle = w.Dropdown(options = ['solid', 'dashed', 'dashdot', 'dotted', 'none'],
+                                       value = 'dashed',
+                                       description = 'Line style (repeated measurements):',
+                                       style = {'description_width': 'initial'})
+        self.rm_linecolor = w.ColorPicker(concise = False, description = 'Line color (repeated measurements)', style = {'description_width': 'initial'})
+        self.rm_alpha = w.BoundedFloatText(value = 0.8, min = 0, max = 1, step = 0.05,
+                                           description = 'Line transparency (repeated measurements):',
+                                           style = {'description_width': 'initial'})
 
         row_0 = w.HBox([self.fig_height, self.fig_width])
         row_1 = w.VBox([self.color_palette,
                         w.HBox([self._preset_color_palette, self._custom_color_palette])])
-        row_2 = w.HBox([self.show_legend, self.marker_size])
-        row_3 = w.HBox([self.boxplot_width, self.boxplot_linewidth])
-        return w.VBox([row_0, row_1, row_2, row_3])
+        row_2 = user_info
+        row_3 = w.HBox([self.show_legend, self.marker_size])
+        row_4 = w.HBox([self.boxplot_width, self.boxplot_linewidth])
+        row_5 = w.HBox([self.rm_linewidth, self.rm_linestyle])
+        row_6 = w.HBox([self.rm_linecolor, self.rm_alpha])
+        return w.VBox([row_0, row_1, row_2, row_3, row_4, row_5, row_6])
 
 
     def export_current_settings(self, b) -> None:
