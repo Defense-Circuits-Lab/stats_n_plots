@@ -25,6 +25,8 @@ Please get in touch if you have any feedback, questions, or feature requests for
 
 ## How to use
 
+** DOCUMENTATION UPDATE PENDING **
+
 We provide comprehensive tutorials that explain step-by-step how to use dcl_stats_n_plots.
 
 If you would like to use our GUI, please check out our [GUI tutorial](https://dsegebarth.github.io/dcl_stats_n_plots/gui_tutorial.html).
