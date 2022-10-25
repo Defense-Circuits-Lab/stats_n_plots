@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "dcl_stats_n_plots"
+  site-url: "https://DSegebarth.github.io/dcl_stats_n_plots/"
+  description: "coming soon"
+  repo-branch: master
+  repo-url: "https://github.com/DSegebarth/dcl_stats_n_plots/tree/master/"
