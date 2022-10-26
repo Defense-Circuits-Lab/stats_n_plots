@@ -12,17 +12,18 @@ also for other researchers. The common goal for each repository,
 however, is to provide the tool as an interactive, userfriendly, and
 intuitive GUI (usually based on
 [ipywidgets](https://ipywidgets.readthedocs.io/en/stable/), hence the
-name) so that the user needs little to no coding expertise.
+name), such that the user needs little to no coding expertise.
 
-List of all repositories of the DCLwidgets series: <br> \*
-[dcl_stats_n\_plots](https://github.com/DSegebarth/dcl_stats_n_plots/):
-A widget to compute statistics and plot the data with several options to
-customize the plot \*
-[DCL_to_NWB](https://github.com/DSegebarth/DCL_to_NWB/): A widget to
-convert datasets acquired in the DCL into the NWB file format \*
-[BSc_MS](https://github.com/DSegebarth/BSc_MS/): A widget to annotate
-the corners of a maze within video files and save the corresponding x-
-and y-coordinates
+List of all repositories of the DCLwidgets series: <br>
+
+- [dcl_stats_n\_plots](https://github.com/DSegebarth/dcl_stats_n_plots/):
+  A widget to compute statistics and plot the data with several options
+  to customize the plot
+- [DCL_to_NWB](https://github.com/DSegebarth/DCL_to_NWB/): A widget to
+  convert datasets acquired in the DCL into the NWB file format
+- [BSc_MS](https://github.com/DSegebarth/BSc_MS/): A widget to annotate
+  the corners of a maze within video files and save the corresponding x-
+  and y-coordinates
 
 ------------------------------------------------------------------------
 
