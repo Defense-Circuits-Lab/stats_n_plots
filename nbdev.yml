@@ -2,8 +2,8 @@ project:
   output-dir: _docs
 
 website:
-  title: "dcl_stats_n_plots"
-  site-url: "https://DSegebarth.github.io/dcl_stats_n_plots/"
-  description: "coming soon"
+  title: "stats_n_plots"
+  site-url: "https://defense-circuits-lab.github.io/stats_n_plots/"
+  description: "Computation and visualization of statistical analyses common in the Life sciences made easy"
   repo-branch: master
-  repo-url: "https://github.com/DSegebarth/dcl_stats_n_plots/tree/master/"
+  repo-url: "https://github.com/Defense-Circuits-Lab/stats_n_plots/tree/master/"

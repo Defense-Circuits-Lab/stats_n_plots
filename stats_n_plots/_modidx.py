@@ -2,7 +2,7 @@
 
 d = { 'settings': { 'branch': 'master',
                 'doc_baseurl': '/stats_n_plots/',
-                'doc_host': 'https://DSegebarth.github.io',
+                'doc_host': 'https://defense-circuits-lab.github.io',
                 'git_url': 'https://github.com/Defense-Circuits-Lab/stats_n_plots/tree/master/',
                 'lib_path': 'stats_n_plots'},
   'syms': { 'stats_n_plots.database': { 'stats_n_plots.database.Configs': ('database.html#configs', 'stats_n_plots/database.py'),
