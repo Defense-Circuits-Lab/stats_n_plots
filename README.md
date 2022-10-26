@@ -14,12 +14,12 @@ intuitive GUI (usually based on
 [ipywidgets](https://ipywidgets.readthedocs.io/en/stable/), hence the
 name) so that the user needs little to no coding expertise.
 
-List of all repositories of the DCLwidgets series: -
+List of all repositories of the DCLwidgets series: <br> \*
 [dcl_stats_n\_plots](https://github.com/DSegebarth/dcl_stats_n_plots/):
 A widget to compute statistics and plot the data with several options to
-customize the plot -
+customize the plot \*
 [DCL_to_NWB](https://github.com/DSegebarth/DCL_to_NWB/): A widget to
-convert datasets acquired in the DCL into the NWB file format -
+convert datasets acquired in the DCL into the NWB file format \*
 [BSc_MS](https://github.com/DSegebarth/BSc_MS/): A widget to annotate
 the corners of a maze within video files and save the corresponding x-
 and y-coordinates
@@ -63,7 +63,7 @@ With the “environment.yml” file in your current working directory: <br>
 
 With the “environment.yml” file in a different directory: <br>
 
-> conda env create -file PATH.yml
+> conda env create -file PATH\TO\THE\FILE\environment.yml
 
 This will install all dependencies that are required to use
 `dcl_stats_n_plost`, including its GUI version.
@@ -93,8 +93,8 @@ This will install all dependencies that are required to use
 > If you are new to `nbdev`, you´d probably also want to check out their
 > comprehensive tutorials and walkthroughs
 > [here](https://nbdev.fast.ai/tutorials/). I will also add some more
-> contribution guidelines to this repo soon. In the meantime, feel free
-> to get in touch! :-)
+> contribution guidelines to this repository soon. In the meantime, feel
+> free to get in touch! :-)
 
 </div>
 
@@ -126,7 +126,7 @@ There are some major reorganizations planned:
     link it to the DCL will no longer be required
 3)  Once the migration was successfully completed, the documentation
     will be updated to eventually match the “refactored” version, which
-    actually also includes some new statistical tests compared to the
+    actually already includes some new statistical tests compared to the
     old version, as well as additional functions inteded to improve
     usability (like exporting & importing your current plotting
     settings)
@@ -137,8 +137,13 @@ There are some major reorganizations planned:
 Once the steps listed above are all completed, there are plenty of ideas
 for how to continue developing this package further:
 
-- integrate proper tests (especially with the improved CI of nbdev and
-  also once additional contributors join)
+- integrate tests (especially with the improved CI of nbdev v2 and also
+  once additional contributors join)
+- add additional statistical tests & plots (e.g. Kolmogorov-Smirnov test
+  for goodness of fit for cumulative probability functions, or linear &
+  linear mixed effect models, ..)
+- add additional customization options (optional hue column, fonts, ..)
 - improve how configs are export and imported, ideally to include all
   settings (type of plot, color scheme, …)
 - create DCL-default configs
+- fix bugs ;-)
