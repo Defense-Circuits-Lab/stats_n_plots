@@ -3,6 +3,7 @@ input.xlsx
 customized_plot.png
 statistic_results.xlsx
 results/
+_modidx.py
 
 
 *.bak
