@@ -505,3 +505,4 @@ class TwoDistributionsPlots(PlotHandler):
                     color='k', fontsize=self.configs.fontsize_stars, fontweight=self.configs.fontweight_stars,
                     horizontalalignment='center', verticalalignment='center', transform=ax.transAxes)
         return fig, ax
+
