@@ -394,10 +394,14 @@ class TwoDistributionsStats(StatisticalTest):
     @property
     def name_displayed_in_gui(self):
         return 'Comparison of two continous distributions that will be estimated from independent samples'
-    
+
     @property
     def plot_handler(self):
         return TwoDistributionsPlots
+
+    @property
+    def trigger_modidx(self):
+        return 'attempting to fix some GitHub CI error'
     
     def add_test_specific_information_to_df_infos(self) -> Dict:
         print('adding to df_info')
@@ -424,3 +428,4 @@ class TwoDistributionsStats(StatisticalTest):
     
     def add_test_specific_information_to_pairwise_comparisons(self) -> Dict:
         return self.lut['pairwise_comparisons']
+

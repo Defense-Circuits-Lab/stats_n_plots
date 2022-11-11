@@ -250,4 +250,6 @@ d = { 'settings': { 'branch': 'master',
                                      'stats_n_plots.stats.TwoDistributionsStats.name_displayed_in_gui': ( 'stats.html#twodistributionsstats.name_displayed_in_gui',
                                                                                                           'stats_n_plots/stats.py'),
                                      'stats_n_plots.stats.TwoDistributionsStats.plot_handler': ( 'stats.html#twodistributionsstats.plot_handler',
-                                                                                                 'stats_n_plots/stats.py')}}}
+                                                                                                 'stats_n_plots/stats.py'),
+                                     'stats_n_plots.stats.TwoDistributionsStats.trigger_modidx': ( 'stats.html#twodistributionsstats.trigger_modidx',
+                                                                                                   'stats_n_plots/stats.py')}}}
