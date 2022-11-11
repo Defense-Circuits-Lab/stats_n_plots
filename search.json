@@ -1,0 +1,79 @@
+[
+  {
+    "objectID": "database.html",
+    "href": "database.html",
+    "title": "database",
+    "section": "",
+    "text": "source\n\nConfigs\n\n Configs ()\n\nInitialize self. See help(type(self)) for accurate signature.\n\nsource\n\n\nDatabase\n\n Database ()\n\nInitialize self. See help(type(self)) for accurate signature."
+  },
+  {
+    "objectID": "plots.html",
+    "href": "plots.html",
+    "title": "plots",
+    "section": "",
+    "text": "source\n\nsort_by_third\n\n sort_by_third (e)\n\n\nsource\n\n\nPlotHandler\n\n PlotHandler ()\n\nHelper class that provides a standard way to create an ABC using inheritance.\n\nsource\n\n\nOneSamplePlots\n\n OneSamplePlots ()\n\nHelper class that provides a standard way to create an ABC using inheritance.\n\nsource\n\n\nMultipleIndependentSamplesPlots\n\n MultipleIndependentSamplesPlots ()\n\nHelper class that provides a standard way to create an ABC using inheritance.\n\nsource\n\n\nMixedModelANOVAPlots\n\n MixedModelANOVAPlots ()\n\nHelper class that provides a standard way to create an ABC using inheritance.\n\nsource\n\n\nMultipleDependentSamplesPlots\n\n MultipleDependentSamplesPlots ()\n\nHelper class that provides a standard way to create an ABC using inheritance.\n\nsource\n\n\nTwoDistributionsPlots\n\n TwoDistributionsPlots ()\n\nHelper class that provides a standard way to create an ABC using inheritance."
+  },
+  {
+    "objectID": "gui.html",
+    "href": "gui.html",
+    "title": "gui",
+    "section": "",
+    "text": "source\n\nlaunch_gui\n\n launch_gui ()\n\n\nsource\n\n\nGUI\n\n GUI ()\n\nInitialize self. See help(type(self)) for accurate signature.\n\nsource\n\n\nPlainTab\n\n PlainTab (gui:__main__.GUI)\n\nHelper class that provides a standard way to create an ABC using inheritance.\n\nsource\n\n\nStatisticsTab\n\n StatisticsTab (gui:__main__.GUI)\n\nHelper class that provides a standard way to create an ABC using inheritance.\n\nsource\n\n\nPlotTab\n\n PlotTab (gui:__main__.GUI)\n\nHelper class that provides a standard way to create an ABC using inheritance.\n\nsource\n\n\nConfigsTab\n\n ConfigsTab (gui:__main__.GUI)\n\nHelper class that provides a standard way to create an ABC using inheritance."
+  },
+  {
+    "objectID": "main.html",
+    "href": "main.html",
+    "title": "main",
+    "section": "",
+    "text": "source\n\nSession\n\n Session ()\n\nInitialize self. See help(type(self)) for accurate signature."
+  },
+  {
+    "objectID": "CONTRIBUTING.html",
+    "href": "CONTRIBUTING.html",
+    "title": "stats_n_plots",
+    "section": "",
+    "text": "Before anything else, please install the git hooks that run automatic scripts during each commit and merge to strip the notebooks of superfluous metadata (and avoid merge conflicts). After cloning the repository, run the following command inside it:\nnbdev_install_git_hooks\n\n\n\n\nEnsure the bug was not already reported by searching on GitHub under Issues.\nIf you’re unable to find an open issue addressing the problem, open a new one. Be sure to include a title and clear description, as much relevant information as possible, and a code sample or an executable test case demonstrating the expected behavior that is not occurring.\nBe sure to add the complete error messages.\n\n\n\n\nOpen a new GitHub pull request with the patch.\nEnsure that your PR includes a test that fails without your patch, and pass with it.\nEnsure the PR description clearly describes the problem and solution. Include the relevant issue number if applicable.\n\n\n\n\n\n\nKeep each PR focused. While it’s more convenient, do not combine several unrelated fixes together. Create as many branches as needing to keep each PR focused.\nDo not mix style changes/fixes with “functional” changes. It’s very difficult to review such PRs and it most likely get rejected.\nDo not add/remove vertical whitespace. Preserve the original style of the file you edit as much as you can.\nDo not turn an already submitted PR into your development playground. If after you submitted PR, you discovered that more work is needed - close the PR, do the required work and then submit a new PR. Otherwise each of your commits requires attention from maintainers of the project.\nIf, however, you submitted a PR and received a request for changes, you should proceed with commits inside that PR, so that the maintainer can see the incremental fixes and won’t need to review the whole PR again. In the exception case where you realize it’ll take many many commits to complete the requests, then it’s probably best to close the PR, do the work and then submit it again. Use common sense where you’d choose one way over another.\n\n\n\n\n\nDocs are automatically created from the notebooks in the nbs folder."
+  },
+  {
+    "objectID": "stats.html",
+    "href": "stats.html",
+    "title": "stats",
+    "section": "",
+    "text": "source\n\nStatisticalTest\n\n StatisticalTest ()\n\nHelper class that provides a standard way to create an ABC using inheritance.\n\nsource\n\n\nOneSampleStats\n\n OneSampleStats ()\n\nHelper class that provides a standard way to create an ABC using inheritance.\n\nsource\n\n\nMultipleIndependentSamplesStats\n\n MultipleIndependentSamplesStats ()\n\nHelper class that provides a standard way to create an ABC using inheritance.\n\nsource\n\n\nMixedModelANOVAStats\n\n MixedModelANOVAStats ()\n\nHelper class that provides a standard way to create an ABC using inheritance.\n\nsource\n\n\nMultipleDependentSamplesStats\n\n MultipleDependentSamplesStats ()\n\nHelper class that provides a standard way to create an ABC using inheritance.\n\nsource\n\n\nTwoDistributionsStats\n\n TwoDistributionsStats ()\n\nHelper class that provides a standard way to create an ABC using inheritance."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "stats_n_plots",
+    "section": "",
+    "text": "This repository is part of the DCLwidgets series. These repositories are dedicated to foster the joint development of tools and resources by the Defense Circuits Lab. The intended use of each tool may vary greatly from very lab- and/or analysis-specific problems, to tools and resources that may be of use also for other researchers. The common goal for each repository, however, is to provide the tool as an interactive, userfriendly, and intuitive GUI (usually based on ipywidgets, hence the name), such that the user needs little to no coding expertise.\nList of all repositories of the DCLwidgets series:"
+  },
+  {
+    "objectID": "index.html#about-this-widget",
+    "href": "index.html#about-this-widget",
+    "title": "stats_n_plots",
+    "section": "About this widget",
+    "text": "About this widget\nThe purpose of this widget is to make everyday life in the lab a little easier, as it helps you to compute statistical tests and to create highly customizable plots that visualize your data. The widget also enables you to select exactly which statistical results you would like to annotate within the plots. This way, statistical analysis and visualization of your data is what it should be - simple & fast!\nPlease get in touch if you have any feedback, questions, or feature requests for us!"
+  },
+  {
+    "objectID": "index.html#installation",
+    "href": "index.html#installation",
+    "title": "stats_n_plots",
+    "section": "Installation",
+    "text": "Installation\n\nUsing conda:\nAlthough the stats_n_plots package itself is only available on PiPy, we yet recommend installation via conda - especially if you would like to use the GUI. Simply recreate the conda environment on your local machine by running the following command in your command line or terminal (e.g. Anaconda prompt). You can find the corresponding “environment.yml” file in the GitHub repo (here). Just make sure to place the file either in the current working directory (usually displayed at the beginning of each line in your terminal), or to provide the entire filepath (e.g. something like: “C:\\Users\\dsege\\Downloads\\environment.yml”):\nWith the “environment.yml” file in your current working directory: \n\nconda env create -file environment.yml\n\nWith the “environment.yml” file in a different directory: \n\nconda env create -file path\\to\\the\\file\\environment.yml\n\nThis will install all dependencies that are required to use stats_n_plost, including its GUI version.\n\n\n\n\n\n\nNote\n\n\n\nThis installation was so far only tested on Linux (Ubuntu 20.04.4) using conda 22.9.0\n\n\n\n\n\n\n\n\nNote\n\n\n\nIf you would like to contribute to the development of stats_n_plost you are more than welcome! On top of the regular user installation, you will, however, also need to install nbdev in the same environment. Simply follow all the steps above and once you have verified that everything was installed correcty, simply run in the same conda environment:\n\nconda install -c fastai nbdev\n\nIf you are new to nbdev, you´d probably also want to check out their comprehensive tutorials and walkthroughs here. I will also add some more contribution guidelines to this repository soon. In the meantime, feel free to get in touch! :-)\n\n\n\n\nUsing pip:\nDespite the stats_n_plots package itself is only available via pypi.org, we still highly recommend to follow the installation guidelines “using conda” above, especially if you´d like to use its GUI functionalities. If you´d still want to go down this route, here´s your install command:\n\npip install dcl-stats-n-plots"
+  },
+  {
+    "objectID": "index.html#how-to-use",
+    "href": "index.html#how-to-use",
+    "title": "stats_n_plots",
+    "section": "How to use",
+    "text": "How to use\n.. the documentation, including the comprehensive tutorials, is currently being updated .."
+  },
+  {
+    "objectID": "index.html#next-steps",
+    "href": "index.html#next-steps",
+    "title": "stats_n_plots",
+    "section": "Next steps",
+    "text": "Next steps\n\n\n\n\n\n\nDanger\n\n\n\nThe repository was migrated to be now located on the recently created Defense-Circuits-Lab GitHub organisation - originally, it was created and developed here. Alongside the migration, the package was also renamed (originally: dcl_stats_n_plots, now: stats_n_plots).\nImportantly, development & maintenance will only continue in this repository on the stats_n_plots package, which can be accessed from PyPi here.\n\n\nWith the main steps of the migration being completed, the next steps include:\n\nUpdate the documentation to eventually match the “refactored” version, which actually already includes some new statistical tests compared to the old version, as well as additional functions inteded to improve usability (like exporting & importing your current plotting settings)\nAdd contribution guidelines and information\n\nOnce the steps listed above are completed, there are plenty of ideas for how to continue developing this package further:\n\nintegrate tests (especially with the improved CI of nbdev v2 and also once additional contributors join)\nadd additional statistical tests & plots (e.g. Kolmogorov-Smirnov test for goodness of fit for cumulative probability functions, or linear & linear mixed effect models, ..)\nadd additional customization options (optional hue column, fonts, ..)\nimprove how configs are export and imported, ideally to include all settings (type of plot, color scheme, …)\ncreate DCL-default configs\nfix bugs ;-)"
+  }
+]
