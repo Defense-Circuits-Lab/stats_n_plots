@@ -2,7 +2,7 @@
 
 # %% auto 0
 __all__ = ['sort_by_third', 'PlotHandler', 'OneSamplePlots', 'MultipleIndependentSamplesPlots', 'MixedModelANOVAPlots',
-           'MultipleDependentSamplesPlots']
+           'MultipleDependentSamplesPlots', 'TwoDistributionsPlots']
 
 # %% ../02_plots.ipynb 3
 from typing import Tuple, Dict, List, Optional, Union
@@ -476,3 +476,32 @@ class MultipleDependentSamplesPlots(PlotHandler):
                 y = y+3*y_shift_annotation_line
             ax.set_xlim(-0.5, n_groups - 0.5)
         return fig, ax                  
+
+# %% ../02_plots.ipynb 10
+class TwoDistributionsPlots(PlotHandler):
+
+    @property
+    def plot_options_displayed_in_gui(self) -> List[str]:
+        return ['lineplot']
+    
+    
+    def add_handler_specific_plots(self) -> Tuple[plt.Figure, plt.Axes]:
+        fig, ax = self.fig, self.ax
+        data_column_name = self.database.stats_results['df_infos']['data_column_name']
+        group_column_name = self.database.stats_results['df_infos']['group_column_name']
+        if self.configs.plot_type == 'lineplot':
+            sns.ecdfplot(data = self.data, x = data_column_name, palette = self.configs.color_palette,
+                         hue = group_column_name, hue_order = self.configs.l_xlabel_order, ax=ax,
+                         alpha = self.configs.rm_alpha, linewidth = self.configs.rm_linewidth, linestyle = self.configs.rm_linestyle)
+        if self.configs.show_legend == False:
+            ax.get_legend().remove()
+        return fig, ax
+
+    
+    def add_handler_specific_stats_annotations(self) -> Tuple[plt.Figure, plt.Axes]:
+        fig, ax = self.fig, self.ax
+        if len(self.configs.l_stats_to_annotate) > 0:
+            ax.text(0.5, self.configs.distance_brackets_to_data, self.database.stats_results['summary_stats']['stars_str'], 
+                    color='k', fontsize=self.configs.fontsize_stars, fontweight=self.configs.fontweight_stars,
+                    horizontalalignment='center', verticalalignment='center', transform=ax.transAxes)
+        return fig, ax

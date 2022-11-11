@@ -423,55 +423,66 @@ class ConfigsTab(PlainTab):
 
     def initialize_additional_configs_accordion_tab(self) -> VBox:
         self.fig_width = w.FloatSlider(value=28, min=1, max=50, description='Figure width:', 
-                                       style={'description_width': 'inital'})
+                                       style={'description_width': 'inital'},
+                                      layout = {'width': '55%'})
         self.fig_height = w.FloatSlider(value=16, min=1, max=50, description='Figure height:', 
-                                        style={'description_width': 'inital'})
+                                        style={'description_width': 'inital'},
+                                       layout = {'width': '45%'})
         self._preset_color_palette = w.Dropdown(options = ['colorblind', 'Spectral', 'viridis', 'rocket', 'cubehelix'],
                                                 value = 'viridis',
                                                 description = 'Select a color palette',
-                                                layout = {'width': '35%'},
+                                                layout = {'width': '45%'},
                                                 style = {'description_width': 'initial'})
         color_pickers = []
         for group_id in self.gui.session.database.stats_results['df_infos']['all_group_ids']:
-            color_pickers.append(w.ColorPicker(concise = False, description = group_id, style = {'description_width': 'initial'}))
-        self._custom_color_palette = w.VBox(color_pickers)
+            color_pickers.append(w.ColorPicker(concise = False, description = group_id, style = {'description_width': 'initial'}, layout = {'width': '99%'}))
+        self._custom_color_palette = w.VBox(color_pickers, layout = {'width': '55%'})
         self.color_palette = w.RadioButtons(description = 'Please select a color code option and chose from the respective options below:',
                                             options = [('Use a pre-defined palette', 'preset'), 
                                                        ('Define colors individually', 'custom')],
-                                            value = 'preset', layout = {'width': '80%', 'height': '75px'}, 
+                                            value = 'preset', layout = {'width': '95%', 'height': '75px'}, 
                                             style = {'description_width': 'initial'})
         user_info = w.Label(value = 'Below, you can find several additional customization features that are, however, applicable only for certain plots:')
-        self.show_legend = w.Checkbox(value=True, description='Show legend (MMA plots):', 
-                                      style={'description_width': 'initial'})
-        self.marker_size = w.FloatText(value=5,description='marker size (any stripplot):', 
-                                       style={'description_width': 'initial'})
+        self.show_legend = w.Checkbox(value=True, description='Show legend (e.g. MMA & distributions)', 
+                                      style={'description_width': 'initial'},
+                                      layout = {'width': '45%'})
+        self.marker_size = w.FloatText(value=5,description='marker size (e.g. all stripplots):', 
+                                       style={'description_width': 'initial'},
+                                      layout = {'width': '55%'})
         self.boxplot_linewidth = w.BoundedFloatText(value = 1.5, min = 0, max = 10, step = 0.5,
-                                                    description = 'Boxplot linewidth:',
-                                                    style = {'description_width': 'initial'})
+                                                    description = 'Boxplot outline linewidth:',
+                                                    style = {'description_width': 'initial'},
+                                                    layout = {'width': '55%'})
         self.boxplot_width = w.BoundedFloatText(value = 0.8, min = 0, max = 1, step = 0.1, 
-                                                description = 'Boxplot width:',
-                                                style = {'description_width': 'initial'})
+                                                description = 'Boxplot box width:',
+                                                style = {'description_width': 'initial'},
+                                                layout = {'width': '45%'})
         self.rm_linewidth = w.BoundedFloatText(value = 0.5, min = 0, max = 10, step = 0.1,
-                                               description = 'Line width (repeated measurements):',
-                                               style = {'description_width': 'initial'})
+                                               description = 'Line width (e.g. repeated measurements & distributions):',
+                                               style = {'description_width': 'initial'},
+                                               layout = {'width': '45%'})
         self.rm_linestyle = w.Dropdown(options = ['solid', 'dashed', 'dashdot', 'dotted', 'none'],
                                        value = 'dashed',
-                                       description = 'Line style (repeated measurements):',
-                                       style = {'description_width': 'initial'})
-        self.rm_linecolor = w.ColorPicker(concise = False, description = 'Line color (repeated measurements)', style = {'description_width': 'initial'})
+                                       description = 'Line style (e.g. repeated measurements & distributions):',
+                                       style = {'description_width': 'initial'},
+                                       layout = {'width': '55%'})
+        self.rm_linecolor = w.ColorPicker(concise = False, description = 'Line color (e.g. repeated measurements)', 
+                                          style = {'description_width': 'initial'}, 
+                                         layout = {'width': '55%'})
         self.rm_alpha = w.BoundedFloatText(value = 0.8, min = 0, max = 1, step = 0.05,
-                                           description = 'Line transparency (repeated measurements):',
-                                           style = {'description_width': 'initial'})
+                                           description = 'Line transparency (e.g. repeated measurements & distributions):',
+                                           style = {'description_width': 'initial'},
+                                          layout = {'width': '45%'})
         
-        row_0 = w.HBox([self.fig_height, self.fig_width])
-        row_1 = w.VBox([self.color_palette, 
-                        w.HBox([self._preset_color_palette, self._custom_color_palette])])
-        row_2 = user_info
-        row_3 = w.HBox([self.show_legend, self.marker_size])
-        row_4 = w.HBox([self.boxplot_width, self.boxplot_linewidth])
-        row_5 = w.HBox([self.rm_linewidth, self.rm_linestyle])
-        row_6 = w.HBox([self.rm_linecolor, self.rm_alpha])
-        return w.VBox([row_0, row_1, row_2, row_3, row_4, row_5, row_6])
+        row_0 = w.HBox([self.fig_height, self.fig_width], layout = {'width': '90%'})
+        row_1 = w.HBox([self.color_palette], layout = {'width': '90%'})
+        row_2 = w.HBox([self._preset_color_palette, self._custom_color_palette], layout = {'width': '90%'})
+        row_3 = user_info
+        row_4 = w.HBox([self.show_legend, self.marker_size], layout = {'width': '90%'})
+        row_5 = w.HBox([self.boxplot_width, self.boxplot_linewidth], layout = {'width': '90%'})
+        row_6 = w.HBox([self.rm_linewidth, self.rm_linestyle], layout = {'width': '90%'})
+        row_7 = w.HBox([self.rm_alpha, self.rm_linecolor], layout = {'width': '90%'})
+        return w.VBox([row_0, row_1, row_2, row_3, row_4, row_5, row_6, row_7])
         
                                              
     def export_current_settings(self, b) -> None:

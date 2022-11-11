@@ -2,7 +2,7 @@
 
 # %% auto 0
 __all__ = ['StatisticalTest', 'OneSampleStats', 'MultipleIndependentSamplesStats', 'MixedModelANOVAStats',
-           'MultipleDependentSamplesStats']
+           'MultipleDependentSamplesStats', 'TwoDistributionsStats']
 
 # %% ../03_stats.ipynb 3
 from typing import Tuple, Dict, List, Optional, Union
@@ -12,9 +12,10 @@ import pandas as pd
 import numpy as np
 import pingouin as pg
 import itertools
+import scipy
 
 from .database import Database
-from .plots import OneSamplePlots, MultipleIndependentSamplesPlots, MixedModelANOVAPlots, MultipleDependentSamplesPlots
+from .plots import OneSamplePlots, MultipleIndependentSamplesPlots, MixedModelANOVAPlots, MultipleDependentSamplesPlots, TwoDistributionsPlots
 
 # %% ../03_stats.ipynb 4
 class StatisticalTest(ABC):
@@ -386,3 +387,40 @@ class MultipleDependentSamplesStats(StatisticalTest):
         pairwise_comparisons = pg.pairwise_ttests(data = self.df, dv = df_infos['data_column_name'], within = df_infos['group_column_name'], 
                                                   subject = df_infos['subject_column_name'], parametric = summary_stats['use_parametric'], padjust='holm')
         return pairwise_comparisons
+
+# %% ../03_stats.ipynb 9
+class TwoDistributionsStats(StatisticalTest):
+    
+    @property
+    def name_displayed_in_gui(self):
+        return 'Comparison of two continous distributions that will be estimated from independent samples'
+    
+    @property
+    def plot_handler(self):
+        return TwoDistributionsPlots
+    
+    def add_test_specific_information_to_df_infos(self) -> Dict:
+        print('adding to df_info')
+        df_info = self.lut['df_infos'].copy()
+        if df_info['n_groups'] != 2:
+            raise ValueError('The current implementation of this test only supports the comparison of '
+                             'exactly two groups. Your input data, however, seems to have '
+                             f'{df_info["n_groups"]} groups. Please evaluate your input data and try again!')
+        return df_info
+
+    
+    def add_test_specific_information_to_summary_stats(self) -> Dict:
+        df_infos, summary_stats = self.lut['df_infos'].copy(), self.lut['summary_stats'].copy()
+        id_group_a, id_group_b = df_infos['all_group_ids']
+        data_group_a = self.df.loc[self.df[df_infos['group_column_name']] == id_group_a, df_infos['data_column_name']].values 
+        data_group_b = self.df.loc[self.df[df_infos['group_column_name']] == id_group_b, df_infos['data_column_name']].values
+        test_statistic, p_value = scipy.stats.ks_2samp(data_group_a, data_group_b)
+        summary_stats['performed_test'] = 'two samples Kolmogorov-Smirnov test for goodness of fit'
+        summary_stats['full_test_results'] = pd.DataFrame(data = {'KS statistic': [test_statistic], 'p-value': [p_value]})
+        summary_stats['p_value'] = p_value
+        summary_stats['stars_str'] = self.get_stars_string(p = p_value)   
+        return summary_stats
+
+    
+    def add_test_specific_information_to_pairwise_comparisons(self) -> Dict:
+        return self.lut['pairwise_comparisons']
